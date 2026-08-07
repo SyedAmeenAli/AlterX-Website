@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { FOOTER_COLS, BUSINESS, SOCIALS } from "@/content/navigation";
 import { EASE } from "@/lib/anim";
-import { ThreadPath } from "@/components/thread";
+import NetSegment from "@/components/home/NetworkThread";
 
 const LEGAL_ROUTES = ["/privacy", "/cookie-policy", "/terms", "/acceptable-use", "/dpa"];
 
@@ -24,7 +24,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-black text-[#fbfaf7] relative overflow-clip" data-testid="site-footer">
-      <div className="max-w-[1500px] mx-auto px-6 md:px-10 pt-20">
+      <NetSegment name="footer" />
+      <div className="relative z-10 max-w-[1500px] mx-auto px-6 md:px-10 pt-20">
         <p className="text-xl md:text-2xl font-semibold tracking-tight text-white/90 max-w-md">From intent to completed, reviewable work.</p>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mt-14 pt-12 border-t border-white/12">
@@ -73,10 +74,7 @@ export default function Footer() {
       </div>
 
       {!simplified && (
-        <div ref={wrapRef} className="relative select-none overflow-clip" aria-hidden="true" data-testid="footer-wordmark">
-          <svg className="absolute inset-x-0 top-0 w-full h-10 z-10 pointer-events-none" viewBox="0 0 1440 40" preserveAspectRatio="none">
-            <ThreadPath d="M720 0 C 780 14, 900 22, 1440 20" strokeWidth={2} duration={1.2} />
-          </svg>
+        <div ref={wrapRef} className="relative z-10 select-none overflow-clip" aria-hidden="true" data-testid="footer-wordmark">
           <motion.div
             initial={reduce ? false : { y: 28, opacity: 0.9 }}
             whileInView={{ y: 0, opacity: 1 }}

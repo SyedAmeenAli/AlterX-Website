@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RUNWAY_ROWS } from "@/content/home";
 import { ChapterHead } from "@/components/kit";
 import { EASE } from "@/lib/anim";
+import NetSegment from "@/components/home/NetworkThread";
 
 const Lane = ({ label, status, stop, active, engine }) => (
   <div className="min-w-0">
@@ -24,7 +25,7 @@ export default function Runway() {
   return (
     <section className="bg-[#fbfaf7] py-24 md:py-36 relative cv-auto" data-testid="runway-section">
       <div className="absolute inset-y-0 right-0 w-1/3 pointer-events-none" style={{ background: "var(--ax-atmo-light)" }} aria-hidden="true" />
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead
           num="03"
           eyebrow="Capability runway"

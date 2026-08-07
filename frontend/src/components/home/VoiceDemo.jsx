@@ -5,6 +5,7 @@ import { Play, RotateCcw, ShieldCheck, ArrowRight, Check } from "lucide-react";
 import { VOICE_INDUSTRIES } from "@/content/home";
 import { ChapterHead } from "@/components/kit";
 import { EASE } from "@/lib/anim";
+import NetSegment from "@/components/home/NetworkThread";
 
 const VOICE_ENABLED = process.env.REACT_APP_VOICE_WORKFLOWS_ENABLED === "true";
 
@@ -45,8 +46,9 @@ export default function VoiceDemo() {
   };
 
   return (
-    <section className="bg-[#fbfaf7] py-24 md:py-36 cv-auto" data-testid="voice-section">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+    <section className="bg-[#fbfaf7] py-24 md:py-36 cv-auto relative" data-testid="voice-section">
+      <NetSegment name="voice" />
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead
           num="05"
           eyebrow="Voice workflows"

@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { HERO } from "@/content/home";
 import useParticleX from "@/lib/useParticleX";
 import { EASE } from "@/lib/anim";
+import NetSegment from "@/components/home/NetworkThread";
 
 const PHRASE_HOLD = 5200;
 
@@ -95,7 +96,7 @@ export default function HeroX() {
       <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ background: "linear-gradient(95deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 36%, rgba(0,0,0,0) 55%)" }} aria-hidden="true" />
       <div className="absolute inset-0 pointer-events-none md:hidden" style={{ background: "linear-gradient(180deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 52%, rgba(0,0,0,.12) 80%)" }} aria-hidden="true" />
 
-      <div className="relative h-full max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col justify-center pointer-events-none">
+      <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col justify-center pointer-events-none">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15, ease: EASE }}>
           <div className="ax-eyebrow text-[#ff4d0a] flex items-center gap-3 mb-6">
             <span className="inline-block w-6 h-[2px] bg-[#ff4d0a]" aria-hidden="true" />

@@ -1,0 +1,41 @@
+{
+  "summary": "Frontend-only verification of Engine Story (AlterEngineLiveStory), Products modal-style interaction, and Global Network Mesh at 1440x900, 1366x768 and (Engine Story only) 390x844. All 5 stages of the Engine Story activate in order as the user scrolls (data-active=true on the corresponding rail step). Understand types the objective, Plan draws work strips + route, Approve shows the decision sheet and auto-approves after ~1.65s, Act rotates activity phrases, Check shows the decision brief with Needs review then the 'Try Alter Engine' CTA. Rail-click smooth-scrolls and activates the target stage (verified for Approve and Check). Products section: all 4 tiles hover/focus/click swap the shared detail stage content correctly, detail container position/size does not jump (drift=0.00), hovered tile visual turns black, mouse-leave returns to 'engine' after ~220ms, and CTA has an href. Mesh: 9 '.ax-net canvas' elements exist across the homepage, pointer-events is 'none', no horizontal scrollbar (scrollWidth==innerWidth at 1440 and 1366), zero console errors while scrolling top-to-footer. HOWEVER a real visual defect was found in the Engine Story scene composer at BOTH desktop widths: the objective composer overflows the scene container to the right and its text is visibly truncated. Root cause identified.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "EngineStory / Scene objective composer",
+        "issue": "Objective composer is NOT horizontally centered inside the scene at 1440x900 and 1366x768 — it visibly overflows the scene's right edge by ~240-250px and the text is truncated (e.g. shows 'Prepare a decision-ready supplier comparis…'). Measured: at 1366, scene.right=850, composer.right=1091 (overflow 241px). At 1440, scene.right=891, composer.right=1139 (overflow 248px). The scene's overflow-hidden clips the excess so nothing spills outside the section, but the composer bar is drawn far off-center and the objective sentence is not fully visible. Root cause: the composer is a <motion.div className='absolute left-1/2 -translate-x-1/2 w-[80%]'> with animate={{ top, y }}. Framer-motion writes inline style 'transform: none' (or translateY(0)) which overrides Tailwind's -translate-x-1/2, so left:50% is applied without the -50% counter-translation. Fix suggestions: (a) animate 'x' via framer instead of relying on Tailwind translate (e.g. wrap composer in an outer centering div and animate only the inner), or (b) use style={{ left: '10%', width: '80%' }} without translate, or (c) use Tailwind classes that survive framer transforms (e.g. explicit inset-x-[10%] w-[80%]).",
+        "selector": "[data-testid='story-scene'] [data-testid='story-objective']",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "EngineStory Scene at 1440x900 and 1366x768",
+        "issues": [
+          "Objective composer visually off-center to the right in every stage; truncated objective sentence hides ' supplier comparison.' text.",
+          "Composer overlaps/covers the top edge of the story-brief in the Check stage at 1366x768 (composer sits at top:5% inside the scene but is not centered, occupying right half where the brief sits)."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Fix the horizontal centering of the objective composer in /app/frontend/src/components/home/EngineStory.jsx (see Scene component, motion.div wrapping the composer). Remove reliance on Tailwind -translate-x-1/2 while animating top/y with framer-motion. Recommended: change classes to 'absolute left-[10%] w-[80%]' (drop left-1/2 -translate-x-1/2) so no transform is needed for horizontal centering; keep the framer y/top animation for vertical."
+  ],
+  "critical_code_review_comments": [
+    "EngineStory.jsx Scene composer combines Tailwind '-translate-x-1/2' with framer-motion animate={{ top, y }} — framer writes 'transform: none/translateY(0)' which nullifies Tailwind's transform, breaking horizontal centering. Any element using absolute left-1/2 -translate-x-1/2 that is also a framer motion target must not rely on transform-based centering.",
+    "Same file: DecisionBrief also uses 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' as a motion.div with initial/animate scale+y — verify it is not similarly affected (in testing at 1366 the brief bounding box appeared reasonable, but the same anti-pattern applies and can regress).",
+    "Mobile branch of EngineStory (isDesktop=false) does not expose data-testid on the 5 stacked stage blocks — not required by spec, but adding a stable testid (e.g., story-mobile-stage-<name>) would make regression testing easier."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "90% (all interaction/state assertions pass; 1 visual/centering defect in the Engine Story composer)"},
+  "seed_data_creation": "None",
+  "should_call_test_agent_after_fix": true,
+  "should_main_agent_self_test": false,
+  "test_credentials": "N/A — public marketing site",
+  "context_for_next_testing_agent": "Engine Story functional flow (5-stage scroll activation, typing, auto-approve, phrases, check sequence, CTA, rail click) all PASS. Products section (hover/focus/click, default reset after 220ms, CTA href, tile visual bg turning black, no container jump) all PASS. Mesh presence and pointer-events + no-horizontal-scroll checks PASS. The ONLY unresolved issue is the composer horizontal centering bug at BOTH 1440x900 and 1366x768 (overflows right by ~240-250px, truncates the objective sentence). After the developer fixes it, re-verify: (1) composer.right <= scene.right at 1440 and 1366 in every stage, (2) full objective 'Prepare a decision-ready supplier comparison.' is visible at Understand submitted state, (3) composer does not overlap DecisionBrief at Check. On mobile 390x844 the section renders in normal flow (height ~2786px, no sticky, no horizontal scroll) — desktop rail testids are absent by design; if mobile testids are added, expand tests.",
+  "rca_of_the_issue": "Framer-motion inlines a transform style on any element it animates. When the animation targets non-transform props (top, y), framer-motion still writes transform: 'none' or 'translateY(0px)' on the element, which overrides Tailwind utility classes that rely on transform (like -translate-x-1/2). The composer was authored as 'absolute left-1/2 -translate-x-1/2 w-[80%]' expecting Tailwind to counter-translate it back to the center, but framer-motion strips that transform, leaving the composer with left:50% and no counter-translation, causing a ~half-container rightward shift and clipping/truncation."
+}

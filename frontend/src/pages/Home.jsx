@@ -12,12 +12,14 @@ import Orbit from "@/components/home/Orbit";
 import VoiceDemo from "@/components/home/VoiceDemo";
 import CipherField from "@/components/home/CipherField";
 import { SECURITY_PRINCIPLES, WORK_ENTRIES, RESOURCES, COMPOSER_CHIPS } from "@/content/home";
+import NetSegment from "@/components/home/NetworkThread";
 
 const SecuritySection = () => (
   <section className="bg-black text-[#fbfaf7] relative overflow-clip" data-testid="security-section">
     <div className="absolute inset-0"><CipherField /></div>
     <div className="absolute inset-y-0 left-0 w-full lg:w-[58%] pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(0,0,0,.96) 0%, rgba(0,0,0,.9) 55%, rgba(0,0,0,.55) 80%, rgba(0,0,0,0) 100%)" }} aria-hidden="true" />
-    <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-44">
+    <NetSegment name="security" />
+    <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-44">
       <div className="max-w-xl relative">
         <div className="relative">
           <ChapterHead num="06" eyebrow="Security" title="Control is built into the work." body="Approvals, permissions, workspace separation, evidence and clear ownership are part of the operating model, not an add-on." dark />
@@ -38,8 +40,9 @@ const SecuritySection = () => (
 );
 
 const WorkSection = () => (
-  <section className="bg-[#fbfaf7] py-24 md:py-36 cv-auto" data-testid="work-section">
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+  <section className="bg-[#fbfaf7] py-24 md:py-36 cv-auto relative" data-testid="work-section">
+    <NetSegment name="work" />
+    <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
       <ChapterHead num="07" eyebrow="Selected work" title="Real work. Carefully built." body="AlterX builds practical systems around real business needs, from intelligent digital experiences to connected inventory and operational software." />
       <div className="border-b border-black/15">
         {WORK_ENTRIES.map((w, i) => (
@@ -63,8 +66,9 @@ const WorkSection = () => (
 );
 
 const ResourcesSection = () => (
-  <section className="bg-[#f3f0e9] py-24 md:py-36 cv-auto" data-testid="resources-section">
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+  <section className="bg-[#f3f0e9] py-24 md:py-36 cv-auto relative" data-testid="resources-section">
+    <NetSegment name="resources" />
+    <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
       <ChapterHead num="08" eyebrow="Resources" title="The system behind visible work." />
       <div className="border-b border-black/15">
         {RESOURCES.slice(0, 5).map((r, i) => (
@@ -89,7 +93,8 @@ const Composer = () => {
   return (
     <section className="bg-black text-[#fbfaf7] py-28 md:py-40 relative overflow-clip" data-testid="composer-section">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-dark)" }} aria-hidden="true" />
-      <div className="relative max-w-[900px] mx-auto px-6 md:px-10 text-center">
+      <NetSegment name="composer" />
+      <div className="relative z-10 max-w-[900px] mx-auto px-6 md:px-10 text-center">
         <Eyebrow dark className="justify-center mb-6">Start here</Eyebrow>
         <h2 className="ax-display text-3xl sm:text-4xl lg:text-[56px]">What should AlterX organize first?</h2>
         <p className="mt-5 text-white/60 max-w-xl mx-auto">Describe one business outcome. Start with the result, not the software.</p>

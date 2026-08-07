@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ORBIT_NODES } from "@/content/home";
 import { ChapterHead } from "@/components/kit";
 import { EASE } from "@/lib/anim";
+import NetSegment from "@/components/home/NetworkThread";
 
 const R = 240;
 const CX = 330, CY = 330;
@@ -22,8 +23,9 @@ export default function Orbit() {
 
   return (
     <section className="bg-black text-[#fbfaf7] py-24 md:py-36 relative cv-auto" data-testid="orbit-section">
+      <NetSegment name="orbit" />
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(255,77,10,.14) 0%, rgba(255,77,10,.05) 40%, rgba(0,0,0,0) 70%)" }} aria-hidden="true" />
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead
           num="04"
           eyebrow="Accountability orbit"

@@ -200,6 +200,13 @@ b, strong { font-weight: 600; }
 .ax-panel .ico-signal { opacity: 0; transition: opacity 0.35s var(--ax-ease); }
 .ax-panel:hover .ico-signal, .ax-panel:focus-within .ico-signal { opacity: 1; }
 
+/* product tiles — tile root owns pointer interaction */
+.productVisual, .productVisual svg { pointer-events: none; }
+
+/* engine story — human typing caret */
+.ax-caret { display: inline-block; width: 1px; height: 1em; background: #ff5a1f; margin-left: 2px; vertical-align: -0.14em; animation: axcaret 1s steps(1) infinite; }
+@keyframes axcaret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
 /* ---------- runway ---------- */
 .ax-runway-signal { transition: width 0.7s var(--ax-ease); }
 
