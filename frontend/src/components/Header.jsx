@@ -168,12 +168,20 @@ export default function Header() {
         <AnimatePresence>
           {activeMenu && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
+              initial={{ opacity: 0, y: -8, x: "-50%" }}
+              animate={{ opacity: 1, y: 0, x: "-50%" }}
+              exit={{ opacity: 0, y: -6, x: "-50%" }}
               transition={{ duration: 0.24, ease: EASE }}
-              className="hidden lg:block absolute left-1/2 -translate-x-1/2"
-              style={{ width: "min(1500px, calc(100vw - 48px))", top: "calc(var(--header-height) + 10px)" }}
+              className="megaMenu hidden lg:block"
+              style={{
+                position: "fixed",
+                top: "calc(var(--header-height) + 10px)",
+                left: "50%",
+                right: "auto",
+                width: "min(1500px, calc(100vw - 48px))",
+                maxHeight: "calc(100svh - var(--header-height) - 30px)",
+                margin: 0,
+              }}
               onMouseEnter={() => clearTimeout(leaveTimer.current)}
               onMouseLeave={leave}
               role="region"
