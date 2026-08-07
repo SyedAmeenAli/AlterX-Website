@@ -23,6 +23,9 @@ Build the complete AlterX public website + a frontend-only "Try Alter Engine" pr
 ## What's implemented (June 2026)
 All 29 public routes + 11 try routes, sitemap.xml, robots.txt, per-page meta/canonical (usePageMeta). Verified via screenshots: hero, mega menu, panels hover, sticky story, runway, orbit, voice (play/approval/outcome), security mask, footer, contact validation + email fallback, legal, 404, full mission lifecycle, tour, command bar, inspector, workflows, mobile (390px, no overflow). `yarn build` passes.
 
+## Bug fixes (June 2026)
+- Header mega-menu centering: menu was opening shifted RIGHT because Tailwind `-translate-x-1/2` was overridden by Framer Motion's inline `transform: translateY(...)`. Fix (Header.jsx ~L168-210): single shared `motion.div` with `className="megaMenu hidden lg:block"`, `position:fixed; top:calc(var(--header-height)+10px); left:50%; right:auto; width:min(1500px, calc(100vw-48px)); maxHeight:calc(100svh - var(--header-height) - 30px)`, and Framer Motion `x:"-50%"` on initial/animate/exit so centering composes with the y slide instead of being clobbered. Verified by testing_agent (iteration_1.json): 0.00px diff to viewport center for all 6 nav items at 1440/1366/1280px; outer bounds fully stationary on item switch. NAV key for Alter Engine is `engine` (testid `nav-trigger-engine`).
+
 ## Remaining / backlog
 - P1: Supply final hero video assets (webm/mp4/poster) if desired; social URL env vars; real contact endpoint; legal [TO CONFIRM] fields (registration no., grievance officer) are release blockers per drafts.
 - P1: Playwright test suite + axe pass (manual keyboard/reduced-motion honored in code; not CI-automated).
