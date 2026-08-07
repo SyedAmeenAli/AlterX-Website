@@ -94,10 +94,10 @@ const WorkStrip = ({ step, status, delay }) => {
   const bar = running ? C.orange : complete ? C.mint : step.tint;
   return (
     <motion.div
-      className="absolute -translate-x-1/2 -translate-y-1/2 w-[150px]"
+      className="absolute w-[150px]"
       style={{ left: `${step.x}%`, top: `${step.y}%` }}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: status === "upcoming" ? 0.4 : 1, y: 0 }}
+      initial={{ opacity: 0, x: "-50%", y: "calc(-50% + 10px)" }}
+      animate={{ opacity: status === "upcoming" ? 0.4 : 1, x: "-50%", y: "-50%" }}
       transition={{ duration: 0.4, delay, ease: EASE }}
     >
       <div
@@ -179,8 +179,8 @@ const ApprovalSheet = ({ show, approved }) => (
   <AnimatePresence>
     {show && (
       <motion.div
-        className="absolute right-[3%] top-1/2 -translate-y-1/2 w-[46%] max-w-[320px] z-30"
-        initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }}
+        className="absolute right-[3%] top-1/2 w-[46%] max-w-[320px] z-30"
+        initial={{ opacity: 0, x: 30, y: "-50%" }} animate={{ opacity: 1, x: 0, y: "-50%" }} exit={{ opacity: 0, x: 30, y: "-50%" }}
         transition={{ duration: 0.45, ease: EASE }} data-testid="story-approval-sheet"
       >
         <div className="rounded-[10px] border p-5 bg-[#0e0d0c]/95 backdrop-blur-sm" style={{ borderColor: "rgba(233,173,79,0.4)" }}>
@@ -214,8 +214,8 @@ const DecisionBrief = ({ checkPhase }) => {
   const needsReview = checkPhase >= 1 && checkPhase < 3;
   return (
     <motion.div
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[74%] max-w-[440px] z-20"
-      initial={{ opacity: 0, y: 14, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+      className="absolute left-1/2 top-1/2 w-[74%] max-w-[440px] z-20"
+      initial={{ opacity: 0, x: "-50%", y: "-50%", scale: 0.98 }} animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
       transition={{ duration: 0.5, ease: EASE }} data-testid="story-brief"
     >
       <div className="rounded-[10px] border border-white/12 bg-[#0c0c0c]/95 backdrop-blur-sm overflow-hidden">
@@ -311,9 +311,9 @@ const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, reduce }
 
       {/* objective composer — persistent */}
       <motion.div
-        className="absolute left-1/2 -translate-x-1/2 w-[80%] z-20"
+        className="absolute left-[10%] w-[80%] z-20"
         initial={false}
-        animate={{ top: submitted ? "5%" : "50%", y: submitted ? "0%" : "-50%" }}
+        animate={{ top: submitted ? "5%" : "44%" }}
         transition={{ duration: 0.6, ease: EASE }}
       >
         <div className="rounded-[9px] border border-white/12 bg-white/[.05] backdrop-blur-[3px] px-4 py-3 flex items-center gap-3">
