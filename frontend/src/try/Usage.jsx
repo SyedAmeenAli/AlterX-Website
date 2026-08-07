@@ -20,19 +20,19 @@ export default function Usage() {
       <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/12 border border-white/12 mb-10">
         {stats.map(([k, v]) => (
           <div key={k} className="bg-[#090909] p-5" data-testid={`usage-stat-${k.toLowerCase().replace(/\s/g, "-")}`}>
-            <p className="ax-display text-3xl text-[#ff5a1f]">{v}</p>
+            <p className="ax-display text-3xl text-[#ff4d0a]">{v}</p>
             <p className="text-[12px] text-white/55 mt-1">{k}</p>
           </div>
         ))}
       </div>
-      <h2 className="font-mono-ax text-[10px] uppercase tracking-wider text-white/45 mb-4">Missions by state</h2>
+      <h2 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/45 mb-4">Missions by state</h2>
       {missions.length === 0 ? (
         <p className="text-white/40 text-[13px]" data-testid="usage-empty">No activity yet.</p>
       ) : (
         <div className="space-y-2.5 max-w-lg">
           {Object.entries(byState).map(([state, count]) => (
             <div key={state} className="flex items-center gap-4" data-testid={`usage-state-${state}`}>
-              <span className="font-mono-ax text-[10px] uppercase text-white/55 w-[90px]">{state}</span>
+              <span className="text-[11px] font-medium uppercase text-white/55 w-[90px]">{state}</span>
               <div className="flex-1 h-3 bg-white/8">
                 <div className="h-full" style={{ width: `${(count / max) * 100}%`, background: "var(--ax-grad-orange)" }} />
               </div>

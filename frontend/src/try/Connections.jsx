@@ -19,10 +19,10 @@ export default function Connections() {
         {INTEGRATION_CATEGORIES.map((c) => {
           const on = connected.includes(c.key);
           return (
-            <div key={c.key} className={`border p-5 ${on ? "border-[#ff5a1f]/50" : "border-white/12"}`} data-testid={`connection-card-${c.key}`}>
+            <div key={c.key} className={`border p-5 ${on ? "border-[#ff4d0a]/50" : "border-white/12"}`} data-testid={`connection-card-${c.key}`}>
               <div className="flex items-center justify-between mb-2">
-                <p className="font-bold text-[15px] flex items-center gap-2"><Plug size={14} className={on ? "text-[#ff5a1f]" : "text-white/40"} aria-hidden="true" />{c.label}</p>
-                <button onClick={() => toggle(c.key)} className={`text-[11px] font-bold px-3 py-1.5 ${on ? "border border-[#ff5a1f]/60 text-[#ff5a1f]" : "bg-[#ff5a1f] text-black"}`} data-testid={`connection-toggle-${c.key}`}>
+                <p className="font-bold text-[15px] flex items-center gap-2"><Plug size={14} className={on ? "text-[#ff4d0a]" : "text-white/40"} aria-hidden="true" />{c.label}</p>
+                <button onClick={() => toggle(c.key)} className={`text-[11px] font-bold px-3 py-1.5 ${on ? "border border-[#ff4d0a]/60 text-[#ff4d0a]" : "bg-[#ff4d0a] text-black"}`} data-testid={`connection-toggle-${c.key}`}>
                   {on ? "Disconnect" : "Connect"}
                 </button>
               </div>
@@ -30,12 +30,12 @@ export default function Connections() {
               <dl className="space-y-1.5 text-[12px]">
                 {[["Scope", c.permissions], ["Permissions", c.triggers], ["Available actions", c.actions], ["Approval", c.approval], ["Evidence", c.evidence]].map(([k, v]) => (
                   <div key={k} className="grid grid-cols-[110px_1fr] gap-2 border-t border-white/10 pt-1.5">
-                    <dt className="font-mono-ax text-[9px] uppercase tracking-wider text-white/40 pt-0.5">{k}</dt>
+                    <dt className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40 pt-0.5">{k}</dt>
                     <dd className="text-white/70">{v}</dd>
                   </div>
                 ))}
               </dl>
-              {on && <p className="mt-3 flex items-center gap-1.5 text-[11px] text-[#ff5a1f]" data-testid={`connection-status-${c.key}`}><Check size={11} aria-hidden="true" /> Connected in this demonstration</p>}
+              {on && <p className="mt-3 flex items-center gap-1.5 text-[11px] text-[#ff4d0a]" data-testid={`connection-status-${c.key}`}><Check size={11} aria-hidden="true" /> Connected in this demonstration</p>}
             </div>
           );
         })}

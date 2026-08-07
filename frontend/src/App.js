@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useLenis } from "@/lib/anim";
 
 import Home from "@/pages/Home";
 import AlterEngine from "@/pages/AlterEngine";
@@ -11,6 +10,7 @@ import Products from "@/pages/Products";
 import CognitiveAI from "@/pages/CognitiveAI";
 import Solutions from "@/pages/Solutions";
 import SolutionDetail from "@/pages/SolutionDetail";
+import CustomWorkflows from "@/pages/CustomWorkflows";
 import Developers from "@/pages/Developers";
 import Integrations from "@/pages/Integrations";
 import Security from "@/pages/Security";
@@ -51,7 +51,6 @@ function ScrollToTop() {
 }
 
 function PublicLayout() {
-  useLenis();
   return (
     <>
       <Header />
@@ -75,6 +74,8 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/cognitive-ai" element={<CognitiveAI />} />
           <Route path="/solutions" element={<Solutions />} />
+          <Route path="/solutions/cognitive-ai" element={<CognitiveAI />} />
+          <Route path="/solutions/custom-workflows" element={<CustomWorkflows />} />
           <Route path="/solutions/:slug" element={<SolutionDetail />} />
           <Route path="/developers" element={<Developers />} />
           <Route path="/integrations" element={<Integrations />} />

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { usePageMeta, Reveal } from "@/lib/anim";
-import { ChapterHead, EditorialRow, Marquee, Eyebrow, FillLink } from "@/components/kit";
+import { ChapterHead, EditorialRow, Eyebrow, FillLink } from "@/components/kit";
+import { ThreadPath } from "@/components/thread";
 import HeroX from "@/components/home/HeroX";
 import ProductPanels from "@/components/home/ProductPanels";
 import EngineStory from "@/components/home/EngineStory";
@@ -10,7 +11,7 @@ import Runway from "@/components/home/Runway";
 import Orbit from "@/components/home/Orbit";
 import VoiceDemo from "@/components/home/VoiceDemo";
 import CipherField from "@/components/home/CipherField";
-import { SECURITY_PRINCIPLES, WORK_ENTRIES, RESOURCES, COMPOSER_CHIPS, STAGES } from "@/content/home";
+import { SECURITY_PRINCIPLES, WORK_ENTRIES, RESOURCES, COMPOSER_CHIPS } from "@/content/home";
 
 const SecuritySection = () => (
   <section className="bg-black text-[#fbfaf7] relative overflow-clip" data-testid="security-section">
@@ -43,13 +44,14 @@ const WorkSection = () => (
       <div className="border-b border-black/15">
         {WORK_ENTRIES.map((w, i) => (
           <Reveal key={w.slug} delay={i * 0.06}>
-            <Link to={`/work/${w.slug}`} className="ax-fill group grid md:grid-cols-[70px_200px_1fr_auto] items-center gap-4 md:gap-8 py-8 px-4 md:px-6 border-t border-black/15 text-[#090909]" data-testid={`work-row-${w.slug}`}>
-              <span className="font-mono-ax text-xs opacity-50">{String(i + 1).padStart(2, "0")}</span>
+            <Link to={`/work/${w.slug}`} className="ax-fill group grid md:grid-cols-[200px_1fr_auto] items-center gap-4 md:gap-8 py-8 px-4 md:px-6 border-t border-black/15 text-[#090909]" data-testid={`work-row-${w.slug}`}>
               <span className="ax-eyebrow opacity-60 hidden md:block">{w.category}</span>
               <span className="min-w-0">
-                <span className="block text-xl md:text-[26px] font-bold tracking-tight leading-snug">{w.title}</span>
-                <span className="block text-sm opacity-60 mt-1.5 max-w-2xl">{w.description}</span>
-                <span className="inline-block font-mono-ax text-[10px] uppercase tracking-wider mt-3 border border-current px-2 py-0.5 opacity-60">{w.label}</span>
+                <span className="block text-xl md:text-[26px] font-semibold tracking-tight leading-snug">{w.title}</span>
+                <span className="block text-sm opacity-65 mt-1.5 max-w-2xl">{w.description}</span>
+                <span className="inline-flex items-center gap-2 text-[12px] font-medium mt-3 opacity-60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d0a] inline-block" aria-hidden="true" />{w.label}
+                </span>
               </span>
               <ArrowUpRight size={22} className="ax-arrow shrink-0" aria-hidden="true" />
             </Link>
@@ -88,7 +90,7 @@ const Composer = () => {
     <section className="bg-black text-[#fbfaf7] py-28 md:py-40 relative overflow-clip" data-testid="composer-section">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-dark)" }} aria-hidden="true" />
       <div className="relative max-w-[900px] mx-auto px-6 md:px-10 text-center">
-        <Eyebrow dark className="justify-center mb-6">09 · Start here</Eyebrow>
+        <Eyebrow dark className="justify-center mb-6">Start here</Eyebrow>
         <h2 className="ax-display text-3xl sm:text-4xl lg:text-[56px]">What should AlterX organize first?</h2>
         <p className="mt-5 text-white/60 max-w-xl mx-auto">Describe one business outcome. Start with the result, not the software.</p>
         <form
@@ -101,14 +103,17 @@ const Composer = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Describe the outcome you need..."
-            className="flex-1 bg-[#090909] border border-white/20 px-5 py-4 text-[15px] text-white placeholder:text-white/35 focus:border-[#ff5a1f] focus:outline-none"
+            className="flex-1 bg-[#090909] border border-white/20 px-5 py-4 text-[15px] text-white placeholder:text-white/35 focus:border-[#ff4d0a] focus:outline-none"
             data-testid="composer-input"
           />
           <button type="submit" className="btn-primary justify-center" data-testid="composer-submit">
             Open in Alter Engine <ArrowRight size={15} className="ax-arrow" aria-hidden="true" />
           </button>
         </form>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <svg className="max-w-2xl mx-auto w-full h-3 -mt-1" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true">
+          <ThreadPath d="M0 6 L600 6" strokeWidth={2} duration={1.1} />
+        </svg>
+        <div className="mt-5 flex flex-wrap justify-center gap-2">
           {COMPOSER_CHIPS.map((c) => (
             <button key={c} onClick={() => go(c)} className="ax-fill text-[13px] font-semibold text-white/60 border border-white/15 px-4 py-2" data-testid={`composer-chip-${COMPOSER_CHIPS.indexOf(c)}`}>
               {c}
@@ -131,7 +136,6 @@ export default function Home() {
       <Orbit />
       <VoiceDemo />
       <SecuritySection />
-      <Marquee items={STAGES.map((s) => s.toUpperCase())} />
       <WorkSection />
       <ResourcesSection />
       <Composer />

@@ -32,7 +32,7 @@ export default function Integrations() {
                 <dl className="space-y-2 text-[13px]">
                   {[["Permissions", c.permissions], ["Triggers", c.triggers], ["Actions", c.actions], ["Approval", c.approval], ["Evidence", c.evidence]].map(([k, v]) => (
                     <div key={k} className="grid grid-cols-[100px_1fr] gap-3 border-t border-black/10 pt-2">
-                      <dt className="font-mono-ax text-[10px] uppercase tracking-wider text-[#bd3510] pt-0.5">{k}</dt>
+                      <dt className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#c9360a] pt-0.5">{k}</dt>
                       <dd className="text-black/70">{v}</dd>
                     </div>
                   ))}

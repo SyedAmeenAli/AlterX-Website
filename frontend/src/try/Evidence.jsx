@@ -21,7 +21,7 @@ export default function Evidence() {
               <button onClick={() => setOpen(open === m.id ? null : m.id)} className="w-full flex items-center gap-4 px-5 py-4 text-left" aria-expanded={open === m.id} data-testid={`evidence-toggle-${m.id}`}>
                 <span className="font-mono-ax text-[11px] text-white/50">{m.id}</span>
                 <span className="flex-1 text-[14px] font-bold text-white/85 truncate">{m.objective}</span>
-                <span className="font-mono-ax text-[10px] text-white/40">{m.history.length} events</span>
+                <span className="text-[11px] text-white/40">{m.history.length} events</span>
                 <ChevronDown size={14} className={`text-white/40 transition-transform ${open === m.id ? "rotate-180" : ""}`} aria-hidden="true" />
               </button>
               {open === m.id && (
@@ -30,13 +30,13 @@ export default function Evidence() {
                     {m.history.map((h, i) => (
                       <div key={i} className="flex gap-3 text-[12.5px]" data-testid={`evidence-event-${m.id}-${i}`}>
                         <span className="font-mono-ax text-[10px] text-white/35 w-[130px] shrink-0">{new Date(h.ts).toLocaleString()}</span>
-                        <span className={`font-mono-ax text-[9px] uppercase w-[70px] shrink-0 ${h.type === "failure" ? "text-[#ff8a63]" : h.type === "decision" || h.type === "approval" ? "text-[#ff5a1f]" : "text-white/45"}`}>{h.type}</span>
+                        <span className={`text-[10px] font-medium uppercase w-[70px] shrink-0 ${h.type === "failure" ? "text-[#ff8a63]" : h.type === "decision" || h.type === "approval" ? "text-[#ff4d0a]" : "text-white/45"}`}>{h.type}</span>
                         <span className="text-white/70">{h.label}{h.detail && <span className="text-white/40"> — {h.detail}</span>}</span>
                       </div>
                     ))}
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => exportEvidence(m)} className="bg-[#ff5a1f] text-black text-[12px] font-bold px-3.5 py-1.5 flex items-center gap-1.5" data-testid={`evidence-export-${m.id}`}>
+                    <button onClick={() => exportEvidence(m)} className="bg-[#ff4d0a] text-black text-[12px] font-bold px-3.5 py-1.5 flex items-center gap-1.5" data-testid={`evidence-export-${m.id}`}>
                       <Download size={11} aria-hidden="true" /> Export JSON
                     </button>
                     <Link to={`/try-alter-engine/missions/${m.id}`} className="border border-white/20 text-white/70 text-[12px] px-3.5 py-1.5">Open mission</Link>

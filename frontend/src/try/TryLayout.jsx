@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Outlet, NavLink, Link, useLocation } from "react-router-dom";
-import { Plus, ListChecks, ShieldCheck, Repeat, Plug, BookOpen, FileCheck, BarChart3, Settings, HelpCircle, PanelLeft, ChevronDown } from "lucide-react";
+import { Plus, ListChecks, ShieldCheck, Repeat, Plug, BookOpen, FileCheck, BarChart3, Settings, HelpCircle, ChevronDown, Search } from "lucide-react";
 import CommandBar from "@/try/CommandBar";
 import Tour from "@/try/Tour";
 import { tourDone } from "@/lib/store";
-import { DemoBadge } from "@/components/kit";
 
 const NAV_ITEMS = [
   { to: "/try-alter-engine/new", label: "New mission", icon: Plus, key: "new" },
@@ -19,7 +18,7 @@ const NAV_ITEMS = [
 ];
 
 export default function TryLayout() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
@@ -50,35 +49,36 @@ export default function TryLayout() {
   return (
     <div className="min-h-screen bg-[#090909] text-[#fbfaf7] flex flex-col" style={{ fontSize: "15px" }}>
       <a href="#try-main" className="ax-skip">Skip to content</a>
-      <header className="h-[56px] shrink-0 border-b border-white/12 bg-black flex items-center justify-between px-4 gap-4 sticky top-0 z-[60]" data-testid="try-topbar">
+
+      <header className="h-[56px] shrink-0 border-b border-white/10 bg-black flex items-center justify-between px-4 gap-4 sticky top-0 z-[60]" data-testid="try-topbar">
         <div className="flex items-center gap-3 min-w-0">
-          <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 text-white/60 hover:text-[#ff5a1f] transition-colors" aria-label="Toggle sidebar" data-testid="try-sidebar-toggle">
-            <PanelLeft size={17} />
-          </button>
           <Link to="/" className="shrink-0" aria-label="AlterX home">
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }} className="text-[15px]">ALTER<span className="text-[#ff5a1f]">X</span></span>
+            <span className="text-[16px] font-semibold tracking-[-0.03em]">ALTER<span className="text-[#ff4d0a]">X</span></span>
           </Link>
-          <span className="text-white/25">/</span>
-          <span className="font-mono-ax text-[11px] text-white/55 truncate" data-testid="try-workspace-label">
+          <span className="text-white/20">/</span>
+          <span className="text-[13px] font-medium text-white/60 truncate" data-testid="try-workspace-label">
             {localStorage.getItem("ax_workspace_name") || "Demo workspace"}
           </span>
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-medium text-white/40 ml-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d0a] inline-block" aria-hidden="true" />
+            Demo
+          </span>
         </div>
-        <DemoBadge className="hidden md:inline-flex" />
         <div className="flex items-center gap-2">
-          <button onClick={() => setCmdOpen(true)} className="hidden sm:flex items-center gap-2 border border-white/15 px-3 py-1.5 text-[12px] text-white/50 hover:border-[#ff5a1f]/50 transition-colors" data-testid="try-search-trigger">
-            Search <kbd className="font-mono-ax text-[10px] border border-white/20 px-1">⌘K</kbd>
+          <button onClick={() => setCmdOpen(true)} className="hidden sm:flex items-center gap-2.5 border border-white/12 rounded-[4px] px-3 py-1.5 text-[12px] text-white/50 hover:border-[#ff4d0a]/50 transition-colors" data-testid="try-search-trigger">
+            <Search size={12} aria-hidden="true" /> Search <kbd className="font-mono-ax text-[10px] border border-white/15 rounded-[3px] px-1">⌘K</kbd>
           </button>
-          <button onClick={() => setTourOpen(true)} className="p-1.5 text-white/60 hover:text-[#ff5a1f] transition-colors" aria-label="Start product tour" data-testid="try-tour-btn" data-tour="help">
+          <button onClick={() => setTourOpen(true)} className="p-1.5 text-white/60 hover:text-[#ff4d0a] transition-colors" aria-label="Start product tour" data-testid="try-tour-btn" data-tour="help">
             <HelpCircle size={17} />
           </button>
           <div className="relative">
             <button onClick={() => setUserOpen(!userOpen)} className="flex items-center gap-1.5 pl-1" aria-haspopup="true" aria-expanded={userOpen} data-testid="try-user-menu">
-              <span className="w-7 h-7 bg-[#ff5a1f] text-black font-bold text-[12px] flex items-center justify-center">DV</span>
+              <span className="w-7 h-7 rounded-[4px] bg-[#ff4d0a] text-black font-semibold text-[12px] flex items-center justify-center">DV</span>
               <ChevronDown size={13} className="text-white/50" />
             </button>
             {userOpen && (
-              <div className="absolute right-0 top-full mt-2 w-52 bg-black border border-white/15 py-1 z-50" role="menu">
-                <p className="px-4 py-2 text-[12px] text-white/45 border-b border-white/10">Demo visitor · illustrative session</p>
+              <div className="absolute right-0 top-full mt-2 w-64 bg-black border border-white/15 rounded-[4px] py-1 z-50" role="menu">
+                <p className="px-4 py-2.5 text-[12px] text-white/50 border-b border-white/10 leading-relaxed">This is an illustrative frontend demonstration. It does not execute external actions.</p>
                 <Link to="/try-alter-engine/settings" className="block px-4 py-2 text-[13px] hover:bg-white/5" role="menuitem">Settings</Link>
                 <Link to="/" className="block px-4 py-2 text-[13px] hover:bg-white/5" role="menuitem">Exit to website</Link>
               </div>
@@ -86,19 +86,32 @@ export default function TryLayout() {
           </div>
         </div>
       </header>
+
       <div className="flex flex-1 min-h-0">
-        <nav className={`${collapsed ? "w-[52px]" : "w-[210px]"} shrink-0 border-r border-white/12 bg-black transition-[width] duration-200 py-3 flex flex-col sticky top-[56px] h-[calc(100vh-56px)] overflow-y-auto z-[50]`} aria-label="Application" data-testid="try-sidebar">
+        <nav
+          className={`${expanded ? "w-[236px]" : "w-[68px]"} shrink-0 border-r border-white/10 bg-black transition-[width] duration-300 py-3 flex flex-col sticky top-[56px] h-[calc(100vh-56px)] overflow-y-auto overflow-x-hidden z-[50]`}
+          aria-label="Application"
+          data-testid="try-sidebar"
+          onMouseEnter={() => setExpanded(true)}
+          onMouseLeave={() => setExpanded(false)}
+          onFocus={() => setExpanded(true)}
+          onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setExpanded(false); }}
+        >
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.key}
               to={item.to}
               data-tour={`nav-${item.key}`}
-              className={({ isActive }) => `flex items-center gap-3 px-4 py-2.5 text-[13px] font-semibold border-l-2 transition-colors ${isActive ? "border-[#ff5a1f] text-[#ff5a1f] bg-white/[.04]" : "border-transparent text-white/60 hover:text-white"}`}
+              className={({ isActive }) =>
+                `flex items-center gap-3.5 mx-2.5 my-0.5 px-[13px] py-2.5 rounded-[4px] text-[13.5px] font-medium whitespace-nowrap transition-colors ${
+                  isActive ? "bg-[#ff4d0a] text-black" : "text-white/60 hover:text-white hover:bg-white/[.05]"
+                }`
+              }
               data-testid={`try-nav-${item.key}`}
               title={item.label}
             >
-              <item.icon size={16} className="shrink-0" aria-hidden="true" />
-              {!collapsed && item.label}
+              <item.icon size={17} className="shrink-0" aria-hidden="true" />
+              <span className={`transition-opacity duration-200 ${expanded ? "opacity-100" : "opacity-0"}`}>{item.label}</span>
             </NavLink>
           ))}
         </nav>
@@ -106,7 +119,7 @@ export default function TryLayout() {
           <Outlet />
         </main>
       </div>
-      <CommandBar open={cmdOpen} onClose={() => setCmdOpen(false)} onStartTour={() => { setCmdOpen(false); setTourOpen(true); }} onToggleSidebar={() => setCollapsed((c) => !c)} />
+      <CommandBar open={cmdOpen} onClose={() => setCmdOpen(false)} onStartTour={() => { setCmdOpen(false); setTourOpen(true); }} onToggleSidebar={() => setExpanded((c) => !c)} />
       {tourOpen && <Tour onClose={() => setTourOpen(false)} />}
     </div>
   );

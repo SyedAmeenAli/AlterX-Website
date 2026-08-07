@@ -26,7 +26,7 @@ export default function Products() {
             {STAGES.map((s, i) => (
               <Reveal key={s} delay={i * 0.06}>
                 <div className="bg-[#f3f0e9] p-6 h-full" data-testid={`lifecycle-stage-${s.toLowerCase()}`}>
-                  <p className="font-mono-ax text-[11px] text-[#bd3510] mb-2">0{i + 1}</p>
+                  <p className="text-[12px] font-medium text-[#c9360a] mb-2">0{i + 1}</p>
                   <p className="text-lg font-bold tracking-tight">{s}</p>
                 </div>
               </Reveal>

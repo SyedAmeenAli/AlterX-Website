@@ -22,7 +22,7 @@ export default function Orbit() {
 
   return (
     <section className="bg-black text-[#fbfaf7] py-24 md:py-36 relative cv-auto" data-testid="orbit-section">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(255,90,31,.14) 0%, rgba(241,90,36,.05) 40%, rgba(0,0,0,0) 70%)" }} aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(255,77,10,.14) 0%, rgba(255,77,10,.05) 40%, rgba(0,0,0,0) 70%)" }} aria-hidden="true" />
       <div className="relative max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead
           num="04"
@@ -52,8 +52,8 @@ export default function Orbit() {
                       <motion.g animate={{ rotate: -rotation }} transition={{ duration: 0.7, ease: EASE }}>
                         <circle
                           r="26"
-                          fill={isA ? "#ff5a1f" : "#090909"}
-                          stroke={isA ? "#ff5a1f" : seen ? "rgba(255,90,31,.45)" : "rgba(255,255,255,.25)"}
+                          fill={isA ? "#ff4d0a" : "#090909"}
+                          stroke={isA ? "#ff4d0a" : seen ? "rgba(255,77,10,.45)" : "rgba(255,255,255,.25)"}
                           strokeWidth="1.5"
                           className="cursor-pointer"
                           onClick={() => pick(i)}
@@ -64,18 +64,29 @@ export default function Orbit() {
                           data-testid={`orbit-node-${n.key}`}
                         />
                         <text textAnchor="middle" dy="4" fontSize="12" fontWeight="700" fill={isA ? "#000" : "#fbfaf7"} pointerEvents="none">{i + 1}</text>
-                        <text textAnchor="middle" y="46" fontSize="12" fontWeight="600" fill={isA ? "#ff5a1f" : "rgba(255,255,255,.55)"} pointerEvents="none">{n.label}</text>
+                        <text textAnchor="middle" y="46" fontSize="12" fontWeight="600" fill={isA ? "#ff4d0a" : "rgba(255,255,255,.55)"} pointerEvents="none">{n.label}</text>
                       </motion.g>
                     </g>
                   );
                 })}
               </motion.g>
-              <line x1={CX + 32} y1={CY} x2={CX + R - 28} y2={CY} stroke="#ff5a1f" strokeWidth="1.5" strokeDasharray="3 4" />
+              <motion.path
+                key={active}
+                d="M 542 217.4 A 240 240 0 0 1 542 442.6"
+                fill="none"
+                stroke="#ff4d0a"
+                strokeWidth="2.5"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.7, ease: EASE }}
+                aria-hidden="true"
+              />
+              <line x1={CX + 32} y1={CY} x2={CX + R - 28} y2={CY} stroke="#ff4d0a" strokeWidth="1.5" strokeDasharray="3 4" />
               <g>
                 <circle cx={CX} cy={CY} r="58" fill="#090909" stroke="rgba(255,255,255,.2)" strokeWidth="1.5" />
-                <circle cx={CX} cy={CY} r="46" fill="none" stroke="rgba(255,90,31,.5)" strokeWidth="1" />
-                <path d={`M ${CX - 14} ${CY + 14} L ${CX + 14} ${CY - 14} M ${CX - 14} ${CY - 14} L ${CX + 14} ${CY + 14}`} stroke="#ff5a1f" strokeWidth="3" />
-                <text x={CX} y={CY + 34} textAnchor="middle" fontSize="8" fill="rgba(255,255,255,.5)" fontFamily="JetBrains Mono">{ORBIT_NODES[active].key.toUpperCase()}</text>
+                <circle cx={CX} cy={CY} r="46" fill="none" stroke="rgba(255,77,10,.5)" strokeWidth="1" />
+                <path d={`M ${CX - 14} ${CY + 14} L ${CX + 14} ${CY - 14} M ${CX - 14} ${CY - 14} L ${CX + 14} ${CY + 14}`} stroke="#ff4d0a" strokeWidth="3" />
+                <text x={CX} y={CY + 34} textAnchor="middle" fontSize="9" fontWeight="500" fill="rgba(255,255,255,.55)" fontFamily="Hanken Grotesk" letterSpacing="0.12em">{ORBIT_NODES[active].label.toUpperCase()}</text>
               </g>
             </svg>
           </div>
@@ -86,12 +97,12 @@ export default function Orbit() {
                   key={n.key}
                   onClick={() => pick(i)}
                   onMouseEnter={() => pick(i)}
-                  className={`ax-fill w-full text-left px-4 py-3 flex items-center gap-3 border-l-2 ${i === active ? "border-[#ff5a1f] text-[#fbfaf7]" : "border-white/10 text-white/50"}`}
+                  className={`ax-fill w-full text-left px-4 py-3 flex items-center gap-3 border-l-2 ${i === active ? "border-[#ff4d0a] text-[#fbfaf7]" : "border-white/10 text-white/50"}`}
                   data-active={i === active}
                   data-testid={`orbit-list-${n.key}`}
                 >
-                  <span className="font-mono-ax text-[10px]">{i + 1}</span>
-                  <span className="font-bold text-[16px] tracking-tight">{n.label}</span>
+                  <span className="text-[12px] font-medium opacity-70">{i + 1}</span>
+                  <span className="font-semibold text-[16px] tracking-tight">{n.label}</span>
                 </button>
               ))}
             </div>

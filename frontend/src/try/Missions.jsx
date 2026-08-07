@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { listMissions, getScenario } from "@/lib/store";
 
 const STATE_LABEL = { clarify: "Understand", plan: "Plan", approval: "Approve", run: "Act", failure: "Recovery", verify: "Check", complete: "Complete", stopped: "Stopped" };
-const STATE_COLOR = { complete: "text-white/50 border-white/20", stopped: "text-white/40 border-white/15" };
+const STATE_COLOR = { complete: "text-white/50", stopped: "text-white/40" };
 
 export default function Missions() {
   const missions = listMissions();
@@ -35,7 +35,7 @@ export default function Missions() {
                   <span className="block text-[11px] text-white/40 mt-0.5">Scenario: {sc.title} · {new Date(m.createdAt).toLocaleString()}</span>
                 </span>
                 <span className="text-[11px] text-white/45 hidden md:block">{m.history.length} events</span>
-                <span className={`font-mono-ax text-[10px] uppercase tracking-wider border px-2 py-1 text-center ${STATE_COLOR[m.state] || "text-[#ff5a1f] border-[#ff5a1f]/40"}`}>
+                <span className={`text-[11px] font-medium uppercase tracking-[0.14em] text-right ${STATE_COLOR[m.state] || "text-[#ff8a3d]"}`}>
                   {STATE_LABEL[m.state] || m.state}
                 </span>
               </Link>

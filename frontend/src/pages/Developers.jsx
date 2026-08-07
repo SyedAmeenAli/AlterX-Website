@@ -17,7 +17,7 @@ export default function Developers() {
       />
       <section className="bg-[#fbfaf7] pb-24">
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-          <p className="font-mono-ax text-[11px] uppercase tracking-wider text-[#bd3510] border border-[#bd3510]/40 inline-block px-3 py-1.5 mb-14" data-testid="dev-managed-notice">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#c9360a] border border-[#c9360a]/40 inline-block px-3 py-1.5 mb-14" data-testid="dev-managed-notice">
             Conceptual preview — API access is managed. No public SDK or endpoints are published yet.
           </p>
           <div className="space-y-16">
@@ -25,13 +25,13 @@ export default function Developers() {
               <Reveal key={s.id}>
                 <div id={s.id} className="grid lg:grid-cols-[340px_1fr] gap-8 border-t border-black/15 pt-10" data-testid={`dev-section-${s.id}`}>
                   <div>
-                    <p className="font-mono-ax text-[11px] text-[#bd3510] mb-2">{String(i + 1).padStart(2, "0")}</p>
+                    <p className="text-[12px] font-medium text-[#c9360a] mb-2">{String(i + 1).padStart(2, "0")}</p>
                     <h2 className="text-2xl font-bold tracking-tight">{s.t}</h2>
                   </div>
                   <div>
                     <p className="text-[16px] text-black/70 max-w-2xl">{s.d}</p>
                     {s.code && (
-                      <pre className="mt-6 bg-black text-white/85 p-6 overflow-x-auto text-[13px] font-mono-ax leading-relaxed border-l-2 border-[#ff5a1f]"><code>{s.code}</code></pre>
+                      <pre className="mt-6 bg-black text-white/85 p-6 overflow-x-auto text-[13px] font-mono-ax leading-relaxed border-l-2 border-[#ff4d0a]"><code>{s.code}</code></pre>
                     )}
                   </div>
                 </div>

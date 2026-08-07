@@ -29,7 +29,7 @@ export default function Careers() {
             <div className="bg-black text-[#fbfaf7] p-8">
               <h2 className="text-xl font-bold tracking-tight mb-2">Disciplines</h2>
               <ul className="text-[15px] text-white/70 space-y-1.5 mt-3">
-                {DISCIPLINES.map((d) => <li key={d} className="border-l-2 border-[#ff5a1f] pl-3">{d}</li>)}
+                {DISCIPLINES.map((d) => <li key={d} className="border-l-2 border-[#ff4d0a] pl-3">{d}</li>)}
               </ul>
             </div>
           </div>
@@ -47,7 +47,7 @@ export default function Careers() {
             <div className="border-b border-black/15">
               {OPEN_ROLES.map((r, i) => (
                 <div key={r.title} className="grid md:grid-cols-[70px_1fr_auto] gap-4 py-6 border-t border-black/15">
-                  <span className="font-mono-ax text-xs opacity-50">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[12px] font-medium opacity-50">{String(i + 1).padStart(2, "0")}</span>
                   <div><p className="text-xl font-bold">{r.title}</p><p className="text-sm text-black/60">{r.discipline} · {r.location}</p></div>
                   <FillLink to="/contact">Apply</FillLink>
                 </div>

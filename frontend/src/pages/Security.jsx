@@ -46,7 +46,7 @@ export default function Security() {
           <div className="grid md:grid-cols-2 gap-px bg-white/12 border border-white/12">
             {SECTIONS.map((s, i) => (
               <div key={s.t} className="bg-black p-8" data-testid={`security-topic-${i}`}>
-                <p className="font-mono-ax text-[11px] text-[#ff5a1f] mb-3">{String(i + 1).padStart(2, "0")}</p>
+                <p className="text-[12px] font-medium text-[#ff4d0a] mb-3">{String(i + 1).padStart(2, "0")}</p>
                 <h2 className="text-xl font-bold tracking-tight mb-2">{s.t}</h2>
                 <p className="text-[14px] text-white/60">{s.d}</p>
               </div>

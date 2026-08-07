@@ -43,21 +43,21 @@ export default function Tour({ onClose }) {
       <div className="absolute inset-0 bg-black/45" style={{ backdropFilter: "blur(1.5px)" }} onClick={() => close(false)} />
       {rect && (
         <div
-          className="absolute border-2 border-[#ff5a1f] pointer-events-none transition-all duration-300"
+          className="absolute border-2 border-[#ff4d0a] pointer-events-none transition-all duration-300"
           style={{ top: rect.top, left: rect.left, width: rect.width, height: rect.height, boxShadow: "0 0 0 9999px rgba(0,0,0,.55)" }}
           aria-hidden="true"
           data-testid="tour-spotlight"
         />
       )}
       <div className="absolute w-[320px] bg-[#fbfaf7] text-[#090909] p-5 transition-all duration-300" style={{ top: tipTop, left: tipLeft }} data-testid="tour-tooltip">
-        <p className="font-mono-ax text-[10px] text-[#bd3510] uppercase tracking-wider mb-1.5">Step {idx + 1} of {STEPS.length}</p>
+        <p className="text-[11px] font-medium text-[#c9360a] uppercase tracking-[0.14em] mb-1.5">Step {idx + 1} of {STEPS.length}</p>
         <p className="font-bold text-[16px] tracking-tight">{step.title}</p>
         <p className="text-[13px] text-black/65 mt-1.5">{step.body}</p>
         <div className="flex items-center justify-between mt-5">
           <button onClick={() => close(false)} className="text-[12px] font-semibold text-black/50 hover:text-black" data-testid="tour-skip">Skip</button>
           <div className="flex gap-2">
             {idx > 0 && <button onClick={() => setIdx(idx - 1)} className="border border-black/25 px-3.5 py-1.5 text-[12px] font-bold" data-testid="tour-back">Back</button>}
-            <button onClick={() => (last ? close(true) : setIdx(idx + 1))} className="bg-[#ff5a1f] text-black px-3.5 py-1.5 text-[12px] font-bold" data-testid="tour-next">
+            <button onClick={() => (last ? close(true) : setIdx(idx + 1))} className="bg-[#ff4d0a] text-black px-3.5 py-1.5 text-[12px] font-bold" data-testid="tour-next">
               {last ? "Finish" : "Next"}
             </button>
           </div>

@@ -8,18 +8,53 @@ import { EASE } from "@/lib/anim";
 
 const PHRASE_HOLD = 5200;
 
-export default function HeroX() {
+function FallbackCanvas() {
   const canvasRef = useRef(null);
-  const headRef = useRef(null);
-  const [idx, setIdx] = useState(0);
   const reduce = useReducedMotion();
   useParticleX(canvasRef, reduce);
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" data-testid="hero-canvas" />;
+}
 
+export default function HeroX() {
+  const headRef = useRef(null);
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+  const [idx, setIdx] = useState(0);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const [inView, setInView] = useState(true);
+  const reduce = useReducedMotion();
+
+  /* observe hero visibility — pauses video and phrase rotation offscreen */
   useEffect(() => {
-    if (reduce) return;
-    const id = setInterval(() => setIdx((i) => (i + 1) % HERO.phrases.length), PHRASE_HOLD + 480);
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.05 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  /* video play/pause control */
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const sync = () => {
+      if (reduce || !inView || document.hidden) v.pause();
+      else v.play().catch(() => {});
+    };
+    sync();
+    document.addEventListener("visibilitychange", sync);
+    return () => document.removeEventListener("visibilitychange", sync);
+  }, [reduce, inView, videoFailed]);
+
+  /* phrase rotation — paused when hidden, offscreen or reduced motion */
+  useEffect(() => {
+    if (reduce || !inView) return;
+    const id = setInterval(() => {
+      if (document.hidden) return;
+      setIdx((i) => (i + 1) % HERO.phrases.length);
+    }, PHRASE_HOLD + 490);
     return () => clearInterval(id);
-  }, [reduce]);
+  }, [reduce, inView]);
 
   const onMove = (e) => {
     const el = headRef.current;
@@ -31,17 +66,39 @@ export default function HeroX() {
 
   return (
     <section
+      ref={sectionRef}
       className="relative bg-black text-[#fbfaf7] overflow-clip"
-      style={{ height: "100svh", minHeight: "640px", paddingTop: "var(--header-height)" }}
+      style={{ height: "100svh", minHeight: "620px", paddingTop: "var(--header-height)" }}
       data-testid="hero-section"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" data-testid="hero-canvas" />
-      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ background: "linear-gradient(95deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.62) 38%, rgba(0,0,0,0) 58%)" }} aria-hidden="true" />
-      <div className="absolute inset-0 pointer-events-none md:hidden" style={{ background: "linear-gradient(180deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.55) 52%, rgba(0,0,0,.05) 78%)" }} aria-hidden="true" />
+      {videoFailed ? (
+        <FallbackCanvas />
+      ) : (
+        <div
+          className="absolute top-0 bottom-0 right-0 w-full md:w-[62%]"
+          style={{ WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 26%)", maskImage: "linear-gradient(to right, transparent 0%, black 26%)" }}
+          aria-hidden="true"
+        >
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            src="/assets/particle-x.mp4"
+            muted
+            loop
+            playsInline
+            preload="auto"
+            onError={() => setVideoFailed(true)}
+            data-testid="hero-video"
+          />
+        </div>
+      )}
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ background: "linear-gradient(95deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 36%, rgba(0,0,0,0) 55%)" }} aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none md:hidden" style={{ background: "linear-gradient(180deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 52%, rgba(0,0,0,.12) 80%)" }} aria-hidden="true" />
+
       <div className="relative h-full max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col justify-center pointer-events-none">
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15, ease: EASE }}>
-          <div className="ax-eyebrow text-[#ff5a1f] flex items-center gap-3 mb-7">
-            <span className="inline-block w-6 h-[2px] bg-[#ff5a1f]" aria-hidden="true" />
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15, ease: EASE }}>
+          <div className="ax-eyebrow text-[#ff4d0a] flex items-center gap-3 mb-6">
+            <span className="inline-block w-6 h-[2px] bg-[#ff4d0a]" aria-hidden="true" />
             {HERO.eyebrow}
           </div>
         </motion.div>
@@ -49,30 +106,31 @@ export default function HeroX() {
         <h1
           ref={headRef}
           onPointerMove={onMove}
-          className="ax-mask-headline ax-display text-4xl sm:text-6xl lg:text-[74px] max-w-[13ch] pointer-events-auto"
+          className="ax-mask-headline ax-display pointer-events-auto"
+          style={{ fontSize: "clamp(42px, 5.8vw, 88px)", maxWidth: "13ch" }}
           data-testid="hero-headline"
         >
           <span className="block overflow-hidden">
-            <motion.span className="block" initial={reduce ? false : { y: "108%" }} animate={{ y: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: EASE }}>
+            <motion.span className="block" initial={reduce ? false : { y: "106%" }} animate={{ y: 0 }} transition={{ duration: 0.75, delay: 0.22, ease: EASE }}>
               {HERO.line1}
             </motion.span>
           </span>
           <span className="block overflow-hidden">
-            <motion.span className="block" initial={reduce ? false : { y: "108%" }} animate={{ y: 0 }} transition={{ duration: 0.8, delay: 0.38, ease: EASE }}>
+            <motion.span className="block" initial={reduce ? false : { y: "106%" }} animate={{ y: 0 }} transition={{ duration: 0.75, delay: 0.34, ease: EASE }}>
               {HERO.line2}
             </motion.span>
           </span>
-          <span className="block relative" style={{ height: "1.08em" }} data-testid="hero-phrase-line">
+          <span className="block relative" style={{ height: "1.06em" }} data-testid="hero-phrase-line">
             {reduce ? (
-              <span className="text-[#ff5a1f]">{HERO.phrases[0]}</span>
+              <span className="text-[#ff4d0a]">{HERO.phrases[0]}</span>
             ) : (
               <AnimatePresence mode="wait">
                 <motion.span
                   key={idx}
-                  className="absolute left-0 top-0 text-[#ff5a1f] whitespace-nowrap"
-                  initial={{ opacity: 0, y: "40%" }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: 0.28, delay: 0.05, ease: EASE } }}
-                  exit={{ opacity: 0, y: "-30%", transition: { duration: 0.15 } }}
+                  className="absolute left-0 top-0 text-[#ff4d0a] whitespace-nowrap"
+                  initial={{ opacity: 0, y: "36%" }}
+                  animate={{ opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.04, ease: EASE } }}
+                  exit={{ opacity: 0, y: "-28%", transition: { duration: 0.15 } }}
                 >
                   {HERO.phrases[idx]}
                 </motion.span>
@@ -86,18 +144,18 @@ export default function HeroX() {
         </h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.55, ease: EASE }}
-          className="mt-7 text-base md:text-lg text-white/65 max-w-xl"
+          transition={{ duration: 0.55, delay: 0.5, ease: EASE }}
+          className="mt-6 text-base md:text-lg text-white/70 max-w-xl"
         >
           {HERO.paragraph}
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.68, ease: EASE }}
+          transition={{ duration: 0.55, delay: 0.62, ease: EASE }}
           className="mt-9 flex flex-wrap gap-4 pointer-events-auto"
         >
           <Link to="/try-alter-engine" className="btn-primary" data-testid="hero-primary-cta">

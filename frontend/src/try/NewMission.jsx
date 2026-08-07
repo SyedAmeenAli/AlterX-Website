@@ -22,33 +22,44 @@ export default function NewMission() {
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-[860px]" data-testid="new-mission-page">
-      <p className="font-mono-ax text-[11px] text-[#ff5a1f] uppercase tracking-wider mb-3">New mission</p>
-      <h1 className="ax-display text-3xl md:text-[40px]">What outcome do you need?</h1>
-      <p className="text-white/55 mt-3">Start with the result, not the software. The mission is created locally with a deterministic ID — no network request is made.</p>
-      <form onSubmit={(e) => { e.preventDefault(); start(); }} className="mt-8" data-tour="composer">
-        <label htmlFor="nm-composer" className="sr-only">Describe the result that must be true at the end</label>
-        <textarea
-          id="nm-composer"
-          rows={4}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Describe the result that must be true at the end..."
-          className="w-full bg-black border border-white/20 px-4 py-3.5 text-[15px] text-white placeholder:text-white/35 focus:border-[#ff5a1f] focus:outline-none"
-          data-testid="new-mission-input"
-        />
-        <button type="submit" className="btn-primary mt-4" data-testid="new-mission-submit" disabled={!text.trim()}>
-          Create mission <ArrowRight size={15} className="ax-arrow" aria-hidden="true" />
-        </button>
-      </form>
-      <div className="mt-10">
-        <p className="font-mono-ax text-[10px] uppercase tracking-wider text-white/45 mb-3">Example missions</p>
-        <div className="flex flex-col gap-2 items-start">
-          {COMPOSER_CHIPS.map((c, i) => (
-            <button key={c} onClick={() => start(c)} className="ax-fill text-[13px] font-semibold text-white/65 border border-white/15 px-4 py-2.5" data-testid={`new-mission-example-${i}`}>
-              {c}
+    <div className="min-h-[calc(100vh-56px)] flex flex-col justify-center items-center px-6 py-16 relative" data-testid="new-mission-page">
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(255,77,10,.09) 0%, rgba(255,77,10,.025) 40%, rgba(0,0,0,0) 68%)" }} aria-hidden="true" />
+      <div className="relative w-full max-w-[720px]">
+        <h1 className="ax-display text-3xl md:text-[42px] text-center">What outcome do you need?</h1>
+        <p className="text-white/55 mt-4 text-center max-w-xl mx-auto text-[15px]">Start with the result, not the software. The mission is created locally — no network request is made.</p>
+        <form onSubmit={(e) => { e.preventDefault(); start(); }} className="mt-10" data-tour="composer">
+          <label htmlFor="nm-composer" className="sr-only">Describe the outcome</label>
+          <div className="relative">
+            <textarea
+              id="nm-composer"
+              rows={3}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Describe the outcome…"
+              className="w-full bg-black/70 border border-white/20 rounded-[6px] px-6 py-5 text-[16px] text-white placeholder:text-white/35 focus:border-[#ff4d0a] focus:outline-none transition-colors resize-none"
+              data-testid="new-mission-input"
+            />
+          </div>
+          <div className="flex justify-end mt-3">
+            <button
+              type="submit"
+              disabled={!text.trim()}
+              className={`inline-flex items-center gap-2 rounded-[4px] px-5 py-3 text-[14px] font-semibold transition-colors ${text.trim() ? "bg-[#ff4d0a] text-black hover:bg-[#ff641d]" : "bg-white/[.07] text-white/45 cursor-not-allowed"}`}
+              data-testid="new-mission-submit"
+            >
+              Create mission <ArrowRight size={15} aria-hidden="true" />
             </button>
-          ))}
+          </div>
+        </form>
+        <div className="mt-8">
+          <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-white/40 mb-3 text-center">Or start from an example</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {COMPOSER_CHIPS.map((c, i) => (
+              <button key={c} onClick={() => start(c)} className="ax-fill text-[12.5px] font-medium text-white/65 border border-white/12 rounded-[4px] px-4 py-2.5" data-testid={`new-mission-example-${i}`}>
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

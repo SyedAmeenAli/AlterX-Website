@@ -1,27 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { motion, useReducedMotion, useInView } from "framer-motion";
-import Lenis from "lenis";
 
 export const EASE = [0.25, 1, 0.5, 1];
 
-export function useLenis() {
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 1 });
-    let raf;
-    const loop = (t) => { lenis.raf(t); raf = requestAnimationFrame(loop); };
-    raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); lenis.destroy(); };
-  }, []);
-}
-
-export const Reveal = ({ children, delay = 0, y = 26, className, once = true, ...rest }) => (
+export const Reveal = ({ children, delay = 0, y = 14, className, once = true, ...rest }) => (
   <motion.div
     className={className}
-    initial={{ opacity: 0, y }}
+    initial={{ opacity: 0.001, y }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once, margin: "-60px" }}
-    transition={{ duration: 0.62, delay, ease: EASE }}
+    transition={{ duration: 0.55, delay, ease: EASE }}
     {...rest}
   >
     {children}
@@ -39,9 +27,9 @@ export const MaskLines = ({ lines, className, lineClass, delay = 0, as: Tag = "d
         <span key={i} className="block overflow-hidden pb-[0.12em] -mb-[0.12em]">
           <motion.span
             className={`block ${lineClass || ""}`}
-            initial={reduce ? false : { y: "108%" }}
-            animate={reduce || inView ? { y: 0 } : { y: "108%" }}
-            transition={{ duration: 0.72, delay: delay + i * 0.09, ease: EASE }}
+            initial={reduce ? false : { y: "104%", opacity: 0.82 }}
+            animate={reduce || inView ? { y: 0, opacity: 1 } : { y: "104%", opacity: 0.82 }}
+            transition={{ duration: 0.66, delay: delay + i * 0.08, ease: EASE }}
           >
             {l}
           </motion.span>

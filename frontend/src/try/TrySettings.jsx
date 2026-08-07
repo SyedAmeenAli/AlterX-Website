@@ -25,10 +25,10 @@ export default function TrySettings() {
       <form onSubmit={save} className="border border-white/12 p-6 mb-6">
         <label htmlFor="ws-name" className="block text-[13px] font-bold mb-2">Workspace name</label>
         <div className="flex gap-2 max-w-md">
-          <input id="ws-name" value={name} onChange={(e) => setName(e.target.value)} className="flex-1 bg-black border border-white/20 px-4 py-2.5 text-[14px] text-white focus:border-[#ff5a1f] focus:outline-none" data-testid="settings-workspace-input" />
+          <input id="ws-name" value={name} onChange={(e) => setName(e.target.value)} className="flex-1 bg-black border border-white/20 px-4 py-2.5 text-[14px] text-white focus:border-[#ff4d0a] focus:outline-none" data-testid="settings-workspace-input" />
           <button type="submit" className="btn-primary !py-2.5 !text-[13px]" data-testid="settings-workspace-save">Save</button>
         </div>
-        {saved && <p className="text-[12px] text-[#ff5a1f] mt-2" role="status" data-testid="settings-saved-note">Saved. The top bar updates on the next navigation.</p>}
+        {saved && <p className="text-[12px] text-[#ff4d0a] mt-2" role="status" data-testid="settings-saved-note">Saved. The top bar updates on the next navigation.</p>}
       </form>
 
       <div className="border border-white/12 p-6 mb-6">
@@ -40,19 +40,19 @@ export default function TrySettings() {
             ["Execution backend", "None — deterministic frontend demonstration"],
           ].map(([k, v]) => (
             <div key={k} className="grid grid-cols-[160px_1fr] gap-3 border-t border-white/10 pt-2">
-              <dt className="text-white/45">{k}</dt><dd className="text-white/80 font-mono-ax text-[12px]">{v}</dd>
+              <dt className="text-white/45">{k}</dt><dd className="text-white/80 text-[12px]">{v}</dd>
             </div>
           ))}
         </dl>
       </div>
 
-      <div className="border border-[#bd3510]/60 p-6">
+      <div className="border border-[#c9360a]/60 p-6">
         <p className="text-[13px] font-bold mb-2">Reset demonstration data</p>
         <p className="text-[13px] text-white/55 mb-4">Removes all local missions, workflows, connections, knowledge and tour state from this browser.</p>
         {cleared ? (
-          <p className="text-[13px] text-[#ff5a1f]" role="status" data-testid="settings-reset-done">Demo data cleared. Start a new mission to begin again.</p>
+          <p className="text-[13px] text-[#ff4d0a]" role="status" data-testid="settings-reset-done">Demo data cleared. Start a new mission to begin again.</p>
         ) : (
-          <button onClick={reset} className="border border-[#bd3510] text-[#ff8a63] text-[13px] font-bold px-4 py-2 flex items-center gap-2 hover:bg-[#bd3510]/15 transition-colors" data-testid="settings-reset-btn">
+          <button onClick={reset} className="border border-[#c9360a] text-[#ff8a63] text-[13px] font-bold px-4 py-2 flex items-center gap-2 hover:bg-[#c9360a]/15 transition-colors" data-testid="settings-reset-btn">
             <Trash2 size={13} aria-hidden="true" /> Reset demo data
           </button>
         )}

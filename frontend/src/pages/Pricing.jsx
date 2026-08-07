@@ -13,14 +13,14 @@ export default function Pricing() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid md:grid-cols-3 border-t border-l border-white/15">
           {PRICING_SHAPES.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08}>
-              <div className={`border-r border-b border-white/15 p-8 h-full ${i === 1 ? "bg-[#ff5a1f]/[.07]" : ""}`} data-testid={`pricing-shape-${p.name.toLowerCase()}`}>
-                <p className="font-mono-ax text-[11px] text-[#ff5a1f] uppercase tracking-wider mb-3">{String(i + 1).padStart(2, "0")}</p>
+              <div className={`border-r border-b border-white/15 p-8 h-full ${i === 1 ? "bg-[#ff4d0a]/[.07]" : ""}`} data-testid={`pricing-shape-${p.name.toLowerCase()}`}>
+                <p className="text-[12px] font-medium text-[#ff4d0a] uppercase tracking-wider mb-3">{String(i + 1).padStart(2, "0")}</p>
                 <h2 className="text-3xl font-bold tracking-tight">{p.name}</h2>
                 <p className="text-white/60 mt-2 mb-7">{p.lead}</p>
                 <ul className="space-y-2.5">
                   {p.points.map((pt) => (
                     <li key={pt} className="flex items-start gap-2.5 text-[14px] text-white/80">
-                      <Check size={14} className="text-[#ff5a1f] mt-1 shrink-0" aria-hidden="true" /> {pt}
+                      <Check size={14} className="text-[#ff4d0a] mt-1 shrink-0" aria-hidden="true" /> {pt}
                     </li>
                   ))}
                 </ul>

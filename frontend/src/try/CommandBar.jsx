@@ -64,12 +64,12 @@ export default function CommandBar({ open, onClose, onStartTour, onToggleSidebar
               <button
                 onClick={() => runItem(item)}
                 onMouseEnter={() => setSel(i)}
-                className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left ${i === sel ? "bg-[#ff5a1f] text-black" : "text-white/80"}`}
+                className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left ${i === sel ? "bg-[#ff4d0a] text-black" : "text-white/80"}`}
                 data-testid={`command-item-${i}`}
               >
                 <span className="text-[13px] font-semibold truncate">{item.label}</span>
                 <span className="flex items-center gap-2 shrink-0">
-                  <span className={`font-mono-ax text-[9px] uppercase ${i === sel ? "text-black/60" : "text-white/35"}`}>{item.type}</span>
+                  <span className={`text-[10px] font-medium uppercase ${i === sel ? "text-black/60" : "text-white/35"}`}>{item.type}</span>
                   {i === sel && <CornerDownLeft size={12} aria-hidden="true" />}
                 </span>
               </button>

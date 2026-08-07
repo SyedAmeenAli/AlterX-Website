@@ -11,12 +11,12 @@ const CaptureDemo = () => {
   return (
     <div className="border border-black/15 bg-white" data-testid="capture-demo">
       <div className="flex items-center justify-between border-b border-black/10 px-4 py-2.5">
-        <span className="font-mono-ax text-[10px] text-black/50">COGNITIVE AI · PRODUCT CAPTURE</span>
+        <span className="text-[11px] font-medium text-black/50">COGNITIVE AI · PRODUCT CAPTURE</span>
         <DemoBadge />
       </div>
       <div className="flex border-b border-black/10">
         {CAPTURE_STEPS.map((s, i) => (
-          <button key={s} onClick={() => setStep(i)} className={`ax-fill flex-1 py-3 text-[13px] font-bold ${step === i ? "text-[#bd3510]" : "text-black/50"}`} data-active={step === i} data-testid={`capture-step-${s.toLowerCase()}`}>
+          <button key={s} onClick={() => setStep(i)} className={`ax-fill flex-1 py-3 text-[13px] font-bold ${step === i ? "text-[#c9360a]" : "text-black/50"}`} data-active={step === i} data-testid={`capture-step-${s.toLowerCase()}`}>
             {i + 1}. {s}
           </button>
         ))}
@@ -33,11 +33,11 @@ const CaptureDemo = () => {
         )}
         {step === 1 && (
           <div className="max-w-md mx-auto">
-            <p className="font-mono-ax text-[10px] text-[#bd3510] uppercase tracking-wider mb-4">Extracted for confirmation</p>
+            <p className="text-[11px] font-medium text-[#c9360a] uppercase tracking-[0.14em] mb-4">Extracted for confirmation</p>
             {[["Name", "Linen overshirt — relaxed fit"], ["Colour", "Rust"], ["Material", "100% linen"], ["Category", "Apparel · Outerwear"], ["Type", "Overshirt"], ["Proposed SKU", "AP-OVS-RST-014"]].map(([k, v]) => (
               <div key={k} className="flex justify-between py-2.5 border-b border-black/10 text-[14px]">
                 <span className="text-black/50">{k}</span>
-                <span className={`font-semibold ${k === "Proposed SKU" ? "font-mono-ax text-[12px] text-[#bd3510]" : ""}`}>{v}</span>
+                <span className={`font-semibold ${k === "Proposed SKU" ? "text-[12px] font-medium text-[#c9360a]" : ""}`}>{v}</span>
               </div>
             ))}
             <button onClick={() => setStep(2)} className="btn-primary !py-2.5 mt-5" data-testid="capture-confirm-btn">Confirm and enter catalogue</button>
@@ -45,7 +45,7 @@ const CaptureDemo = () => {
         )}
         {step === 2 && (
           <div className="max-w-md mx-auto text-center py-8">
-            <Check size={40} className="mx-auto text-[#bd3510] mb-4" aria-hidden="true" />
+            <Check size={40} className="mx-auto text-[#c9360a] mb-4" aria-hidden="true" />
             <p className="text-lg font-bold">Confirmed by a person. Entered into the record.</p>
             <p className="text-[14px] text-black/60 mt-2 mb-6">Human confirmation happens before catalogue entry — extraction proposes, people decide.</p>
             <button onClick={() => setStep(0)} className="btn-ghost-light ax-fill !py-2.5" data-testid="capture-restart-btn">Run it again</button>
@@ -85,7 +85,7 @@ export default function CognitiveAI() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/15 border border-black/15">
             {SECTIONS.map((s, i) => (
               <div key={s.t} className="bg-[#fbfaf7] p-8" data-testid={`cognitive-section-${i}`}>
-                <p className="font-mono-ax text-[11px] text-[#bd3510] mb-3">{String(i + 2).padStart(2, "0")}</p>
+                <p className="text-[12px] font-medium text-[#c9360a] mb-3">{String(i + 2).padStart(2, "0")}</p>
                 <h2 className="text-xl font-bold tracking-tight mb-2">{s.t}</h2>
                 <p className="text-[14px] text-black/60">{s.d}</p>
               </div>

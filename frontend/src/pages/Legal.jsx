@@ -13,12 +13,12 @@ export default function Legal({ slug }) {
     <div className="bg-[#fbfaf7] text-[#090909]" style={{ paddingTop: "calc(var(--header-height) + 56px)" }}>
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-24">
         <div className="border-b border-black/15 pb-8 mb-10">
-          <p className="ax-eyebrow text-[#bd3510] mb-4">Legal</p>
+          <p className="ax-eyebrow text-[#c9360a] mb-4">Legal</p>
           <h1 className="ax-display text-4xl sm:text-5xl">{doc.title}</h1>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-5 text-[13px] text-black/55">
             <span>Last updated: {doc.updated}</span>
-            <span className="font-mono-ax text-[11px] uppercase tracking-wider border border-[#bd3510]/40 text-[#bd3510] px-2 py-0.5" data-testid="legal-status">{doc.status}</span>
-            <button onClick={() => window.print()} className="inline-flex items-center gap-1.5 font-semibold hover:text-[#bd3510] transition-colors" data-testid="legal-print-btn">
+            <span className="text-[11px] font-medium uppercase tracking-[0.16em] border border-[#c9360a]/40 text-[#c9360a] px-2 py-0.5" data-testid="legal-status">{doc.status}</span>
+            <button onClick={() => window.print()} className="inline-flex items-center gap-1.5 font-semibold hover:text-[#c9360a] transition-colors" data-testid="legal-print-btn">
               <Printer size={13} aria-hidden="true" /> Print / download
             </button>
           </div>
@@ -34,7 +34,7 @@ export default function Legal({ slug }) {
             <ul className="space-y-2 border-l border-black/15">
               {doc.sections.map((s, i) => (
                 <li key={s.h}>
-                  <a href={`#${slugify(s.h)}`} className="block pl-4 py-0.5 text-[13px] text-black/60 hover:text-[#bd3510] hover:border-l-2 hover:border-[#ff5a1f] hover:-ml-[1px] transition-colors">
+                  <a href={`#${slugify(s.h)}`} className="block pl-4 py-0.5 text-[13px] text-black/60 hover:text-[#c9360a] hover:border-l-2 hover:border-[#ff4d0a] hover:-ml-[1px] transition-colors">
                     {i + 1}. {s.h}
                   </a>
                 </li>

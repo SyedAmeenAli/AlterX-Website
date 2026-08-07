@@ -24,7 +24,7 @@ export default function Company() {
           <div className="grid md:grid-cols-3 border border-white/15 mb-28">
             {ANCHORS.map((a, i) => (
               <div key={a.t} className={`p-8 ${i < 2 ? "md:border-r border-white/15" : ""} ${i < 2 ? "border-b md:border-b-0" : ""}`}>
-                <p className="font-mono-ax text-[11px] text-[#ff5a1f] uppercase tracking-wider mb-3">{a.t}</p>
+                <p className="text-[12px] font-medium text-[#ff4d0a] uppercase tracking-wider mb-3">{a.t}</p>
                 <p className="text-xl font-bold tracking-tight">{a.d}</p>
               </div>
             ))}
@@ -37,7 +37,7 @@ export default function Company() {
                 {PRINCIPLES.map((p, i) => (
                   <Reveal key={p.t} delay={i * 0.05}>
                     <div className="grid md:grid-cols-[70px_260px_1fr] gap-4 py-7 border-t border-white/15" data-testid={`principle-${i}`}>
-                      <span className="font-mono-ax text-xs text-white/40">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="text-[12px] font-medium text-white/40">{String(i + 1).padStart(2, "0")}</span>
                       <p className="text-xl font-bold tracking-tight">{p.t}</p>
                       <p className="text-[15px] text-white/60">{p.d}</p>
                     </div>
@@ -48,11 +48,11 @@ export default function Company() {
             <Reveal delay={0.2}>
               <div className="border border-white/15 bg-[#090909] p-7 sticky top-[110px]" aria-hidden="true">
                 <div className="flex items-center justify-between mb-8">
-                  <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }} className="text-2xl">ALTER<span className="text-[#ff5a1f]">X</span></span>
-                  <span className="font-mono-ax text-[10px] text-white/40">EST. HYDERABAD</span>
+                  <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }} className="text-2xl">ALTER<span className="text-[#ff4d0a]">X</span></span>
+                  <span className="text-[11px] font-medium text-white/40">EST. HYDERABAD</span>
                 </div>
-                <div className="h-[2px] bg-[#ff5a1f] w-14 mb-8" />
-                <p className="font-mono-ax text-[11px] text-white/45 leading-loose">
+                <div className="h-[2px] bg-[#ff4d0a] w-14 mb-8" />
+                <p className="text-[12px] font-medium text-white/45 leading-loose">
                   OUTCOME → PLAN<br />PLAN → APPROVAL<br />APPROVAL → ACTION<br />ACTION → CHECK<br />CHECK → EVIDENCE
                 </p>
                 <div className="mt-8 pt-6 border-t border-white/12">

@@ -5,65 +5,62 @@ import { ArrowRight, Menu, X, ChevronDown } from "lucide-react";
 import { NAV } from "@/content/navigation";
 import { EASE } from "@/lib/anim";
 
-const DARK_HERO_ROUTES = ["/", "/alter-engine", "/platform", "/security", "/company", "/pricing"];
+const DARK_HERO_ROUTES = ["/", "/alter-engine", "/platform", "/security", "/company", "/pricing", "/developers"];
 
 const Wordmark = ({ light }) => (
   <Link to="/" className="flex items-center shrink-0" aria-label="AlterX home" data-testid="header-logo">
-    <svg width="104" height="28" viewBox="0 0 104 28" aria-hidden="true">
-      <defs>
-        <clipPath id="ax-x-clip"><rect x="80" y="2" width="10.5" height="12" /></clipPath>
-      </defs>
-      <text x="0" y="22" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="21" letterSpacing="-0.5" fill={light ? "#fbfaf7" : "#090909"}>ALTER</text>
-      <text x="79" y="22" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="23" fill={light ? "#fbfaf7" : "#090909"}>X</text>
-      <text x="79" y="22" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="23" fill="#ff5a1f" clipPath="url(#ax-x-clip)">X</text>
-    </svg>
+    <span className="text-[20px] font-semibold tracking-[-0.03em] leading-none" style={{ color: light ? "#fbfaf7" : "#090909" }}>
+      ALTER<span className="text-[#ff4d0a]">X</span>
+    </span>
   </Link>
 );
 
 const MenuVisual = ({ kind }) => {
-  const stroke = "#ff5a1f";
+  const stroke = "#ff4d0a";
   if (kind === "inventory")
     return (
-      <svg viewBox="0 0 200 120" className="w-full h-28" aria-hidden="true">
+      <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
         {[0, 1, 2].map((i) => (
-          <g key={i} transform={`translate(${30 + i * 12} ${70 - i * 18})`}>
-            <path d={`M0 0 L60 -14 L120 0 L60 14 Z`} fill="none" stroke={i === 1 ? stroke : "rgba(9,9,9,.35)"} strokeWidth="1.5" />
+          <g key={i} transform={`translate(${34 + i * 12} ${84 - i * 20})`}>
+            <path d={`M0 0 L66 -16 L132 0 L66 16 Z`} fill={i === 1 ? "rgba(255,77,10,.06)" : "none"} stroke={i === 1 ? stroke : "rgba(9,9,9,.3)"} strokeWidth="1.5" />
           </g>
         ))}
-        <circle cx="102" cy="38" r="4" fill={stroke} />
-        <line x1="102" y1="42" x2="102" y2="84" stroke={stroke} strokeWidth="1" strokeDasharray="3 3" />
+        <circle cx="112" cy="44" r="4.5" fill={stroke} />
+        <path d="M112 49 L112 96" stroke={stroke} strokeWidth="1.5" strokeDasharray="3 4" fill="none" />
       </svg>
     );
   if (kind === "build")
     return (
-      <svg viewBox="0 0 200 120" className="w-full h-28" aria-hidden="true">
-        <rect x="75" y="40" width="50" height="40" fill="none" stroke={stroke} strokeWidth="1.5" />
-        <line x1="20" y1="50" x2="75" y2="50" stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />
-        <line x1="20" y1="70" x2="75" y2="70" stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />
-        <line x1="125" y1="60" x2="180" y2="60" stroke={stroke} strokeWidth="1.5" />
-        <circle cx="180" cy="60" r="4" fill={stroke} />
-        <rect x="93" y="22" width="14" height="10" fill="none" stroke={stroke} strokeWidth="1.5" />
-        <line x1="100" y1="32" x2="100" y2="40" stroke={stroke} strokeWidth="1.5" />
+      <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
+        <path d="M64 34 L52 34 L52 106 L64 106" fill="none" stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />
+        <path d="M156 34 L168 34 L168 106 L156 106" fill="none" stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />
+        <rect x="84" y="52" width="52" height="36" fill="rgba(255,77,10,.07)" stroke={stroke} strokeWidth="1.5" />
+        <path d="M20 62 L84 62 M20 80 L84 80" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
+        <path d="M136 70 L200 70" stroke={stroke} strokeWidth="1.5" />
+        <circle cx="200" cy="70" r="4.5" fill={stroke} />
       </svg>
     );
   if (kind === "company" || kind === "resources")
     return (
-      <svg viewBox="0 0 200 120" className="w-full h-28" aria-hidden="true">
+      <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
         {[0, 1, 2, 3].map((i) => (
-          <line key={i} x1="24" y1={30 + i * 20} x2={176 - i * 26} y2={30 + i * 20} stroke={i === 0 ? stroke : "rgba(9,9,9,.35)"} strokeWidth="1.5" />
+          <path key={i} d={`M28 ${38 + i * 22} L${192 - i * 30} ${38 + i * 22}`} stroke={i === 0 ? stroke : "rgba(9,9,9,.3)"} strokeWidth="1.5" fill="none" />
         ))}
-        <circle cx={176} cy={30} r="4" fill={stroke} />
+        <circle cx="192" cy="38" r="4.5" fill={stroke} />
       </svg>
     );
+  /* engine — five-stage route with approval gate */
   return (
-    <svg viewBox="0 0 200 120" className="w-full h-28" aria-hidden="true">
-      {["U", "P", "A", "A", "C"].map((c, i) => (
-        <g key={i}>
-          <rect x={16 + i * 36} y={48} width={26} height={26} fill={i === 2 ? stroke : "none"} stroke={i === 2 ? stroke : "rgba(9,9,9,.4)"} strokeWidth="1.5" />
-          {i < 4 && <line x1={42 + i * 36} y1={61} x2={52 + i * 36} y2={61} stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />}
-        </g>
-      ))}
-      <text x="16" y="96" fontSize="9" fill="rgba(9,9,9,.55)" fontFamily="JetBrains Mono">UNDERSTAND · PLAN · APPROVE · ACT · CHECK</text>
+    <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
+      <path d="M14 70 L58 70 C 70 70 74 50 88 50 L110 50" fill="none" stroke={stroke} strokeWidth="2" />
+      <path d="M58 70 C 70 70 74 92 88 92 L110 92" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
+      <path d="M110 50 C 128 50 130 70 144 70" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
+      <path d="M110 92 C 128 92 130 70 144 70" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
+      <rect x="144" y="58" width="24" height="24" fill="none" stroke={stroke} strokeWidth="2" transform="rotate(45 156 70)" />
+      <path d="M168 70 L206 70" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+      <circle cx="14" cy="70" r="4" fill={stroke} />
+      <circle cx="206" cy="70" r="4.5" fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="14" y="124" fontSize="11" fill="rgba(9,9,9,.6)" fontFamily="Hanken Grotesk" fontWeight="500" letterSpacing="0.06em">Understand · Plan · Approve · Act · Check</text>
     </svg>
   );
 };
@@ -76,6 +73,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const enterTimer = useRef();
   const leaveTimer = useRef();
+  const navRef = useRef(null);
 
   useEffect(() => {
     let threshold = window.innerHeight * 0.72;
@@ -106,8 +104,19 @@ export default function Header() {
   }, []);
   const leave = useCallback(() => {
     clearTimeout(enterTimer.current);
-    leaveTimer.current = setTimeout(() => setOpen(null), 160);
+    leaveTimer.current = setTimeout(() => setOpen(null), 150);
   }, []);
+
+  const onNavKey = (e, idx) => {
+    const buttons = navRef.current?.querySelectorAll("button[data-nav-root]");
+    if (!buttons) return;
+    if (e.key === "ArrowRight") { e.preventDefault(); buttons[(idx + 1) % buttons.length]?.focus(); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); buttons[(idx - 1 + buttons.length) % buttons.length]?.focus(); }
+    if (e.key === "ArrowDown" && open) {
+      e.preventDefault();
+      document.querySelector(`[data-testid="mega-menu-${open}"] a`)?.focus();
+    }
+  };
 
   const activeMenu = NAV.find((n) => n.key === open);
 
@@ -119,16 +128,18 @@ export default function Header() {
         style={{ height: "var(--header-height)", background: light ? "#000" : "#fbfaf7", borderBottom: `1px solid ${light ? "rgba(255,255,255,.12)" : "rgba(9,9,9,.12)"}` }}
         data-testid="site-header"
       >
-        <div className="max-w-[1500px] mx-auto h-full px-6 md:px-8 flex items-center justify-between gap-6">
-          <Wordmark light={light} />
-          <nav className="hidden lg:flex items-center h-full" aria-label="Primary" onMouseLeave={leave}>
-            {NAV.map((item) => (
+        <div className="max-w-[1500px] mx-auto h-full px-6 md:px-8 grid items-center" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
+          <div className="justify-self-start"><Wordmark light={light} /></div>
+          <nav ref={navRef} className="hidden lg:flex items-center h-full justify-self-center" aria-label="Primary" onMouseLeave={leave}>
+            {NAV.map((item, idx) => (
               <button
                 key={item.key}
-                className={`ax-fill h-[42px] px-4 text-[15px] font-semibold flex items-center gap-1.5 ${light ? "text-[#fbfaf7]" : "text-[#090909]"}`}
+                data-nav-root
+                className={`ax-fill h-[42px] px-4 text-[15px] font-medium flex items-center gap-1.5 ${light ? "text-[#fbfaf7]" : "text-[#090909]"}`}
                 data-active={open === item.key}
                 onMouseEnter={() => enter(item.key)}
                 onFocus={() => enter(item.key)}
+                onKeyDown={(e) => onNavKey(e, idx)}
                 onClick={() => setOpen(open === item.key ? null : item.key)}
                 aria-expanded={open === item.key}
                 aria-haspopup="true"
@@ -139,7 +150,7 @@ export default function Header() {
               </button>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 justify-self-end">
             <Link to="/try-alter-engine" className="btn-primary !hidden sm:!inline-flex !py-2.5 !px-5 text-[14px] whitespace-nowrap" data-testid="header-try-cta">
               Try Alter Engine <ArrowRight size={15} className="ax-arrow" aria-hidden="true" />
             </Link>
@@ -161,35 +172,35 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.24, ease: EASE }}
-              className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-full"
-              style={{ width: "min(1500px, calc(100vw - 64px))" }}
+              className="hidden lg:block absolute left-1/2 -translate-x-1/2"
+              style={{ width: "min(1500px, calc(100vw - 48px))", top: "calc(var(--header-height) + 10px)" }}
               onMouseEnter={() => clearTimeout(leaveTimer.current)}
               onMouseLeave={leave}
               role="region"
               aria-label={`${activeMenu.label} menu`}
               data-testid={`mega-menu-${activeMenu.key}`}
             >
-              <div className="bg-[#fbfaf7] border border-black/12 shadow-[0_40px_80px_rgba(0,0,0,.35)] grid grid-cols-[380px_1fr] max-h-[calc(100vh-120px)] overflow-y-auto">
-                <Link to={activeMenu.featured.to} className="group block bg-[#f3f0e9] p-8 border-r border-black/10" data-testid="mega-menu-featured">
+              <div className="bg-[#fbfaf7] border border-black/15 rounded-[4px] shadow-[0_40px_80px_rgba(0,0,0,.4)] grid grid-cols-[400px_1fr] max-h-[calc(100vh-var(--header-height)-40px)] overflow-y-auto">
+                <Link to={activeMenu.featured.to} className="group block bg-[#f3f0e9] p-9 border-r border-black/10" data-testid="mega-menu-featured">
                   <MenuVisual kind={activeMenu.featured.visual} />
-                  <h3 className="text-xl font-bold tracking-tight mt-4 text-[#090909]">{activeMenu.featured.title}</h3>
-                  <p className="text-sm text-black/60 mt-2 leading-relaxed">{activeMenu.featured.body}</p>
-                  <span className="inline-flex items-center gap-2 mt-5 text-sm font-bold text-[#bd3510]">
+                  <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#090909] leading-snug">{activeMenu.featured.title}</h3>
+                  <p className="text-sm text-black/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
+                  <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#c9360a]">
                     Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
                   </span>
                 </Link>
-                <div className="p-6 grid grid-cols-2 gap-1 content-start">
+                <div className="p-7 grid grid-cols-2 gap-x-2 gap-y-1 content-start">
                   {activeMenu.links.map((l) => (
                     <Link
                       key={l.label}
                       to={l.to}
-                      className={`ax-fill block px-5 py-4 ${l.accent ? "border border-[#ff5a1f]/50" : ""}`}
+                      className="ax-fill block px-5 py-4 rounded-[3px]"
                       data-testid={`mega-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                     >
-                      <span className={`flex items-center gap-2 font-bold text-[15px] ${l.accent ? "text-[#bd3510]" : "text-[#090909]"}`}>
+                      <span className={`flex items-center gap-2 font-semibold text-[15px] ${l.accent ? "text-[#c9360a]" : "text-[#090909]"}`}>
                         {l.label} <ArrowRight size={13} className="ax-arrow" aria-hidden="true" />
                       </span>
-                      <span className="block text-[13px] text-black/55 mt-0.5">{l.desc}</span>
+                      <span className="block text-[13px] text-black/60 mt-0.5">{l.desc}</span>
                     </Link>
                   ))}
                 </div>
@@ -228,12 +239,12 @@ export default function Header() {
             <nav className="p-6" aria-label="Mobile">
               {NAV.map((item) => (
                 <details key={item.key} className="border-b border-black/10">
-                  <summary className="py-4 font-bold text-lg cursor-pointer flex items-center justify-between text-[#090909]">
+                  <summary className="py-4 font-semibold text-lg cursor-pointer flex items-center justify-between text-[#090909]">
                     {item.label} <ChevronDown size={16} aria-hidden="true" />
                   </summary>
                   <div className="pb-4">
                     {item.links.map((l) => (
-                      <NavLink key={l.label} to={l.to} className="block py-2.5 pl-4 text-[15px] font-semibold text-black/70">
+                      <NavLink key={l.label} to={l.to} className="block py-2.5 pl-4 text-[15px] font-medium text-black/70">
                         {l.label}
                       </NavLink>
                     ))}

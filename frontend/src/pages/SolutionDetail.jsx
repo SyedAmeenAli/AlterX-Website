@@ -21,7 +21,7 @@ export default function SolutionDetail() {
               <p className="text-[16px] text-black/75">{sol.condition}</p>
             </div>
             <div className="bg-black text-[#fbfaf7] p-8">
-              <p className="ax-eyebrow text-[#ff5a1f] mb-3 text-[10px]">The required outcome</p>
+              <p className="ax-eyebrow text-[#ff4d0a] mb-3 text-[10px]">The required outcome</p>
               <p className="text-[16px] text-white/85">{sol.outcome}</p>
             </div>
           </div>
@@ -31,7 +31,7 @@ export default function SolutionDetail() {
             {sol.path.map((p, i) => (
               <Reveal key={p} delay={i * 0.06}>
                 <div className="bg-[#fbfaf7] p-6 h-full relative" data-testid={`solution-path-${i}`}>
-                  <p className="font-mono-ax text-[11px] text-[#bd3510] mb-2">{String(i + 1).padStart(2, "0")}</p>
+                  <p className="text-[12px] font-medium text-[#c9360a] mb-2">{String(i + 1).padStart(2, "0")}</p>
                   <p className="font-bold text-[15px]">{p}</p>
                 </div>
               </Reveal>
@@ -47,7 +47,7 @@ export default function SolutionDetail() {
             <div className="bg-[#fbfaf7] p-8">
               <p className="ax-eyebrow text-black/50 mb-4 text-[10px]">Systems involved</p>
               <ul className="space-y-2">
-                {sol.systems.map((s) => <li key={s} className="text-[14px] font-semibold border-l-2 border-[#ff5a1f] pl-3">{s}</li>)}
+                {sol.systems.map((s) => <li key={s} className="text-[14px] font-semibold border-l-2 border-[#ff4d0a] pl-3">{s}</li>)}
               </ul>
             </div>
             <div className="bg-[#fbfaf7] p-8">

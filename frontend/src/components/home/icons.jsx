@@ -1,7 +1,9 @@
 import React from "react";
 
-const O = "#ff5a1f";
-const OB = "#ff761f";
+const O = "#ff4d0a";
+const OB = "#ff641d";
+
+/* Original dimensional icon family — shared isometric depth, line weight and lighting logic. */
 
 export const EngineIcon = () => (
   <svg viewBox="0 0 240 200" className="w-full h-full" aria-hidden="true">
@@ -58,7 +60,6 @@ export const WorkflowsIcon = () => (
       <rect x="126" y="86" width="28" height="28" fill="none" stroke={O} strokeWidth="2" transform="rotate(45 140 100)" />
       <circle cx="140" cy="100" r="4" fill={O} />
       <line x1="158" y1="100" x2="164" y2="100" stroke={O} strokeWidth="2" />
-      <text x="120" y="152" fontSize="9" fill={OB} fontFamily="JetBrains Mono">APPROVAL GATE</text>
     </g>
   </svg>
 );

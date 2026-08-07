@@ -54,12 +54,12 @@ export default function CipherField({ className = "" }) {
           const x = cx + Math.cos(f.angle) * band.rx;
           const y = cy + Math.sin(f.angle) * band.ry;
           ctx.globalAlpha = f.alpha;
-          ctx.fillStyle = band.inner ? "#ff761f" : "#ff5a1f";
+          ctx.fillStyle = band.inner ? "#ff641d" : "#ff4d0a";
           ctx.fillText(f.text, x, y);
         }
       }
       ctx.globalAlpha = 0.35;
-      ctx.strokeStyle = "#ff5a1f";
+      ctx.strokeStyle = "#ff4d0a";
       ctx.lineWidth = 1;
       for (const arc of [0.55, 0.8]) {
         ctx.beginPath();
@@ -67,14 +67,14 @@ export default function CipherField({ className = "" }) {
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = "rgba(255,90,31,.8)";
+      ctx.strokeStyle = "rgba(255,77,10,.8)";
       ctx.lineWidth = 1.5;
       const r = Math.min(W, H) * 0.09;
       ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
       ctx.globalAlpha = 0.4;
       ctx.beginPath(); ctx.arc(cx, cy, r * 1.35, 0, Math.PI * 2); ctx.stroke();
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = "#ff5a1f";
+      ctx.strokeStyle = "#ff4d0a";
       ctx.lineWidth = 2.5;
       const xr = r * 0.4;
       ctx.beginPath();
@@ -86,7 +86,7 @@ export default function CipherField({ className = "" }) {
         scrambleSeed += 7;
         scramble = scrambleString(scrambleSeed);
       }
-      ctx.fillStyle = "#ff761f";
+      ctx.fillStyle = "#ff641d";
       ctx.font = "13px 'JetBrains Mono', monospace";
       ctx.fillText(scramble, cx, cy + r * 1.9);
     };
