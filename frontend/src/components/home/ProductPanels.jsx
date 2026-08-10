@@ -90,8 +90,14 @@ export default function ProductPanels() {
   const d = DETAILS[active];
 
   return (
-    <section className="bg-[#fbfaf7] pt-28 pb-20 md:pt-36 md:pb-28 relative overflow-clip" data-testid="products-section">
+    <section className="pt-28 pb-20 md:pt-36 md:pb-28 relative overflow-clip" style={{ background: "var(--marketing-light-medium)" }} data-testid="products-section">
       <NetSegment name="products" />
+      {/* hero → products: Grainient eases in instead of cutting straight from opaque black */}
+      <div
+        className="absolute inset-x-0 top-0 h-[200px] pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.75) 22%, rgba(249,249,249,0.5) 64%, rgba(249,249,249,0) 100%)" }}
+        aria-hidden="true"
+      />
       <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-light)" }} aria-hidden="true" />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead

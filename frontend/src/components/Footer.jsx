@@ -23,7 +23,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-black text-[#fbfaf7] relative overflow-clip" data-testid="site-footer">
+    <footer className="text-[#fbfaf7] relative overflow-clip" style={{ background: "rgba(0,0,0,0.36)" }} data-testid="site-footer">
       <NetSegment name="footer" />
       <div className="relative z-10 max-w-[1500px] mx-auto px-6 md:px-10 pt-20">
         <p className="text-xl md:text-2xl font-semibold tracking-tight text-white/90 max-w-md">From intent to completed, reviewable work.</p>
@@ -74,24 +74,33 @@ export default function Footer() {
       </div>
 
       {!simplified && (
-        <div ref={wrapRef} className="relative z-10 select-none overflow-clip" aria-hidden="true" data-testid="footer-wordmark">
+        <div ref={wrapRef} className="relative z-10 select-none overflow-clip" data-testid="footer-wordmark">
           <motion.div
             initial={reduce ? false : { y: 28, opacity: 0.9 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: EASE }}
           >
-            <div
-              className={`ax-footer-wordmark text-[#fbfaf7] ${reduce ? "" : "ax-footer-drift"}`}
-              data-paused={paused}
-              style={{ fontSize: "clamp(160px, 30vw, 560px)", marginLeft: "-4vw", paddingTop: "0.06em" }}
+            <Link
+              to="/"
+              aria-label="AlterX — Home"
+              className="ax-footer-wordmark-link"
+              onPointerMove={(e) => {
+                const r = e.currentTarget.getBoundingClientRect();
+                e.currentTarget.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+                e.currentTarget.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+              }}
             >
-              ALTER
-              <span className="ax-footer-x" style={{ pointerEvents: "auto" }}>
-                X
-                <span className="ax-footer-x-fill">X</span>
-              </span>
-            </div>
+              <div
+                className={`ax-footer-wordmark ax-footer-wordmark-stack ${reduce ? "" : "ax-footer-drift"}`}
+                data-paused={paused}
+                style={{ fontSize: "clamp(160px, 30vw, 560px)", marginLeft: "-4vw", paddingTop: "0.06em" }}
+                aria-hidden="true"
+              >
+                <span className="ax-footer-wordmark-outline">AlterX</span>
+                <span className="ax-footer-wordmark-fill">AlterX</span>
+              </div>
+            </Link>
           </motion.div>
         </div>
       )}

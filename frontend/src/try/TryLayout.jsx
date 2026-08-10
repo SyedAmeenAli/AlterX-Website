@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Outlet, NavLink, Link, useLocation } from "react-router-dom";
 import { Plus, ListChecks, ShieldCheck, Repeat, Plug, BookOpen, FileCheck, BarChart3, Settings, HelpCircle, ChevronDown, Search } from "lucide-react";
 import CommandBar from "@/try/CommandBar";
 import Tour from "@/try/Tour";
 import { tourDone } from "@/lib/store";
+import ParticleLogo from "@/components/ui/ParticleLogo";
+import "@/try/sidebar-dock.css";
 
 const NAV_ITEMS = [
   { to: "/try-alter-engine/new", label: "New mission", icon: Plus, key: "new" },
@@ -17,15 +19,34 @@ const NAV_ITEMS = [
   { to: "/try-alter-engine/settings", label: "Settings", icon: Settings, key: "settings" },
 ];
 
+const MAG_RANGE = 78; // px — falloff radius for pointer-distance magnification
+const MAG_MAX = 0.26; // hovered icon tops out at 1.26x
+
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const l = () => setReduced(mq.matches);
+    mq.addEventListener ? mq.addEventListener("change", l) : mq.addListener(l);
+    return () => (mq.removeEventListener ? mq.removeEventListener("change", l) : mq.removeListener(l));
+  }, []);
+  return reduced;
+}
+
 export default function TryLayout() {
-  const [expanded, setExpanded] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [mouseY, setMouseY] = useState(null);
+  const [hoverKey, setHoverKey] = useState(null);
+  const itemRefs = useRef([]);
+  const reducedMotion = useReducedMotion();
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/try-alter-engine" && !tourDone()) {
+    if (location.pathname.startsWith("/try-alter-engine") && !tourDone()) {
       const t = setTimeout(() => setTourOpen(true), 900);
       return () => clearTimeout(t);
     }
@@ -46,22 +67,30 @@ export default function TryLayout() {
 
   useEffect(() => { setUserOpen(false); }, [location.pathname]);
 
+  // Apple-Dock-principle proximity magnification: continuous falloff from
+  // pointer Y, not a per-item :hover scale. Rail itself never moves or
+  // resizes — icons scale from their own center only.
+  const scaleFor = (i) => {
+    if (reducedMotion || mouseY == null) return 1;
+    const el = itemRefs.current[i];
+    if (!el) return 1;
+    const r = el.getBoundingClientRect();
+    const center = r.top + r.height / 2;
+    const dist = Math.abs(mouseY - center);
+    const t = Math.max(0, 1 - dist / MAG_RANGE);
+    return 1 + MAG_MAX * t;
+  };
+
   return (
-    <div className="min-h-screen bg-[#090909] text-[#fbfaf7] flex flex-col" style={{ fontSize: "15px" }}>
+    <div className="min-h-screen bg-[#080808] text-[#fbfaf7] flex flex-col" style={{ fontSize: "15px" }}>
       <a href="#try-main" className="ax-skip">Skip to content</a>
 
       <header className="h-[56px] shrink-0 border-b border-white/10 bg-black flex items-center justify-between px-4 gap-4 sticky top-0 z-[60]" data-testid="try-topbar">
         <div className="flex items-center gap-3 min-w-0">
-          <Link to="/" className="shrink-0" aria-label="AlterX home">
-            <span className="text-[16px] font-semibold tracking-[-0.03em]">ALTER<span className="text-[#ff4d0a]">X</span></span>
-          </Link>
+          <ParticleLogo light size={30} textSize={19} />
           <span className="text-white/20">/</span>
           <span className="text-[13px] font-medium text-white/60 truncate" data-testid="try-workspace-label">
-            {localStorage.getItem("ax_workspace_name") || "Demo workspace"}
-          </span>
-          <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-medium text-white/40 ml-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d0a] inline-block" aria-hidden="true" />
-            Demo
+            {localStorage.getItem("ax_workspace_name") || "My workspace"}
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -78,7 +107,7 @@ export default function TryLayout() {
             </button>
             {userOpen && (
               <div className="absolute right-0 top-full mt-2 w-64 bg-black border border-white/15 rounded-[4px] py-1 z-50" role="menu">
-                <p className="px-4 py-2.5 text-[12px] text-white/50 border-b border-white/10 leading-relaxed">This is an illustrative frontend demonstration. It does not execute external actions.</p>
+                <p className="px-4 py-2.5 text-[12px] text-white/50 border-b border-white/10 leading-relaxed">This workspace runs locally in your browser and does not perform real external actions.</p>
                 <Link to="/try-alter-engine/settings" className="block px-4 py-2 text-[13px] hover:bg-white/5" role="menuitem">Settings</Link>
                 <Link to="/" className="block px-4 py-2 text-[13px] hover:bg-white/5" role="menuitem">Exit to website</Link>
               </div>
@@ -89,37 +118,60 @@ export default function TryLayout() {
 
       <div className="flex flex-1 min-h-0">
         <nav
-          className={`${expanded ? "w-[236px]" : "w-[68px]"} shrink-0 border-r border-white/10 bg-black transition-[width] duration-300 py-3 flex flex-col sticky top-[56px] h-[calc(100vh-56px)] overflow-y-auto overflow-x-hidden z-[50]`}
+          className={`axd-rail ${expanded ? "w-[212px]" : "w-[72px]"} shrink-0 border-r border-white/10 bg-black py-3 flex flex-col items-stretch sticky top-[56px] h-[calc(100vh-56px)] z-[50] transition-[width] duration-200 ease-out`}
           aria-label="Application"
           data-testid="try-sidebar"
           onMouseEnter={() => setExpanded(true)}
-          onMouseLeave={() => setExpanded(false)}
-          onFocus={() => setExpanded(true)}
-          onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setExpanded(false); }}
+          onMouseLeave={() => { setExpanded(false); setMouseY(null); setHoverKey(null); }}
+          onMouseMove={(e) => setMouseY(e.clientY)}
         >
-          {NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.key}
-              to={item.to}
-              data-tour={`nav-${item.key}`}
-              className={({ isActive }) =>
-                `flex items-center gap-3.5 mx-2.5 my-0.5 px-[13px] py-2.5 rounded-[4px] text-[13.5px] font-medium whitespace-nowrap transition-colors ${
-                  isActive ? "bg-[#ff4d0a] text-black" : "text-white/60 hover:text-white hover:bg-white/[.05]"
-                }`
-              }
-              data-testid={`try-nav-${item.key}`}
-              title={item.label}
-            >
-              <item.icon size={17} className="shrink-0" aria-hidden="true" />
-              <span className={`transition-opacity duration-200 ${expanded ? "opacity-100" : "opacity-0"}`}>{item.label}</span>
-            </NavLink>
+          {NAV_ITEMS.map((item, i) => (
+            <div key={item.key} className="relative my-0.5 px-2.5" onMouseEnter={() => setHoverKey(item.key)} onMouseLeave={() => setHoverKey((k) => (k === item.key ? null : k))}>
+              <NavLink
+                to={item.to}
+                end={item.key === "missions" || item.key === "workflows"}
+                data-tour={`nav-${item.key}`}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 py-2.5 rounded-[9px] transition-colors duration-150 ${
+                    isActive ? "bg-[#ff4d0a] text-black" : hoverKey === item.key ? "text-[#ff4d0a] bg-[#ff4d0a]/[.08]" : "text-white/55"
+                  }`
+                }
+                data-testid={`try-nav-${item.key}`}
+                aria-label={item.label}
+                onFocus={() => setHoverKey(item.key)}
+                onBlur={() => setHoverKey((k) => (k === item.key ? null : k))}
+              >
+                {({ isActive }) => (
+                  <>
+                    <span
+                      ref={(el) => (itemRefs.current[i] = el)}
+                      className="axd-item flex items-center justify-center w-9 h-9 shrink-0"
+                      style={{ transform: `scale(${scaleFor(i)})`, transition: "transform 200ms cubic-bezier(.22,1,.36,1)" }}
+                    >
+                      <item.icon
+                        size={28}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                        style={hoverKey === item.key ? { filter: `drop-shadow(0 0 9px rgba(249,115,22,${isActive ? ".5" : ".35"}))` } : undefined}
+                      />
+                    </span>
+                    <span className={`text-[13.5px] font-medium whitespace-nowrap transition-opacity duration-150 ${expanded ? "opacity-100 delay-100" : "opacity-0"}`}>{item.label}</span>
+                  </>
+                )}
+              </NavLink>
+              {!expanded && hoverKey === item.key && (
+                <span className="axd-tooltip pointer-events-none absolute left-full ml-2.5 top-1/2 z-50 whitespace-nowrap text-[12.5px] font-medium text-[#fbfaf7] bg-[#171717] border border-white/[.08] rounded-[6px] px-[9px] py-[6px]" role="tooltip">
+                  {item.label}
+                </span>
+              )}
+            </div>
           ))}
         </nav>
         <main id="try-main" className="flex-1 min-w-0">
           <Outlet />
         </main>
       </div>
-      <CommandBar open={cmdOpen} onClose={() => setCmdOpen(false)} onStartTour={() => { setCmdOpen(false); setTourOpen(true); }} onToggleSidebar={() => setExpanded((c) => !c)} />
+      <CommandBar open={cmdOpen} onClose={() => setCmdOpen(false)} onStartTour={() => { setCmdOpen(false); setTourOpen(true); }} />
       {tourOpen && <Tour onClose={() => setTourOpen(false)} />}
     </div>
   );

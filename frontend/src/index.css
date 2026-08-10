@@ -47,7 +47,7 @@
 
 * { border-color: hsl(var(--border)); }
 
-html { scroll-behavior: auto; }
+html { scroll-behavior: auto; scroll-padding-top: calc(var(--header-height) + 16px); }
 
 body {
   margin: 0;
@@ -233,16 +233,150 @@ b, strong { font-weight: 600; }
 }
 .ax-footer-drift { animation: alterxFooterDrift 22s ease-in-out infinite; will-change: transform; }
 .ax-footer-drift[data-paused="true"] { animation-play-state: paused; }
-.ax-footer-x { position: relative; display: inline-block; }
-.ax-footer-x .ax-footer-x-fill {
+
+/* whole-word pointer-reactive orange fill — rest state is a thin warm-white
+   outline (transparent fill), hover/focus/tap reveals a radial-gradient
+   orange fill centered on the pointer via --mx/--my, set from JS on
+   pointermove; CSS-only fallback (:hover/:focus-visible/:active with the
+   custom props' initial 50%/50%) covers touch, no pointer tracking required
+   there. Two stacked text layers so the base outline and the gradient fill
+   cross-fade independently. */
+.ax-footer-wordmark-link {
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  --mx: 50%;
+  --my: 50%;
+}
+.ax-footer-wordmark-link:focus-visible { outline: 2px solid #F97316; outline-offset: 10px; border-radius: 2px; }
+
+.ax-footer-wordmark-stack { position: relative; display: block; }
+.ax-footer-wordmark-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(249, 249, 249, .22);
+}
+.ax-footer-wordmark-fill {
   position: absolute;
   inset: 0;
-  color: var(--ax-orange);
-  clip-path: polygon(0 100%, 0 100%, 0 100%);
-  transition: clip-path 0.45s var(--ax-ease);
+  color: transparent;
+  background: radial-gradient(ellipse 42% 42% at var(--mx) var(--my), #FF8A45 0%, #F97316 42%, #FF641D 70%, rgba(249, 115, 22, .3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  transition: opacity 450ms ease;
   pointer-events: none;
+  text-shadow: 0 0 30px rgba(249, 115, 22, 0);
 }
-.ax-footer-x:hover .ax-footer-x-fill { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+.ax-footer-wordmark-link:hover .ax-footer-wordmark-fill,
+.ax-footer-wordmark-link:focus-visible .ax-footer-wordmark-fill,
+.ax-footer-wordmark-link:active .ax-footer-wordmark-fill {
+  opacity: 1;
+  text-shadow: 0 0 30px rgba(249, 115, 22, .10);
+}
+.ax-footer-wordmark-link:hover .ax-footer-wordmark-stack,
+.ax-footer-wordmark-link:focus-visible .ax-footer-wordmark-stack {
+  transform: translateY(-2px);
+}
+.ax-footer-wordmark-stack { transition: transform 450ms ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ax-footer-wordmark-fill, .ax-footer-wordmark-stack { transition: none; }
+}
+
+/* ---------- global marketing grainient background ---------- */
+.marketingGrainientBackground {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.marketingContent { position: relative; z-index: 1; }
+
+/* section veils over the global Grainient — tokens, reuse instead of
+   inventing a value per file. Visibility only; the shader itself never
+   changes per section/page. */
+:root {
+  --marketing-light-strong: rgba(249, 249, 249, 0.72);
+  --marketing-light-medium: rgba(249, 249, 249, 0.66);
+  --marketing-dark-strong: rgba(0, 0, 0, 0.72);
+  --marketing-dark-medium: rgba(0, 0, 0, 0.6);
+  --marketing-security: rgba(0, 0, 0, 0.88);
+  --marketing-legal: rgba(249, 249, 249, 0.84);
+}
+
+/* security section on Home — text sits over LetterGlitch; boost legibility
+   with shadow only, background/veil untouched. */
+.security-readable h2,
+.security-readable p,
+.security-readable .font-bold {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.95);
+}
+
+/* ---------- orange sketch thread (background, scroll-drawn) ---------- */
+.ax-net { --thread-progress: 0; }
+.sketchThread {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--thread-progress, 0));
+  transition: stroke-dashoffset 0.05s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sketchThread { stroke-dashoffset: 0; transition: none; }
+}
+
+/* ---------- header nav gooey hover ---------- */
+.ax-nav-gooey {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #ff7a1f 0%, #f97316 48%, #c94312 100%);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.82);
+  transition:
+    left 200ms cubic-bezier(0.25, 1, 0.5, 1),
+    top 200ms cubic-bezier(0.25, 1, 0.5, 1),
+    width 200ms cubic-bezier(0.25, 1, 0.5, 1),
+    height 200ms cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 140ms ease,
+    transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.ax-nav-gooey.is-active { opacity: 1; transform: scale(1); }
+/* nav trigger — no default ax-fill hover fill; the gooey layer below IS
+   the hover surface. Text colour switches with a deliberate delay so the
+   orange forms first. */
+.ax-nav-trigger { background: none; transition: color 200ms ease 180ms; }
+.ax-nav-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--psize);
+  height: var(--psize);
+  border-radius: 999px;
+  background: var(--pcolor);
+  pointer-events: none;
+  animation: ax-nav-particle 760ms cubic-bezier(0.25, 1, 0.5, 1) var(--pdelay) both;
+}
+@keyframes ax-nav-particle {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  16% { opacity: 1; }
+  62% { opacity: 0.9; transform: translate(calc(-50% + var(--px)), calc(-50% + var(--py))) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--px) * 0.6), calc(-50% + var(--py) * 0.6)) scale(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ax-nav-particle { display: none; }
+  .ax-nav-trigger { transition: color 100ms linear; }
+  .ax-nav-gooey { transition: left 100ms linear, top 100ms linear, width 100ms linear, height 100ms linear, opacity 100ms linear; }
+}
 
 /* ---------- execution thread ---------- */
 .ax-thread { stroke: var(--ax-orange); stroke-width: 2px; fill: none; vector-effect: non-scaling-stroke; }

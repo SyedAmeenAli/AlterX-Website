@@ -14,7 +14,7 @@ export default function Products() {
         title={["One Engine.", "Four ways to put it to work."]}
         body="Alter Engine is the flagship execution product. The AlterX Platform is the interface through which people describe outcomes, review plans, approve actions, observe work and review results — not a competing product."
       />
-      <section className="bg-[#fbfaf7] pb-24">
+      <section className="pb-24" style={{ background: "var(--marketing-light-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="border-b border-black/15 mb-20">
             {PRODUCT_PANELS.map((p, i) => (

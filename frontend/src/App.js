@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Outlet, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MarketingGrainientBackground from "@/components/marketing/MarketingGrainientBackground";
 
 import Home from "@/pages/Home";
 import AlterEngine from "@/pages/AlterEngine";
 import Platform from "@/pages/Platform";
-import Products from "@/pages/Products";
 import CognitiveAI from "@/pages/CognitiveAI";
 import Solutions from "@/pages/Solutions";
 import SolutionDetail from "@/pages/SolutionDetail";
 import CustomWorkflows from "@/pages/CustomWorkflows";
+import VoiceWorkflows from "@/pages/VoiceWorkflows";
 import Developers from "@/pages/Developers";
 import Integrations from "@/pages/Integrations";
 import Security from "@/pages/Security";
@@ -32,6 +33,8 @@ import Missions from "@/try/Missions";
 import MissionDetail from "@/try/MissionDetail";
 import Approvals from "@/try/Approvals";
 import Workflows from "@/try/Workflows";
+import WorkflowComposer from "@/try/WorkflowComposer";
+import WorkflowDetail from "@/try/WorkflowDetail";
 import Connections from "@/try/Connections";
 import Knowledge from "@/try/Knowledge";
 import Evidence from "@/try/Evidence";
@@ -53,11 +56,14 @@ function ScrollToTop() {
 function PublicLayout() {
   return (
     <>
-      <Header />
-      <main id="main">
-        <Outlet />
-      </main>
-      <Footer />
+      <MarketingGrainientBackground />
+      <div className="marketingContent">
+        <Header />
+        <main id="main">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
@@ -71,11 +77,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/alter-engine" element={<AlterEngine />} />
           <Route path="/platform" element={<Platform />} />
-          <Route path="/products" element={<Products />} />
+          {/* /products was a duplicate index of Alter Engine content; no
+              longer part of primary navigation — redirect, don't 404. */}
+          <Route path="/products" element={<Navigate to="/alter-engine" replace />} />
           <Route path="/cognitive-ai" element={<CognitiveAI />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/solutions/cognitive-ai" element={<CognitiveAI />} />
           <Route path="/solutions/custom-workflows" element={<CustomWorkflows />} />
+          <Route path="/solutions/voice-workflows" element={<VoiceWorkflows />} />
           <Route path="/solutions/:slug" element={<SolutionDetail />} />
           <Route path="/developers" element={<Developers />} />
           <Route path="/integrations" element={<Integrations />} />
@@ -102,6 +111,8 @@ function App() {
           <Route path="missions/:id" element={<MissionDetail />} />
           <Route path="approvals" element={<Approvals />} />
           <Route path="workflows" element={<Workflows />} />
+          <Route path="workflows/new" element={<WorkflowComposer />} />
+          <Route path="workflows/:id" element={<WorkflowDetail />} />
           <Route path="connections" element={<Connections />} />
           <Route path="knowledge" element={<Knowledge />} />
           <Route path="evidence" element={<Evidence />} />

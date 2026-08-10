@@ -17,7 +17,7 @@ export default function Careers() {
   return (
     <>
       <PageHero eyebrow="Careers" title="Build systems that move real work." body="AlterX is building governed AI execution from Hyderabad, for businesses everywhere." />
-      <section className="bg-[#fbfaf7] pb-24">
+      <section className="pb-24" style={{ background: "rgba(249,249,249,0.68)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-px bg-black/15 border border-black/15 mb-24">
             {SECTIONS.map((s) => (

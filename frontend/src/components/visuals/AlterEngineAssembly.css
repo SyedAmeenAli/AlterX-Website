@@ -1,0 +1,218 @@
+/* AlterEngineAssembly — 8 transparent-orange CSS-3D cubes (the 8 corners
+   of a cube), converge once on entry, then sit calm; hover makes the
+   already-assembled object reactive. Zero blue, zero light mask panels,
+   no infinite loader loop. */
+
+.aea-stage {
+  --engine-orange: #F97316;
+  --engine-orange-hot: #FF641D;
+  --engine-orange-light: #FF8A45;
+  --engine-orange-dark: #C94312;
+  --engine-glow: rgba(249, 115, 22, .30);
+
+  --aea-tiltX: 0deg;
+  --aea-tiltY: 0deg;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 16px rgba(249, 115, 22, .10));
+  transition: filter 400ms ease;
+}
+.aea-stage[data-active="true"] { filter: drop-shadow(0 0 24px rgba(249, 115, 22, .25)) drop-shadow(0 0 60px rgba(249, 115, 22, .08)); }
+
+/* three sizes, one identity */
+.aea-stage--nav  { perspective: 700px;  --aea-w: 26px; --aea-gap: 10px; --aea-scatter: 60px;  --aea-hover-sep: 3px; }
+.aea-stage--tile { perspective: 1000px; --aea-w: 58px; --aea-gap: 20px; --aea-scatter: 150px; --aea-hover-sep: 6px; }
+.aea-stage--hero { perspective: 1500px; --aea-w: 110px; --aea-gap: 40px; --aea-scatter: 280px; --aea-hover-sep: 9px; }
+.aea-stage { --aea-step: calc(var(--aea-w) + var(--aea-gap)); }
+
+.aea-domlabel {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  transform: translateX(-50%) translateY(6px);
+  opacity: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--engine-orange-light);
+  white-space: nowrap;
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.aea-domlabel[data-visible="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.aea-tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(-16deg) rotateY(28deg) rotateX(var(--aea-tiltX)) rotateY(var(--aea-tiltY));
+  transition: transform 280ms cubic-bezier(.25,1,.5,1);
+}
+
+.aea-group { position: relative; transform-style: preserve-3d; }
+
+.aea-cube {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: var(--aea-w);
+  height: var(--aea-w);
+  margin: calc(var(--aea-w) / -2) 0 0 calc(var(--aea-w) / -2);
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform:
+    translate3d(calc(var(--x) * var(--aea-scatter)), calc(var(--y) * var(--aea-scatter)), calc(var(--z) * var(--aea-scatter)))
+    scale(.4);
+  transition: transform 700ms cubic-bezier(.16, 1, .3, 1), opacity 480ms ease;
+  transition-delay: calc(var(--i) * 90ms);
+}
+
+.aea-stage[data-entered="true"] .aea-cube {
+  opacity: 1;
+  transform: translate3d(calc(var(--x) * var(--aea-step)), calc(var(--y) * var(--aea-step)), calc(var(--z) * var(--aea-step))) scale(1);
+}
+
+/* assembled + hovered: the whole structure breathes outward slightly */
+.aea-stage[data-entered="true"][data-active="true"] .aea-cube {
+  transform: translate3d(
+    calc(var(--x) * (var(--aea-step) + var(--aea-hover-sep))),
+    calc(var(--y) * (var(--aea-step) + var(--aea-hover-sep))),
+    calc(var(--z) * (var(--aea-step) + var(--aea-hover-sep)))
+  ) scale(1);
+  transition-delay: calc(var(--i) * 18ms);
+}
+
+.aea-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(249, 115, 22, .55);
+  box-shadow: inset 0 0 16px rgba(255, 255, 255, .025), 0 0 18px rgba(249, 115, 22, .06);
+  backface-visibility: hidden;
+  transition: background 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+}
+/* orange architectural glass, not solid plastic — each face a different
+   transparency/brightness so the 3D form still reads clearly */
+.aea-face--top    { background: linear-gradient(145deg, rgba(255,138,69,.20), rgba(249,115,22,.12)); transform: rotateX(90deg) translateZ(calc(var(--aea-w) / 2)); }
+.aea-face--bottom { background: rgba(201,67,18,.09); transform: rotateX(-90deg) translateZ(calc(var(--aea-w) / 2)); }
+.aea-face--front  { background: rgba(249,115,22,.14); transform: translateZ(calc(var(--aea-w) / 2)); }
+.aea-face--back   { background: rgba(201,67,18,.10); transform: rotateY(180deg) translateZ(calc(var(--aea-w) / 2)); }
+.aea-face--right  { background: rgba(201,67,18,.17); transform: rotateY(90deg) translateZ(calc(var(--aea-w) / 2)); }
+.aea-face--left   { background: rgba(201,67,18,.13); transform: rotateY(-90deg) translateZ(calc(var(--aea-w) / 2)); }
+
+/* the active core — objective becoming active work */
+.aea-stage[data-active="true"] .aea-cube[data-core="true"] .aea-face {
+  background: linear-gradient(145deg, rgba(255,138,69,.45), rgba(249,115,22,.32), rgba(201,67,18,.30));
+  border-color: rgba(249,115,22,.9);
+  box-shadow: inset 0 0 16px rgba(255,255,255,.06), 0 0 22px rgba(249,115,22,.24);
+}
+/* everyone's edges brighten a touch on hover, not just the core */
+.aea-stage[data-active="true"] .aea-face { border-color: rgba(249,115,22,.78); }
+
+/* ---------- state: sequence ("How it works") — blocks separate into
+   three sequential layers instead of the assembled cube corners ---------- */
+.aea-stage[data-state="sequence"][data-entered="true"] .aea-cube {
+  transform: translate3d(
+    calc((var(--i) - 3.5) * (var(--aea-step) * .62)),
+    calc((var(--layer) - 1) * (var(--aea-step) * 1.05)),
+    calc(var(--layer) * var(--aea-step) * .4)
+  ) scale(1);
+}
+.aea-stage[data-state="sequence"][data-active="true"] .aea-cube {
+  transform: translate3d(
+    calc((var(--i) - 3.5) * (var(--aea-step) * .72)),
+    calc((var(--layer) - 1) * (var(--aea-step) * 1.2)),
+    calc(var(--layer) * var(--aea-step) * .5)
+  ) scale(1);
+}
+
+/* ---------- state: boundary ("Human approvals") — everything resolves
+   except the core, which pauses just short of joining ---------- */
+.aea-boundary-line {
+  position: absolute;
+  top: 8%; bottom: 8%;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(rgba(249,115,22,0), var(--engine-orange) 20%, var(--engine-orange) 80%, rgba(249,115,22,0));
+  opacity: 0;
+  transition: opacity 400ms ease;
+  transition-delay: 900ms;
+  pointer-events: none;
+}
+.aea-stage[data-state="boundary"][data-entered="true"] .aea-boundary-line { opacity: .8; }
+.aea-stage[data-state="boundary"][data-entered="true"] .aea-cube[data-core="true"] {
+  transform: translate3d(
+    calc(var(--x) * var(--aea-step) + var(--aea-step) * .55),
+    calc(var(--y) * var(--aea-step)),
+    calc(var(--z) * var(--aea-step))
+  ) scale(1);
+  transition-delay: 720ms;
+}
+.aea-stage[data-state="boundary"][data-entered="true"] .aea-cube[data-core="true"] .aea-face {
+  border-color: rgba(255,255,255,.5);
+  box-shadow: inset 0 0 16px rgba(255,255,255,.06), 0 0 16px rgba(249,115,22,.2);
+}
+
+/* ---------- state: platform ("AlterX Platform") — structure pulls back
+   slightly, the ground/surrounding surface becomes the point of focus ---------- */
+.aea-stage[data-state="platform"][data-entered="true"] .aea-cube {
+  transform: translate3d(calc(var(--x) * var(--aea-step) * 1.32), calc(var(--y) * var(--aea-step) * 1.32), calc(var(--z) * var(--aea-step) * 1.32)) scale(.88);
+}
+.aea-stage[data-state="platform"] .aea-ground { opacity: 1; box-shadow: 0 0 70px rgba(249,115,22,.14); }
+
+/* ---------- state: assemble ("Try Alter Engine") — resolves tighter and
+   faster than the default core, reads as "quickly becoming one thing" ---------- */
+.aea-stage[data-state="assemble"][data-entered="true"] .aea-cube {
+  transform: translate3d(calc(var(--x) * var(--aea-step) * .82), calc(var(--y) * var(--aea-step) * .82), calc(var(--z) * var(--aea-step) * .82)) scale(1.06);
+  transition-duration: 380ms;
+}
+
+/* ---------- state: split ("Checking & recovery") — one piece detaches
+   and returns, once, on hover ---------- */
+.aea-stage[data-state="split"][data-active="true"] .aea-cube[data-piece="true"] {
+  animation: aea-detach-return 900ms cubic-bezier(.25,1,.5,1) both;
+}
+@keyframes aea-detach-return {
+  0%   { transform: translate3d(calc(var(--x) * var(--aea-step)), calc(var(--y) * var(--aea-step)), calc(var(--z) * var(--aea-step))) scale(1); }
+  40%  { transform: translate3d(calc(var(--x) * var(--aea-step) * 1.9), calc(var(--y) * var(--aea-step) * 1.9 - 14px), calc(var(--z) * var(--aea-step) * 1.9)) scale(.85); }
+  70%  { transform: translate3d(calc(var(--x) * var(--aea-step) * 1.9), calc(var(--y) * var(--aea-step) * 1.9 - 14px), calc(var(--z) * var(--aea-step) * 1.9)) scale(.85); }
+  100% { transform: translate3d(calc(var(--x) * var(--aea-step)), calc(var(--y) * var(--aea-step)), calc(var(--z) * var(--aea-step))) scale(1); }
+}
+
+/* ---------- execution ground — transparent surface, not a solid square ---------- */
+.aea-ground {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: calc(var(--aea-step) * 3.1);
+  height: calc(var(--aea-step) * 3.1);
+  margin: calc(var(--aea-step) * -1.55) 0 0 calc(var(--aea-step) * -1.55);
+  transform: rotateX(90deg) translateZ(calc(var(--aea-step) * -1.15));
+  background: linear-gradient(135deg, rgba(249,115,22,.13), rgba(249,115,22,.025));
+  border: 1px solid rgba(249,115,22,.20);
+  border-radius: 4px;
+  box-shadow: 0 0 50px rgba(249,115,22,.08);
+  opacity: 0;
+  transition: opacity 460ms ease, box-shadow 460ms ease;
+  transition-delay: 980ms;
+}
+.aea-stage[data-entered="true"] .aea-ground { opacity: 1; }
+.aea-stage[data-active="true"] .aea-ground { box-shadow: 0 0 70px rgba(249,115,22,.16); transition-delay: 0ms; }
+
+.aea-ground-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(249,115,22,.18), rgba(249,115,22,0) 60%);
+  opacity: .6;
+  transition: opacity 300ms ease;
+}
+.aea-stage[data-active="true"] .aea-ground-shine { opacity: 1; }
+
+/* ---------- reduced motion: assembled + glowing, no motion at all ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .aea-tilt { transition: none; }
+  .aea-cube, .aea-face, .aea-ground, .aea-ground-shine, .aea-stage { transition: none !important; }
+}
+
+/* ---------- mobile: no pointer tracking, structure stays stable ---------- */
+@media (max-width: 767px) {
+  .aea-tilt { transition: none; }
+}

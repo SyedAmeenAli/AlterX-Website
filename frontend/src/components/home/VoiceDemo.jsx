@@ -16,38 +16,58 @@ export default function VoiceDemo() {
   const [awaiting, setAwaiting] = useState(false);
   const [done, setDone] = useState(false);
   const timer = useRef();
+  const audioRef = useRef(null);
   const ind = VOICE_INDUSTRIES[tab];
 
   const reset = useCallback(() => {
     clearTimeout(timer.current);
     setLine(-1); setPlaying(false); setAwaiting(false); setDone(false);
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
   }, []);
 
   useEffect(() => { reset(); }, [tab, reset]);
   useEffect(() => () => clearTimeout(timer.current), []);
 
   const advance = useCallback((from) => {
+    // audio keeps running start to end, uninterrupted — only the transcript
+    // text and the approval card pause/resume, never the clip itself.
     const next = from + 1;
-    if (next >= ind.transcript.length) { setPlaying(false); setDone(true); return; }
+    if (next >= ind.transcript.length) {
+      setDone(true);
+      return;
+    }
     setLine(next);
-    if (ind.transcript[next].approval) { setAwaiting(true); setPlaying(false); return; }
+    if (ind.transcript[next].approval) {
+      setAwaiting(true);
+      return;
+    }
     timer.current = setTimeout(() => advance(next), 1500);
   }, [ind]);
 
   const play = () => {
     reset();
     setPlaying(true);
+    if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.play().catch(() => {}); }
     timer.current = setTimeout(() => advance(-1), 300);
   };
 
   const approve = () => {
-    setAwaiting(false); setPlaying(true);
+    setAwaiting(false);
     timer.current = setTimeout(() => advance(line), 400);
   };
 
   return (
-    <section className="bg-[#fbfaf7] py-24 md:py-36 cv-auto relative" data-testid="voice-section">
+    <section id="voice" className="bg-[#fbfaf7] py-24 md:py-36 cv-auto relative" data-testid="voice-section">
       <NetSegment name="voice" />
+      <audio
+        ref={audioRef}
+        src={ind.audio}
+        preload="none"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+        data-testid="voice-audio"
+      />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead
           num="05"

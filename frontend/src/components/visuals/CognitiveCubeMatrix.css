@@ -1,0 +1,158 @@
+/* CognitiveCubeMatrix — 27-unit CSS-3D field. AlterX orange system only,
+   zero hue-rotate, zero red. Three visible faces per cube (front/top/right)
+   — the rotation range never exposes the other three, so they're omitted
+   rather than wasted DOM. */
+
+:root {
+  --cog-orange: #F97316;
+  --cog-orange-light: #FF8A45;
+  --cog-orange-dark: #C94312;
+  --cog-white: rgba(249, 249, 249, .82);
+  --cog-white-soft: rgba(249, 249, 249, .24);
+  --cog-edge: rgba(249, 249, 249, .42);
+}
+
+.ccm-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ccm-stage--home { perspective: 900px; }
+.ccm-stage--hero { perspective: 1300px; }
+
+.ccm-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 48%, rgba(249,115,22,.12), rgba(249,115,22,.035) 28%, transparent 52%);
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+.ccm-stage[data-active="true"] .ccm-glow { opacity: 1; background: radial-gradient(circle at 50% 48%, rgba(249,115,22,.18), rgba(249,115,22,.05) 28%, transparent 52%); }
+
+.ccm-stage--home { --ccm-w: 30px; --ccm-gap: 8px; }
+.ccm-stage--hero { --ccm-w: 50px; --ccm-gap: 12px; }
+
+/* layer 1 — ambient rotation only, never touched by hover/pointer. A real,
+   clearly-visible continuous turn (not a barely-there oscillation) —
+   slow and calm, not a loader: one full turn every 34s. */
+.ccm-orbit {
+  transform-style: preserve-3d;
+  animation: ccm-ambient 34s linear infinite;
+}
+@keyframes ccm-ambient {
+  from { transform: rotateX(-14deg) rotateY(0deg); }
+  to   { transform: rotateX(-14deg) rotateY(360deg); }
+}
+
+/* layer 2 — pointer tilt, continuous, no delay */
+.ccm-tilt {
+  --ccm-tiltX: 0deg;
+  --ccm-tiltY: 0deg;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--ccm-tiltX)) rotateY(var(--ccm-tiltY));
+  transition: transform 240ms cubic-bezier(.25,1,.5,1);
+}
+
+/* layer 3 — "rotate toward viewer" on hover, 120ms delay per spec timeline */
+.ccm-viewer {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 230ms cubic-bezier(.25,1,.5,1);
+}
+.ccm-stage[data-active="true"] .ccm-viewer {
+  transform: rotateX(-4deg) rotateY(-6deg) translateZ(4px);
+  transition-delay: 120ms;
+}
+
+.ccm-cube {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: var(--ccm-w);
+  height: var(--ccm-w);
+  margin: calc(var(--ccm-w) / -2) 0 0 calc(var(--ccm-w) / -2);
+  transform-style: preserve-3d;
+  transform: translate3d(
+    calc(var(--x) * (var(--ccm-w) + var(--ccm-gap))),
+    calc(var(--y) * (var(--ccm-w) + var(--ccm-gap))),
+    calc(var(--z) * (var(--ccm-w) + var(--ccm-gap)))
+  );
+  transition: transform 260ms cubic-bezier(.25,1,.5,1);
+}
+
+.ccm-face {
+  position: absolute;
+  inset: 0;
+  background: rgba(249, 249, 249, .05);
+  /* black edges — the near-white version disappeared against the light
+     page background this sits on */
+  border: 1.5px solid rgba(9, 9, 9, .55);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, .025);
+  backface-visibility: hidden;
+  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+.ccm-face--front  { transform: translateZ(calc(var(--ccm-w) / 2)); }
+.ccm-face--back   { transform: rotateY(180deg) translateZ(calc(var(--ccm-w) / 2)); filter: brightness(.7); }
+.ccm-face--top    { transform: rotateX(90deg) translateZ(calc(var(--ccm-w) / 2)); filter: brightness(1.18); }
+.ccm-face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--ccm-w) / 2)); filter: brightness(.6); }
+.ccm-face--right  { transform: rotateY(90deg) translateZ(calc(var(--ccm-w) / 2)); filter: brightness(.8); }
+.ccm-face--left   { transform: rotateY(-90deg) translateZ(calc(var(--ccm-w) / 2)); filter: brightness(.68); }
+
+/* a couple of units carry a faint orange edge at rest — "something here
+   is worth watching", without making the whole field orange */
+.ccm-cube[data-attn="self"] .ccm-face,
+.ccm-cube[data-attn="near"] .ccm-face { border-color: rgba(249,115,22,.3); }
+
+/* ---------- attention cube: activates 350–650ms into the hover sequence ---------- */
+.ccm-stage[data-active="true"] .ccm-cube[data-attn="self"] {
+  transition-delay: 350ms;
+}
+.ccm-stage[data-active="true"] .ccm-cube[data-attn="self"] .ccm-face {
+  background: linear-gradient(145deg, var(--cog-orange-light), var(--cog-orange) 50%, var(--cog-orange-dark));
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 0 24px rgba(249,115,22,.34), 0 0 60px rgba(249,115,22,.10);
+  transition-delay: 350ms;
+}
+
+/* neighbours: nudge 2-6px toward the attention cube, edge brightens */
+.ccm-stage[data-active="true"] .ccm-cube[data-attn="near"] {
+  transition-delay: 350ms;
+}
+.ccm-stage[data-active="true"] .ccm-cube[data-attn="near"] {
+  transform: translate3d(
+    calc(var(--x) * (var(--ccm-w) + var(--ccm-gap)) + var(--nx, 0px)),
+    calc(var(--y) * (var(--ccm-w) + var(--ccm-gap)) + var(--ny, 0px)),
+    calc(var(--z) * (var(--ccm-w) + var(--ccm-gap)) + var(--nz, 0px))
+  );
+}
+.ccm-stage[data-active="true"] .ccm-cube[data-attn="near"] .ccm-face {
+  border-color: rgba(249,249,249,.55);
+  transition-delay: 350ms;
+}
+
+/* ---------- individual cube hover — "inspect inventory item" ---------- */
+.ccm-cube:hover .ccm-face {
+  background: var(--cog-orange);
+  border-color: rgba(255,255,255,.38);
+  box-shadow: 0 0 18px rgba(249,115,22,.45), 0 0 42px rgba(249,115,22,.15);
+  transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+/* ---------- reduced motion: stable orientation, no rotation/tilt ---------- */
+.ccm-stage--static .ccm-orbit { animation: none; transform: rotateX(-11deg) rotateY(30deg); }
+.ccm-stage--static .ccm-tilt { transition: none; }
+.ccm-stage--static .ccm-viewer { transition: none; }
+.ccm-stage--static .ccm-cube { transition: none; }
+.ccm-stage--static .ccm-cube[data-attn="self"] .ccm-face { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ccm-orbit { animation: none !important; }
+  .ccm-tilt, .ccm-viewer, .ccm-cube, .ccm-face { transition: none !important; }
+}
+
+/* ---------- mobile: no pointer tracking, no ambient spin, stable + calm ---------- */
+@media (max-width: 767px) {
+  .ccm-orbit { animation: none; transform: rotateX(-11deg) rotateY(30deg); }
+  .ccm-tilt { transition: none; }
+}

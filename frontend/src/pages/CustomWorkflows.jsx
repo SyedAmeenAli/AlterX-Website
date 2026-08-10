@@ -4,6 +4,25 @@ import { ArrowRight } from "lucide-react";
 import { Eyebrow } from "@/components/kit";
 import { ThreadPath } from "@/components/thread";
 import { usePageMeta, Reveal, MaskLines } from "@/lib/anim";
+import WorkflowSetup from "@/components/custom-workflows/WorkflowSetup";
+import CustomWorkflowStack from "@/components/visuals/CustomWorkflowStack";
+
+/* Floating directly in the hero — no card, no background box, no border.
+   Self-hovers to react (layer separation + glow). */
+const CustomWorkflowsHeroVisual = () => {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <div
+      className="hidden lg:block absolute pointer-events-auto"
+      style={{ top: "62%", right: "7%", width: "380px", height: "460px", transform: "translateY(-50%) rotate(-1deg)" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      data-testid="cw-hero-visual"
+    >
+      <CustomWorkflowStack active={hovered} size="hero" showLabels />
+    </div>
+  );
+};
 
 /* The page itself is a workflow — one execution thread travels top to bottom. */
 
@@ -21,9 +40,9 @@ export default function CustomWorkflows() {
   usePageMeta("Custom workflows", "AlterX shapes Alter Engine around the work your team already performs — its handoffs, approval points and connected systems.");
   return (
     <>
-      <section className="bg-[#fbfaf7] text-[#090909] relative overflow-clip" style={{ paddingTop: "calc(var(--header-height) + 72px)" }}>
+      <section className="text-[#090909] relative overflow-clip" style={{ paddingTop: "calc(var(--header-height) + 72px)", background: "var(--marketing-light-medium)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-light)" }} aria-hidden="true" />
-        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pb-20">
+        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pb-20 lg:pr-[420px]">
           <Reveal><Eyebrow className="mb-7">Custom workflows</Eyebrow></Reveal>
           <MaskLines as="h1" lines={["Your process. Your systems.", "Human authority where it belongs."]} className="ax-display text-4xl sm:text-5xl lg:text-[64px] max-w-5xl" />
           <Reveal delay={0.15}>
@@ -35,9 +54,16 @@ export default function CustomWorkflows() {
             </div>
           </Reveal>
         </div>
+        <CustomWorkflowsHeroVisual />
       </section>
 
-      <section className="bg-[#fbfaf7] pb-28 relative" data-testid="cw-thread-page">
+      <section className="pb-24" style={{ background: "var(--marketing-light-medium)" }} data-testid="cw-setup-section">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+          <Reveal><WorkflowSetup /></Reveal>
+        </div>
+      </section>
+
+      <section className="pb-28 relative" style={{ background: "var(--marketing-light-medium)" }} data-testid="cw-thread-page">
         <div className="max-w-[1100px] mx-auto px-6 md:px-10 relative">
           {/* the spine */}
           <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 hidden sm:block" aria-hidden="true">
@@ -89,7 +115,7 @@ export default function CustomWorkflows() {
         </div>
       </section>
 
-      <section className="bg-black text-[#fbfaf7] py-24 text-center">
+      <section className="text-[#fbfaf7] py-24 text-center" style={{ background: "rgba(0,0,0,0.46)" }}>
         <div className="max-w-[760px] mx-auto px-6">
           <MaskLines as="h2" lines={["Bring us the process."]} className="ax-display text-3xl md:text-[46px]" />
           <p className="mt-5 text-white/60 max-w-xl mx-auto">The first conversation focuses on the outcome, the systems involved and where human judgment belongs.</p>

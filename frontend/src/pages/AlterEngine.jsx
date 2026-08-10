@@ -6,6 +6,25 @@ import { Eyebrow, FillLink } from "@/components/kit";
 import { ThreadPath, GradientRibbon } from "@/components/thread";
 import { usePageMeta, Reveal, MaskLines, EASE } from "@/lib/anim";
 import EngineStory from "@/components/home/EngineStory";
+import AlterEngineAssembly from "@/components/visuals/AlterEngineAssembly";
+import AlterEngineFAQ from "@/components/engine/AlterEngineFAQ";
+
+/* Same 8-cube assembly identity as the homepage tile and mega-nav — the
+   primary visual on the right, a real foreground box, not background
+   atmosphere. */
+const EngineHeroAssembly = () => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="relative h-[260px] md:h-[300px]"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      data-testid="engine-hero-assembly"
+    >
+      <AlterEngineAssembly active={hovered} size="hero" />
+    </div>
+  );
+};
 
 /* ------------------------------------------------------------------ */
 /* Hero — one outcome enters the system. The thread builds the path.  */
@@ -141,10 +160,10 @@ export default function AlterEngine() {
 
   return (
     <>
-      {/* HERO — fits the viewport */}
-      <section className="bg-black text-[#fbfaf7] relative overflow-clip" style={{ minHeight: "100svh", paddingTop: "calc(var(--header-height) + 48px)" }} data-testid="engine-hero">
+      {/* HERO */}
+      <section className="text-[#fbfaf7] relative overflow-clip" style={{ minHeight: "100svh", paddingTop: "calc(var(--header-height) + 48px)", background: "var(--marketing-dark-strong)" }} data-testid="engine-hero">
         <div className="absolute inset-y-0 left-0 w-[55%] pointer-events-none" style={{ background: "var(--ax-edge-burn)" }} aria-hidden="true" />
-        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-[46%_1fr] gap-14 items-center pb-20" style={{ minHeight: "calc(100svh - var(--header-height) - 48px)" }}>
+        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-[46%_1fr] gap-14 items-center" style={{ minHeight: "calc(100svh - var(--header-height) - 48px)" }}>
           <div>
             <Reveal><Eyebrow dark className="mb-6">Alter Engine</Eyebrow></Reveal>
             <MaskLines as="h1" lines={["One outcome.", "A visible path", "through the work."]} className="ax-display text-4xl sm:text-5xl lg:text-[64px]" />
@@ -158,7 +177,7 @@ export default function AlterEngine() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={0.2}><HeroThread /></Reveal>
+          <Reveal delay={0.1}><EngineHeroAssembly /></Reveal>
         </div>
       </section>
 
@@ -169,7 +188,7 @@ export default function AlterEngine() {
       </div>
 
       {/* RECOVERY — when the path breaks */}
-      <section id="recovery" className="bg-black text-[#fbfaf7] py-24 md:py-36 relative overflow-clip border-t border-white/[.07]" data-testid="engine-recovery">
+      <section id="recovery" className="text-[#fbfaf7] py-24 md:py-36 relative overflow-clip border-t border-white/[.07]" style={{ background: "rgba(0,0,0,0.62)" }} data-testid="engine-recovery">
         <GradientRibbon className="-bottom-32 left-0 w-full h-[400px]" flip opacity={0.4} id="axrb-recovery" />
         <div className="relative max-w-[1400px] mx-auto px-6 md:px-10">
           <Reveal><Eyebrow dark className="mb-6">Failure has a path</Eyebrow></Reveal>
@@ -182,7 +201,7 @@ export default function AlterEngine() {
       </section>
 
       {/* PLATFORM SUPERVISION */}
-      <section id="authority" className="bg-[#fbfaf7] py-24 md:py-32" data-testid="engine-platform">
+      <section id="authority" className="py-24 md:py-32 relative" style={{ background: "var(--marketing-light-medium)" }} data-testid="engine-platform">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-14 items-center">
           <div>
             <Reveal><Eyebrow className="mb-6">Supervised through AlterX Platform</Eyebrow></Reveal>
@@ -224,8 +243,10 @@ export default function AlterEngine() {
         </div>
       </section>
 
+      <AlterEngineFAQ />
+
       {/* FINAL COMPOSER — the thread resolves into the input underline */}
-      <section className="bg-black text-[#fbfaf7] py-24 md:py-36 relative overflow-clip" data-testid="engine-composer">
+      <section className="text-[#fbfaf7] py-24 md:py-36 relative overflow-clip" style={{ background: "rgba(0,0,0,0.46)" }} data-testid="engine-composer">
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(255,77,10,.12) 0%, rgba(255,77,10,0) 60%)" }} aria-hidden="true" />
         <div className="relative max-w-[820px] mx-auto px-6 text-center">
           <MaskLines as="h2" lines={["Start with the outcome."]} className="ax-display text-3xl sm:text-4xl lg:text-[54px]" />
@@ -240,9 +261,6 @@ export default function AlterEngine() {
               className="w-full bg-transparent border-0 border-b border-white/25 px-1 py-4 text-[18px] text-white text-center placeholder:text-white/35 focus:outline-none focus:border-white/25"
               data-testid="engine-composer-input"
             />
-            <svg className="w-full h-2 -mt-[2px]" viewBox="0 0 600 8" preserveAspectRatio="none" aria-hidden="true">
-              <ThreadPath d="M0 4 L600 4" strokeWidth={2} duration={1} />
-            </svg>
             <div className="mt-8 flex justify-center gap-4">
               <button type="submit" className="btn-primary" data-testid="engine-final-cta">Try Alter Engine <ArrowRight size={15} className="ax-arrow" aria-hidden="true" /></button>
               <FillLink to="/contact" dark>Discuss a workflow</FillLink>

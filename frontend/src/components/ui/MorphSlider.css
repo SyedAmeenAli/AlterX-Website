@@ -1,0 +1,47 @@
+.ax-morph-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  overflow: hidden;
+}
+.ax-morph-slider__stage { position: absolute; inset: 0; bottom: 46px; }
+.ax-morph-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  clip-path: polygon(9% 0, 100% 4%, 94% 88%, 70% 100%, 0 92%, 4% 18%);
+  transform: scale(1.03) rotate(-0.3deg);
+  transition: opacity 340ms ease, clip-path 700ms cubic-bezier(.25,1,.5,1), transform 700ms cubic-bezier(.25,1,.5,1);
+}
+.ax-morph-slide.is-active {
+  opacity: 1;
+  clip-path: polygon(0 4%, 94% 0, 100% 14%, 97% 100%, 6% 96%, 0 80%);
+  transform: scale(1) rotate(0deg);
+}
+.ax-morph-slider__controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.ax-morph-slider__controls button {
+  padding: 6px 12px;
+  border: 1px solid rgba(249,249,249,.16);
+  background: transparent;
+  color: rgba(249,249,249,.55);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.ax-morph-slider__controls button.is-active {
+  color: #090909;
+  background: #ff4d0a;
+  border-color: #ff4d0a;
+}

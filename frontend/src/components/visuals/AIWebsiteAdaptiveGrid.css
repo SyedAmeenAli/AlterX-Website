@@ -1,0 +1,124 @@
+/* AIWebsiteAdaptiveGrid — five interface regions, each on its own
+   irregular route, continuously reorganizing. AlterX orange only, mostly
+   transparent/warm-white, active state travels between four of them. */
+
+.aiw-stage {
+  --aiw-square: 22px;
+  --aiw-gap: 7px;
+  --aiw-step: calc(var(--aiw-square) + var(--aiw-gap));
+  --aiw-cycle: 5.2s;
+  --aiw-px: 0px;
+  --aiw-py: 0px;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(249, 115, 22, .08));
+  transition: filter 400ms ease;
+}
+.aiw-stage[data-active="true"] { filter: drop-shadow(0 0 18px rgba(249, 115, 22, .18)); }
+
+.aiw-stage--nav  { --aiw-square: 22px; --aiw-gap: 7px; --aiw-cycle: 5.2s; }
+.aiw-stage--hero { --aiw-square: 50px; --aiw-gap: 14px; --aiw-cycle: 6.4s; }
+
+.aiw-glow {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 50% 50%, rgba(249,115,22,.11), rgba(249,115,22,.03) 32%, transparent 64%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.aiw-field {
+  position: relative;
+  width: calc(var(--aiw-step) * 2 + var(--aiw-square));
+  height: calc(var(--aiw-step) * 1 + var(--aiw-square));
+  transform: translate3d(var(--aiw-px), var(--aiw-py), 0) scale(1);
+  transition: transform 320ms cubic-bezier(.25,1,.5,1);
+  opacity: 0;
+  animation: aiw-enter 480ms cubic-bezier(.25,1,.5,1) 60ms both;
+}
+@keyframes aiw-enter {
+  from { opacity: 0; transform: translate3d(var(--aiw-px), var(--aiw-py), 0) scale(.96); }
+  to   { opacity: 1; transform: translate3d(var(--aiw-px), var(--aiw-py), 0) scale(1); }
+}
+.aiw-stage[data-active="true"] .aiw-field { transform: translate3d(var(--aiw-px), var(--aiw-py), 0) scale(1.025); }
+
+.aiw-block {
+  position: absolute;
+  top: calc(var(--y) * var(--aiw-step));
+  left: calc(var(--x) * var(--aiw-step));
+  width: var(--aiw-square);
+  height: var(--aiw-square);
+  border-radius: 3px;
+  background: linear-gradient(145deg, rgba(249,249,249,.10), rgba(249,249,249,.025));
+  border: 1px solid rgba(249,249,249,.24);
+  box-shadow: inset 0 0 10px rgba(255,255,255,.025);
+  transition: border-color 280ms ease, box-shadow 280ms ease;
+  animation: aiw-move var(--aiw-cycle) cubic-bezier(.25,1,.5,1) infinite;
+  animation-delay: calc(var(--i) * -0.42s);
+}
+.aiw-stage[data-active="true"] .aiw-block { border-color: rgba(249,249,249,.36); }
+
+@keyframes aiw-move {
+  0%   { transform: translate(0, 0); }
+  15%  { transform: translate(0, 0); }
+  45%  { transform: translate(calc(var(--dx) * var(--aiw-step)), calc(var(--dy) * var(--aiw-step))); }
+  75%  { transform: translate(calc(var(--dx) * var(--aiw-step)), calc(var(--dy) * var(--aiw-step))); }
+  100% { transform: translate(0, 0); }
+}
+
+/* minimal interface hints — geometry stays primary */
+.aiw-mark { position: absolute; pointer-events: none; }
+.aiw-mark--lines { top: 32%; left: 22%; width: 56%; height: 2px; background: rgba(249,249,249,.3); box-shadow: 0 6px 0 rgba(249,249,249,.2); }
+.aiw-mark--dot { top: 50%; left: 50%; width: 4px; height: 4px; margin: -2px 0 0 -2px; border-radius: 50%; background: #ff4d0a; }
+.aiw-mark--rect { top: 24%; left: 24%; width: 52%; height: 34%; border: 1px solid rgba(249,249,249,.22); border-radius: 1px; }
+
+/* the active orange state travels through four of the five blocks */
+.aiw-block[data-active-phase] {
+  animation: aiw-move var(--aiw-cycle) cubic-bezier(.25,1,.5,1) infinite,
+             aiw-active-pulse var(--aiw-cycle) linear infinite;
+}
+.aiw-block[data-active-phase="0"] { animation-delay: calc(var(--i) * -0.42s), 0s; }
+.aiw-block[data-active-phase="1"] { animation-delay: calc(var(--i) * -0.42s), calc(var(--aiw-cycle) * -0.25); }
+.aiw-block[data-active-phase="2"] { animation-delay: calc(var(--i) * -0.42s), calc(var(--aiw-cycle) * -0.5); }
+.aiw-block[data-active-phase="3"] { animation-delay: calc(var(--i) * -0.42s), calc(var(--aiw-cycle) * -0.75); }
+
+@keyframes aiw-active-pulse {
+  0%   { background: linear-gradient(145deg, rgba(249,249,249,.10), rgba(249,249,249,.025)); border-color: rgba(249,249,249,.24); box-shadow: inset 0 0 10px rgba(255,255,255,.025); transform: scale(1); }
+  10%  { background: rgba(249,115,22,.16); border-color: rgba(249,115,22,.45); transform: scale(1); }
+  22%  { background: linear-gradient(145deg, rgba(255,138,69,.9), #F97316 50%, #C94312); border-color: rgba(255,255,255,.15); box-shadow: 0 0 18px rgba(249,115,22,.28), 0 0 48px rgba(249,115,22,.08); transform: scale(1.12); }
+  33%  { background: rgba(249,115,22,.16); border-color: rgba(249,115,22,.45); transform: scale(1); }
+  42%, 100% { background: linear-gradient(145deg, rgba(249,249,249,.10), rgba(249,249,249,.025)); border-color: rgba(249,249,249,.24); box-shadow: inset 0 0 10px rgba(255,255,255,.025); transform: scale(1); }
+}
+/* the scale bump in the pulse is only meaningful at hero size */
+.aiw-stage--nav .aiw-block[data-active-phase] { animation-name: aiw-move, aiw-active-pulse-flat; }
+@keyframes aiw-active-pulse-flat {
+  0%   { background: linear-gradient(145deg, rgba(249,249,249,.10), rgba(249,249,249,.025)); border-color: rgba(249,249,249,.24); }
+  10%  { background: rgba(249,115,22,.16); border-color: rgba(249,115,22,.45); }
+  22%  { background: linear-gradient(145deg, rgba(255,138,69,.9), #F97316 50%, #C94312); border-color: rgba(255,255,255,.15); box-shadow: 0 0 18px rgba(249,115,22,.28); }
+  33%  { background: rgba(249,115,22,.16); border-color: rgba(249,115,22,.45); }
+  42%, 100% { background: linear-gradient(145deg, rgba(249,249,249,.10), rgba(249,249,249,.025)); border-color: rgba(249,249,249,.24); }
+}
+
+/* pause: offscreen, document hidden, or reduced motion */
+.aiw-stage[data-paused="true"] .aiw-block { animation-play-state: paused; }
+
+/* ---------- reduced motion: one stable asymmetric arrangement ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .aiw-field { animation: none; opacity: 1; }
+  .aiw-block { animation: none !important; }
+  .aiw-block[data-slot="2"] {
+    background: linear-gradient(145deg, #FF8A45, #F97316 50%, #C94312);
+    border-color: rgba(255,255,255,.15);
+    box-shadow: 0 0 18px rgba(249,115,22,.28);
+  }
+}
+
+/* ---------- mobile: slower cycle ---------- */
+@media (max-width: 767px) {
+  .aiw-stage { --aiw-cycle: 10s; }
+}

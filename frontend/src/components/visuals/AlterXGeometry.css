@@ -1,0 +1,350 @@
+/* AlterXGeometry — one shared CSS-3D object family. Pure CSS transforms +
+   transitions, no per-frame JS. Colors are the AlterX orange system only. */
+
+.axg-stage {
+  --unit: 44px;
+  --tiltX: 0deg;
+  --tiltY: 0deg;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+}
+
+.axg-scene {
+  position: relative;
+  width: var(--unit);
+  height: var(--unit);
+  transform-style: preserve-3d;
+  transform: rotateX(-18deg) rotateY(-32deg) rotateX(var(--tiltX)) rotateY(var(--tiltY));
+  transition: transform 260ms cubic-bezier(.25,1,.5,1);
+}
+
+.axg-domlabel {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  transform: translateX(-50%) translateY(6px);
+  opacity: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: #ff8b45;
+  white-space: nowrap;
+  transition: opacity 260ms cubic-bezier(.25,1,.5,1), transform 260ms cubic-bezier(.25,1,.5,1);
+}
+.axg-domlabel[data-visible="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- base cube: 6 faces, preserve-3d ---------- */
+.axg-cube {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(.25,1,.5,1), opacity 500ms ease;
+}
+.axg-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,.18);
+}
+.axg-face--front  { background: linear-gradient(145deg, #FF8B45 0%, #F97316 55%, #C94312 100%); transform: translateZ(calc(var(--unit) / 2)); }
+.axg-face--back   { background: #7D2A0B; transform: rotateY(180deg) translateZ(calc(var(--unit) / 2)); }
+.axg-face--right  { background: #C94312; transform: rotateY(90deg) translateZ(calc(var(--unit) / 2)); }
+.axg-face--left   { background: #9A3510; transform: rotateY(-90deg) translateZ(calc(var(--unit) / 2)); }
+.axg-face--top    { background: #FF8A45; transform: rotateX(90deg) translateZ(calc(var(--unit) / 2)); }
+.axg-face--bottom { background: #7D2A0B; transform: rotateX(-90deg) translateZ(calc(var(--unit) / 2)); }
+
+/* wireframe variant: transparent faces, thin orange edges only */
+.axg-cube--wire .axg-face {
+  background: transparent;
+  border-color: rgba(249,115,22,.55);
+}
+.axg-cube--wire .axg-face--front { border-color: #ff4d0a; }
+
+/* ============ ASSEMBLE (Alter Engine / Custom workflows) ============ */
+.axg-assemble { position: absolute; inset: 0; transform-style: preserve-3d; }
+.axg-u { width: var(--unit); height: var(--unit); }
+
+.axg-assemble .axg-u--1 { transform: translate3d(0,0,0); }
+.axg-assemble .axg-u--2 { transform: translate3d(0,0,0) scale(.7); opacity: .85; }
+.axg-assemble .axg-u--3 { transform: translate3d(0,0,0) scale(.5); opacity: .7; }
+
+/* rest: loosely separated, quiet */
+.axg-assemble[data-state="rest"] .axg-u--1 { transform: translate3d(-18px, -6px, 0) rotateY(8deg); }
+.axg-assemble[data-state="rest"] .axg-u--2 { transform: translate3d(14px, 10px, 10px) scale(.7) rotateY(-10deg); opacity: .8; }
+.axg-assemble[data-state="rest"] .axg-u--3 { transform: translate3d(4px, -16px, -14px) scale(.5) rotateY(14deg); opacity: .55; }
+.axg-assemble[data-state="rest"] .axg-marker,
+.axg-assemble[data-state="rest"] .axg-platform-ring { opacity: 0; }
+
+/* active: converged into one coherent structure, marker travels through */
+.axg-assemble[data-state="active"] .axg-u--1,
+.axg-assemble[data-state="active"] .axg-u--2,
+.axg-assemble[data-state="active"] .axg-u--3 {
+  transform: translate3d(0,0,0) scale(1);
+  opacity: 1;
+}
+.axg-assemble[data-state="active"] .axg-marker {
+  opacity: 1;
+  animation: axg-marker-travel 900ms cubic-bezier(.25,1,.5,1) both;
+}
+
+/* authority — human approval: marker reaches a boundary and stops, held */
+.axg-assemble[data-state="authority"] .axg-u--1,
+.axg-assemble[data-state="authority"] .axg-u--2,
+.axg-assemble[data-state="authority"] .axg-u--3 {
+  transform: translate3d(0,0,0) scale(1);
+  opacity: 1;
+}
+.axg-assemble[data-state="authority"] .axg-marker {
+  opacity: 1;
+  left: calc(50% + var(--unit) * 0.62);
+  box-shadow: 0 0 0 2px rgba(249,115,22,.35), -18px 0 0 -6px rgba(249,115,22,.4);
+}
+
+/* recovery — one unit separates, moves back, reconnects */
+.axg-assemble[data-state="recovery"] .axg-u--1 { transform: translate3d(0,0,0); }
+.axg-assemble[data-state="recovery"] .axg-u--2 {
+  animation: axg-recheck 1100ms cubic-bezier(.25,1,.5,1) both;
+}
+.axg-assemble[data-state="recovery"] .axg-u--3 { transform: translate3d(0,0,0) scale(.5); opacity: 1; }
+.axg-assemble[data-state="recovery"] .axg-marker { opacity: 0; }
+
+/* platform — pulls back, a supervising ring appears around the whole thing */
+.axg-assemble[data-state="platform"] .axg-u--1,
+.axg-assemble[data-state="platform"] .axg-u--2,
+.axg-assemble[data-state="platform"] .axg-u--3 {
+  transform: translate3d(0,0,0) scale(.82);
+  opacity: .9;
+}
+.axg-assemble[data-state="platform"] .axg-platform-ring { opacity: 1; }
+.axg-assemble[data-state="platform"] .axg-marker { opacity: 0; }
+
+.axg-marker {
+  position: absolute;
+  top: 50%; left: 8%;
+  width: 6px; height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #ff4d0a;
+  box-shadow: 0 0 10px 2px rgba(255,77,10,.6);
+  opacity: 0;
+  transition: opacity 220ms ease, left 400ms cubic-bezier(.25,1,.5,1);
+  transform: translateZ(calc(var(--unit) / 2 + 4px));
+}
+@keyframes axg-marker-travel {
+  0%   { left: 6%; opacity: 0; }
+  15%  { opacity: 1; }
+  100% { left: 94%; opacity: 1; }
+}
+@keyframes axg-recheck {
+  0%   { transform: translate3d(0,0,0) scale(.7); opacity: .85; }
+  40%  { transform: translate3d(26px, -4px, -18px) scale(.6); opacity: .6; }
+  70%  { transform: translate3d(26px, -4px, -18px) scale(.6); opacity: .6; }
+  100% { transform: translate3d(0,0,0) scale(.7); opacity: .85; }
+}
+
+.axg-platform-ring {
+  position: absolute;
+  inset: -34%;
+  border: 1px dashed rgba(249,115,22,.55);
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  transform: translateZ(0) rotateX(-18deg) rotateY(-32deg);
+}
+
+/* ============ WIREFRAME (Developers) ============ */
+.axg-wireframe { position: absolute; inset: 0; transform-style: preserve-3d; }
+.axg-wireframe[data-spin="true"] .axg-cube--wire {
+  animation: axg-slow-spin 13s linear infinite;
+}
+@keyframes axg-slow-spin { to { transform: rotateY(360deg); } }
+
+.axg-pulse {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 5px; height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #ff4d0a;
+  opacity: 0;
+  transform: translateZ(calc(var(--unit) / 2 + 2px));
+}
+.axg-wireframe[data-state="active"] .axg-pulse {
+  animation: axg-pulse-enter 900ms cubic-bezier(.25,1,.5,1) both;
+}
+.axg-wireframe[data-state="states"] .axg-pulse {
+  animation: axg-pulse-sequence 1200ms cubic-bezier(.25,1,.5,1) both;
+}
+.axg-wireframe[data-state="approvals"] .axg-pulse {
+  opacity: 1;
+  transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(calc(var(--unit) * 0.42));
+  box-shadow: 0 0 8px 2px rgba(255,77,10,.55);
+}
+.axg-wireframe[data-state="evidence"] .axg-pulse {
+  animation: axg-pulse-exit 900ms cubic-bezier(.25,1,.5,1) both;
+}
+/* Architecture — slower, deeper: interior briefly reads as solid */
+.axg-wireframe[data-state="architecture"] .axg-pulse {
+  animation: axg-pulse-sequence 2000ms cubic-bezier(.4,0,.2,1) both;
+}
+.axg-wireframe[data-state="architecture"] .axg-cube--wire .axg-face--front {
+  transition: background 900ms ease;
+  background: linear-gradient(145deg, rgba(255,138,69,.22), rgba(249,115,22,.14) 60%, transparent);
+}
+/* Request developer access — front face opens slightly, light from inside */
+.axg-wireframe[data-state="access"] .axg-cube--wire .axg-face--front {
+  transform: translateZ(calc(var(--unit) / 2 + 6px)) rotateY(-8deg);
+  transition: transform 420ms cubic-bezier(.25,1,.5,1);
+  box-shadow: 0 0 16px rgba(249,115,22,.28);
+}
+.axg-wireframe[data-state="access"] .axg-pulse {
+  opacity: 1;
+  transform: translateZ(calc(var(--unit) / 2 + 2px));
+  box-shadow: 0 0 10px 3px rgba(255,77,10,.5);
+}
+@keyframes axg-pulse-enter {
+  0% { opacity: 0; transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(calc(var(--unit) * -0.6)); }
+  30% { opacity: 1; }
+  100% { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(0); }
+}
+@keyframes axg-pulse-sequence {
+  0%   { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 2px)) rotateY(0deg) translateX(0); }
+  33%  { transform: translateZ(calc(var(--unit) / 2 + 2px)) rotateY(90deg) translateX(0); }
+  66%  { transform: translateZ(calc(var(--unit) / 2 + 2px)) rotateY(180deg) translateX(0); }
+  100% { transform: translateZ(calc(var(--unit) / 2 + 2px)) rotateY(270deg) translateX(0); }
+}
+@keyframes axg-pulse-exit {
+  0%   { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(0) translateY(0) scale(1); }
+  60%  { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(calc(var(--unit) * .8)) translateY(calc(var(--unit) * -.3)) scale(.8); }
+  100% { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(calc(var(--unit) * .9)) translateY(calc(var(--unit) * -.42)) scale(.6); box-shadow: 0 0 0 2px rgba(255,77,10,.5); }
+}
+
+/* ============ STACK (Cognitive AI) ============ */
+.axg-stack { position: absolute; inset: 0; transform-style: preserve-3d; }
+.axg-stack .axg-s--1 { transform: translate3d(0, 34%, 0) scale(.62); opacity: .5; }
+.axg-stack .axg-s--2 { transform: translate3d(0, 0%, 8px) scale(.62); opacity: .5; }
+.axg-stack .axg-s--3 { transform: translate3d(0, -34%, -8px) scale(.62); opacity: .5; }
+
+.axg-stack[data-state="active"] .axg-s--2 {
+  opacity: 1;
+  transform: translate3d(0, 0%, 14px) scale(.72);
+}
+.axg-stack[data-state="active"] .axg-s--1 { transform: translate3d(0, 30%, 4px) scale(.62) rotateY(6deg); opacity: .7; }
+.axg-stack[data-state="active"] .axg-s--3 { transform: translate3d(0, -30%, -4px) scale(.62) rotateY(-6deg); opacity: .7; }
+
+.axg-attention {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px; height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff4d0a 0%, rgba(255,77,10,0) 70%);
+  opacity: 0;
+  transform: translateZ(calc(var(--unit) / 2 + 20px));
+  transition: opacity 300ms ease;
+}
+.axg-stack[data-state="active"] .axg-attention { opacity: 1; }
+
+/* ============ PLANES (AI websites, Resources) ============
+   Thin flat 3D surfaces in perspective, not cubes — deliberately calmer.
+   One shared geometry, driven entirely by data-state: active (AI websites),
+   featured / guides / insights / matrix (Resources' four destinations). */
+.axg-planes { position: absolute; inset: 0; transform-style: preserve-3d; }
+.axg-plane {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: calc(var(--unit) * 1.3);
+  height: calc(var(--unit) * .92);
+  margin: calc(var(--unit) * -.46) 0 0 calc(var(--unit) * -.65);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 3px;
+  background: linear-gradient(145deg, rgba(255,138,69,.9), rgba(249,115,22,.85) 55%, rgba(201,67,18,.85));
+  box-shadow: inset 0 0 14px rgba(255,255,255,.035);
+  transition: transform 480ms cubic-bezier(.25,1,.5,1), opacity 380ms ease, filter 380ms ease;
+}
+.axg-plane--1 { transform: translate3d(-10px, -8px, -10px) rotateY(10deg); opacity: .55; filter: brightness(.75); }
+.axg-plane--2 { transform: translate3d(0, 4px, 4px) rotateY(-4deg); opacity: .8; filter: brightness(.92); }
+.axg-plane--3 { transform: translate3d(10px, 10px, 16px) rotateY(-12deg); opacity: 1; }
+
+/* AI websites: interface adapts — one plane forward, one slides, one lit */
+.axg-planes[data-state="active"] .axg-plane--1 { transform: translate3d(-22px, -4px, -4px) rotateY(4deg); opacity: .7; }
+.axg-planes[data-state="active"] .axg-plane--2 { transform: translate3d(2px, 2px, 12px) rotateY(0deg); opacity: .9; }
+.axg-planes[data-state="active"] .axg-plane--3 { transform: translate3d(14px, 14px, 26px) rotateY(-8deg); opacity: 1; filter: brightness(1.1); box-shadow: 0 0 24px rgba(249,115,22,.28); }
+
+/* Resources — featured: single volume lifts forward */
+.axg-planes[data-state="featured"] .axg-plane--1 { opacity: 0; }
+.axg-planes[data-state="featured"] .axg-plane--2 { opacity: 0; }
+.axg-planes[data-state="featured"] .axg-plane--3 { transform: translate3d(0, -6px, 22px) rotateY(0deg); box-shadow: 0 0 20px rgba(249,115,22,.22); }
+
+/* Resources — guides: planes separate vertically, old rhombus stack gone */
+.axg-planes[data-state="guides"] .axg-plane--1 { transform: translate3d(0, -20px, -8px) rotateY(2deg); opacity: .65; }
+.axg-planes[data-state="guides"] .axg-plane--2 { transform: translate3d(0, 0, 6px) rotateY(0deg); opacity: .85; }
+.axg-planes[data-state="guides"] .axg-plane--3 { transform: translate3d(0, 20px, 18px) rotateY(-2deg); opacity: 1; }
+
+/* Resources — insights: one internal block lit, others tilt slightly */
+.axg-planes[data-state="insights"] .axg-plane--1 { transform: translate3d(-8px, -6px, -10px) rotateY(6deg); opacity: .5; }
+.axg-planes[data-state="insights"] .axg-plane--2 { transform: translate3d(6px, 2px, 18px) rotateY(-3deg); opacity: 1; filter: brightness(1.12); box-shadow: 0 0 18px rgba(249,115,22,.24); }
+.axg-planes[data-state="insights"] .axg-plane--3 { transform: translate3d(-2px, 10px, 2px) rotateY(3deg); opacity: .6; }
+
+/* Resources — all resources: fan outward, center glows */
+.axg-planes[data-state="matrix"] .axg-plane--1 { transform: translate3d(-20px, -14px, -6px) rotateY(12deg); opacity: .7; }
+.axg-planes[data-state="matrix"] .axg-plane--2 { transform: translate3d(0, 2px, 10px) rotateY(0deg); opacity: 1; filter: brightness(1.1); box-shadow: 0 0 18px rgba(249,115,22,.22); }
+.axg-planes[data-state="matrix"] .axg-plane--3 { transform: translate3d(20px, 14px, -2px) rotateY(-12deg); opacity: .7; }
+
+/* ============ SIGNAL (Voice workflows) ============
+   Two small clusters, left (muted) and right (orange), that briefly
+   connect on hover through moving blocks — not a waveform SVG. */
+.axg-signal { position: absolute; inset: 0; transform-style: preserve-3d; }
+.axg-signal .axg-u { width: calc(var(--unit) * .5); height: calc(var(--unit) * .5); }
+.axg-sig--left  { transform: translate3d(-16px, 0, -6px) scale(.8); opacity: .55; filter: grayscale(.4) brightness(1.15); }
+.axg-sig--right { transform: translate3d(16px, 0, 6px) scale(.8); opacity: .85; }
+.axg-sig-link {
+  position: absolute; left: 50%; top: 50%;
+  width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #ff4d0a;
+  opacity: 0;
+  transform: translateZ(calc(var(--unit) / 2 + 6px)) translateX(-14px);
+  transition: opacity 200ms ease;
+}
+.axg-signal[data-state="active"] .axg-sig--left {
+  animation: axg-sig-pulse 900ms cubic-bezier(.25,1,.5,1) 1;
+}
+.axg-signal[data-state="active"] .axg-sig--right {
+  opacity: 1;
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px rgba(249,115,22,.24);
+  transition: opacity 320ms ease 380ms, filter 320ms ease 380ms, box-shadow 320ms ease 380ms;
+}
+.axg-signal[data-state="active"] .axg-sig-link {
+  animation: axg-sig-travel 700ms cubic-bezier(.25,1,.5,1) 260ms 1 both;
+}
+@keyframes axg-sig-pulse {
+  0%, 100% { transform: translate3d(-16px, 0, -6px) scale(.8); }
+  40% { transform: translate3d(-16px, 0, -6px) scale(.95); filter: brightness(1.3); }
+}
+@keyframes axg-sig-travel {
+  0%   { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 6px)) translateX(-14px); }
+  100% { opacity: 0; transform: translateZ(calc(var(--unit) / 2 + 6px)) translateX(14px); }
+}
+
+/* ============ SPLIT (checking & recovery, standalone use) ============ */
+.axg-split { position: absolute; inset: 0; transform-style: preserve-3d; }
+.axg-split .axg-sp--piece { transform: translate3d(0,0,0) scale(.5); opacity: 0; }
+.axg-split[data-state="active"] .axg-sp--piece {
+  animation: axg-split-out-in 1000ms cubic-bezier(.25,1,.5,1) both;
+}
+@keyframes axg-split-out-in {
+  0%   { transform: translate3d(0,0,0) scale(.5); opacity: 0; }
+  35%  { transform: translate3d(0, -18px, 22px) scale(.5); opacity: 1; }
+  65%  { transform: translate3d(0, -18px, 22px) scale(.5); opacity: 1; }
+  100% { transform: translate3d(0,0,0) scale(.5); opacity: .9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axg-scene, .axg-cube, .axg-marker, .axg-pulse, .axg-attention, .axg-platform-ring { transition: none !important; animation: none !important; }
+}

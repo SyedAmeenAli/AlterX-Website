@@ -4,6 +4,15 @@ import { PageHero, FillLink, ChapterHead } from "@/components/kit";
 import { SOLUTIONS } from "@/content/pages";
 import { STAGES } from "@/content/home";
 import { usePageMeta, Reveal } from "@/lib/anim";
+import AIWebsiteAdaptiveGrid from "@/components/visuals/AIWebsiteAdaptiveGrid";
+
+/* AI Websites only — same continuously-adapting five-block identity as the
+   mega-nav preview, floating directly in the hero, no container. */
+const AIWebsitesHeroVisual = () => (
+  <div className="hidden lg:block absolute pointer-events-auto" style={{ top: "50%", right: "8%", width: "380px", height: "300px", transform: "translateY(-50%)" }} aria-hidden="true" data-testid="aiw-hero-visual">
+    <AIWebsiteAdaptiveGrid active size="hero" interactive />
+  </div>
+);
 
 export default function SolutionDetail() {
   const { slug } = useParams();
@@ -12,7 +21,9 @@ export default function SolutionDetail() {
   if (!sol) return <Navigate to="/solutions" replace />;
   return (
     <>
-      <PageHero eyebrow="Solution" title={sol.title} body={sol.lead} />
+      <PageHero eyebrow="Solution" title={sol.title} body={sol.lead}>
+        {slug === "ai-websites" && <AIWebsitesHeroVisual />}
+      </PageHero>
       <section className="bg-[#fbfaf7] pb-24">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-px bg-black/15 border border-black/15 mb-20">

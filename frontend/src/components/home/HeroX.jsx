@@ -68,8 +68,8 @@ export default function HeroX() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black text-[#fbfaf7] overflow-clip"
-      style={{ height: "100svh", minHeight: "620px", paddingTop: "var(--header-height)" }}
+      className="relative text-[#fbfaf7] overflow-clip"
+      style={{ height: "100svh", minHeight: "620px", paddingTop: "var(--header-height)", background: "#000000" }}
       data-testid="hero-section"
     >
       {videoFailed ? (
@@ -95,6 +95,7 @@ export default function HeroX() {
       )}
       <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ background: "linear-gradient(95deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 36%, rgba(0,0,0,0) 55%)" }} aria-hidden="true" />
       <div className="absolute inset-0 pointer-events-none md:hidden" style={{ background: "linear-gradient(180deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 52%, rgba(0,0,0,.12) 80%)" }} aria-hidden="true" />
+      <NetSegment name="hero" />
 
       <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col justify-center pointer-events-none">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15, ease: EASE }}>

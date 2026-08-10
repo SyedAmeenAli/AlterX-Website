@@ -1,0 +1,182 @@
+/* AlterXResourcesFolder — folder opens, papers rise + fan. AlterX orange
+   only, no yellow/gold, no text baked into the visual. */
+
+.rf-reactive {
+  --folder-width: 190px;
+  --rf-tiltX: 0deg;
+  --rf-tiltY: 0deg;
+  --rf-tx: 0px;
+  position: relative;
+  width: var(--folder-width);
+  aspect-ratio: 1 / 0.72;
+  margin: 0 auto;
+  perspective: 900px;
+  filter: drop-shadow(0 0 14px rgba(249, 115, 22, .09));
+  transition: filter 350ms ease;
+}
+.rf-reactive--nav { --folder-width: clamp(138px, 15vw, 168px); }
+.rf-reactive--hero { --folder-width: clamp(240px, 23vw, 340px); }
+.rf-reactive:hover { filter: drop-shadow(0 0 24px rgba(249, 115, 22, .20)) drop-shadow(0 0 52px rgba(249, 115, 22, .055)); }
+
+.rf-shadow {
+  position: absolute;
+  width: 62%;
+  height: 12%;
+  left: 19%;
+  bottom: -3%;
+  background: radial-gradient(ellipse, rgba(249, 115, 22, .17) 0%, rgba(0, 0, 0, .20) 38%, transparent 74%);
+  filter: blur(16px);
+  pointer-events: none;
+  transform: scaleX(1);
+  opacity: .8;
+  transition: transform 450ms cubic-bezier(.22, .61, .36, 1), opacity 450ms ease;
+}
+.rf-shadow[data-open="true"] { transform: scaleX(1.10); opacity: 1; }
+
+.resource-folder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rf-tiltX)) rotateY(var(--rf-tiltY)) translateX(var(--rf-tx));
+  transition: transform 420ms cubic-bezier(.22, .61, .36, 1), translate 420ms cubic-bezier(.22, .61, .36, 1);
+  opacity: 0;
+  translate: 0 12px;
+  scale: .96;
+}
+.resource-folder[data-entered="true"] {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  transition: transform 420ms cubic-bezier(.22, .61, .36, 1), translate 420ms cubic-bezier(.22, .61, .36, 1),
+              opacity 520ms cubic-bezier(.25, 1, .5, 1), scale 520ms cubic-bezier(.25, 1, .5, 1);
+}
+.resource-folder[data-open="true"] { transform: rotateX(var(--rf-tiltX)) rotateY(var(--rf-tiltY)) translateX(var(--rf-tx)) translateY(-7px); }
+
+/* ---------- folder back ---------- */
+.folder__back {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(145deg, #C94312 0%, #8F2D0B 100%);
+  border: 1px solid rgba(255, 255, 255, .10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .13);
+}
+
+/* ---------- papers ---------- */
+.folder__papers {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: -4%;
+  bottom: 18%;
+  perspective: 700px;
+  transform-style: preserve-3d;
+}
+.paper {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px 6px 2px 2px;
+  background: #14100d;
+  border: 1px solid rgba(249, 115, 22, .18);
+  transform: translateY(0) translateZ(0) rotate(0deg);
+  transition: transform 380ms cubic-bezier(.22, .61, .36, 1);
+  transition-delay: 60ms;
+}
+.paper::before, .paper::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 30%;
+  height: 2px;
+  background: rgba(249, 115, 22, .45);
+}
+.paper::before { top: 22%; }
+.paper::after { top: 34%; right: 44%; background: rgba(249, 115, 22, .30); }
+
+.paper--1 { background: #110d0a; z-index: 1; transform: translateZ(-12px); transition-delay: 40ms; }
+.paper--2 { background: #14100d; z-index: 2; transform: translateZ(-5px); transition-delay: 80ms; }
+.paper--3 { background: #171310; z-index: 3; transform: translateZ(4px); transition-delay: 120ms; }
+.paper--3::after { background: rgba(249, 115, 22, .60); right: 55%; }
+
+/* rest — hero default, slightly open even before hover */
+.resource-folder[data-state="rest"] .paper--1 { transform: translateY(-7%) translateZ(-12px); }
+.resource-folder[data-state="rest"] .paper--2 { transform: translateY(-9%) translateZ(-5px); }
+.resource-folder[data-state="rest"] .paper--3 { transform: translateY(-6%) translateZ(4px); }
+
+/* all — nav "All resources" hover, hero hover, hero "All" filter: widest fan */
+.resource-folder[data-state="all"] .paper--1 { transform: translate(-24%, -19%) translateZ(-12px) rotate(-6deg); }
+.resource-folder[data-state="all"] .paper--2 { transform: translate(0, -31%) translateZ(-5px); }
+.resource-folder[data-state="all"] .paper--3 { transform: translate(24%, -20%) translateZ(4px) rotate(6deg); }
+
+/* guides — evenly fanned, calmer than "all" */
+.resource-folder[data-state="guides"] .paper--1 { transform: translate(-14%, -14%) translateZ(-12px) rotate(-3deg); }
+.resource-folder[data-state="guides"] .paper--2 { transform: translate(0, -20%) translateZ(-5px); }
+.resource-folder[data-state="guides"] .paper--3 { transform: translate(14%, -14%) translateZ(4px) rotate(3deg); }
+
+/* insights — front paper comes forward, others stay back */
+.resource-folder[data-state="insights"] .paper--1 { transform: translate(-6%, -6%) translateZ(-12px) rotate(-2deg); }
+.resource-folder[data-state="insights"] .paper--2 { transform: translate(2%, -9%) translateZ(-5px); }
+.resource-folder[data-state="insights"] .paper--3 { transform: translate(0, -24%) translateZ(14px) scale(1.03); }
+
+/* featured — one paper (product tours) rises well above the other two */
+.resource-folder[data-state="featured"] .paper--1 { transform: translate(-8%, -8%) translateZ(-12px) rotate(-3deg); }
+.resource-folder[data-state="featured"] .paper--2 { transform: translate(4%, -38%) translateZ(-5px) rotate(2deg); }
+.resource-folder[data-state="featured"] .paper--3 { transform: translate(8%, -10%) translateZ(4px) rotate(3deg); }
+
+/* ---------- folder front ---------- */
+.folder__front {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 68%;
+  border-radius: 4px 4px 10px 10px;
+  background: linear-gradient(145deg, #FF8A45 0%, #F97316 46%, #C94312 100%);
+  border: 1px solid rgba(255, 255, 255, .10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .13);
+  transform-origin: bottom center;
+  transform: rotateX(0deg);
+  transition: transform 420ms cubic-bezier(.22, .61, .36, 1);
+  z-index: 4;
+}
+.resource-folder[data-state="rest"] .folder__front { transform: rotateX(-10deg); }
+.resource-folder[data-state="all"] .folder__front { transform: rotateX(-34deg); }
+.resource-folder[data-state="guides"] .folder__front { transform: rotateX(-28deg); }
+.resource-folder[data-state="insights"] .folder__front { transform: rotateX(-22deg); }
+.resource-folder[data-state="featured"] .folder__front { transform: rotateX(-26deg); }
+
+/* nav: closed (state="rest", not open) by default. On open, the state
+   attribute (matrix→all / guides / insights / featured, set by which
+   Resources link is hovered) drives the actual arrangement above — this
+   block only adds the open-sequence stagger so the front/papers/glow cascade
+   in on hover instead of snapping. */
+.resource-folder[data-size="nav"]:not([data-open="true"]) .folder__front { transform: rotateX(0deg) !important; }
+.resource-folder[data-size="nav"]:not([data-open="true"]) .paper--1,
+.resource-folder[data-size="nav"]:not([data-open="true"]) .paper--2,
+.resource-folder[data-size="nav"]:not([data-open="true"]) .paper--3 { transform: translateZ(0) !important; }
+.resource-folder[data-size="nav"][data-open="true"] .folder__front { transition-delay: 160ms; }
+.resource-folder[data-size="nav"][data-open="true"] .paper--1 { transition-delay: 240ms; }
+.resource-folder[data-size="nav"][data-open="true"] .paper--2 { transition-delay: 280ms; }
+.resource-folder[data-size="nav"][data-open="true"] .paper--3 { transition-delay: 320ms; }
+.resource-folder[data-size="nav"]:not([data-open="true"]) .folder__front,
+.resource-folder[data-size="nav"]:not([data-open="true"]) .paper--1,
+.resource-folder[data-size="nav"]:not([data-open="true"]) .paper--2,
+.resource-folder[data-size="nav"]:not([data-open="true"]) .paper--3 { transition-delay: 0ms; transition-duration: 380ms; }
+
+/* ---------- reduced motion: partially open, static, no tilt/entrance ---------- */
+.resource-folder[data-reduced="true"] {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  transition: none;
+}
+.resource-folder[data-reduced="true"] .folder__front { transition: none; transform: rotateX(-16deg); }
+.resource-folder[data-reduced="true"] .paper--1 { transition: none; transform: translateY(-7%) translateZ(-12px); }
+.resource-folder[data-reduced="true"] .paper--2 { transition: none; transform: translateY(-9%) translateZ(-5px); }
+.resource-folder[data-reduced="true"] .paper--3 { transition: none; transform: translateY(-6%) translateZ(4px); }
+.rf-reactive:has(.resource-folder[data-reduced="true"]) { transition: none; }
+.rf-reactive:has(.resource-folder[data-reduced="true"]) .resource-folder { transform: none !important; }
+
+/* ---------- mobile ---------- */
+@media (max-width: 767px) {
+  .rf-reactive--hero { --folder-width: 210px; margin: 24px auto 0; }
+}

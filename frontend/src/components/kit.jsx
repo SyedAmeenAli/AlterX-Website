@@ -40,7 +40,7 @@ export const FillLink = ({ to, children, dark, className = "", ...rest }) => (
 );
 
 export const PageHero = ({ eyebrow, title, body, dark, ctas, children, tall }) => (
-  <section className={`${dark ? "bg-black text-[#fbfaf7]" : "bg-[#fbfaf7] text-[#090909]"} relative overflow-clip`} style={{ paddingTop: "calc(var(--header-height) + 64px)" }}>
+  <section className={`${dark ? "text-[#fbfaf7]" : "text-[#090909]"} relative overflow-clip`} style={{ paddingTop: "calc(var(--header-height) + 64px)", background: dark ? "var(--marketing-dark-strong)" : "var(--marketing-light-medium)" }}>
     {dark && <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-edge-burn)" }} aria-hidden="true" />}
     {!dark && <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-light)" }} aria-hidden="true" />}
     <div className={`relative max-w-[1400px] mx-auto px-6 md:px-10 ${tall ? "pb-28 md:pb-36" : "pb-20 md:pb-28"}`}>
@@ -100,6 +100,6 @@ export const Marquee = ({ items, dark }) => (
 export const DemoBadge = ({ className = "" }) => (
   <span className={`inline-flex items-center gap-2 text-[12px] font-medium text-current opacity-60 ${className}`}>
     <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d0a] inline-block" aria-hidden="true" />
-    Demo
+    Illustrative demo
   </span>
 );

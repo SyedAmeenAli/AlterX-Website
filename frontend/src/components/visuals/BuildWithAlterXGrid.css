@@ -1,0 +1,98 @@
+/* BuildWithAlterXGrid — nine blocks, continuous stagger-swap shuffle,
+   moving "active" orange state. The one product visual in the system that
+   never settles — by design. AlterX orange only, no white, no blue. */
+
+.bwx-stage {
+  --bwx-cell: 34px;
+  --bwx-gap: 9px;
+  --bwx-step: calc(var(--bwx-cell) + var(--bwx-gap));
+  --bwx-cycle: 7.2s;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(249, 115, 22, .08));
+  transition: filter 400ms ease;
+}
+.bwx-stage[data-active="true"] { filter: drop-shadow(0 0 22px rgba(249, 115, 22, .20)); }
+
+.bwx-stage--nav  { --bwx-cell: 16px; --bwx-gap: 5px; }
+.bwx-stage--tile { --bwx-cell: 26px; --bwx-gap: 7px; }
+.bwx-stage--hero { --bwx-cell: 42px; --bwx-gap: 11px; }
+
+.bwx-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(249,115,22,.12), transparent 55%);
+  pointer-events: none;
+}
+
+.bwx-grid {
+  position: relative;
+  width: calc(var(--bwx-step) * 3 - var(--bwx-gap));
+  height: calc(var(--bwx-step) * 3 - var(--bwx-gap));
+  transition: transform 320ms cubic-bezier(.25,1,.5,1);
+}
+.bwx-stage[data-active="true"] .bwx-grid { transform: scale(1.035); }
+
+.bwx-cell {
+  position: absolute;
+  top: calc(var(--row) * var(--bwx-step));
+  left: calc(var(--col) * var(--bwx-step));
+  width: var(--bwx-cell);
+  height: var(--bwx-cell);
+  border-radius: 2px;
+  background: linear-gradient(145deg, rgba(249,249,249,.11), rgba(249,249,249,.035));
+  border: 1px solid rgba(249,249,249,.20);
+  box-shadow: inset 0 1px rgba(255,255,255,.04), 0 4px 12px rgba(0,0,0,.18);
+  transition: border-color 320ms ease;
+  animation: bwx-shuffle var(--bwx-cycle) cubic-bezier(.45,0,.25,1) infinite;
+  animation-delay: calc(var(--i) * -0.35s);
+}
+.bwx-stage[data-active="true"] .bwx-cell { border-color: rgba(249,249,249,.32); }
+
+@keyframes bwx-shuffle {
+  0%   { transform: translate(0, 0); }
+  38%  { transform: translate(calc(var(--dx) * var(--bwx-step)), calc(var(--dy) * var(--bwx-step))); }
+  62%  { transform: translate(calc(var(--dx) * var(--bwx-step)), calc(var(--dy) * var(--bwx-step))); }
+  100% { transform: translate(0, 0); }
+}
+
+/* the active orange state travels through four cells, one at a time */
+.bwx-cell[data-active-phase] {
+  animation: bwx-shuffle var(--bwx-cycle) cubic-bezier(.45,0,.25,1) infinite,
+             bwx-active-pulse var(--bwx-cycle) linear infinite;
+}
+.bwx-cell[data-active-phase="0"] { animation-delay: calc(var(--i) * -0.35s), 0s; }
+.bwx-cell[data-active-phase="1"] { animation-delay: calc(var(--i) * -0.35s), calc(var(--bwx-cycle) * -0.25); }
+.bwx-cell[data-active-phase="2"] { animation-delay: calc(var(--i) * -0.35s), calc(var(--bwx-cycle) * -0.5); }
+.bwx-cell[data-active-phase="3"] { animation-delay: calc(var(--i) * -0.35s), calc(var(--bwx-cycle) * -0.75); }
+
+@keyframes bwx-active-pulse {
+  0%   { background: linear-gradient(145deg, rgba(249,249,249,.11), rgba(249,249,249,.035)); border-color: rgba(249,249,249,.20); box-shadow: inset 0 1px rgba(255,255,255,.04), 0 4px 12px rgba(0,0,0,.18); }
+  8%   { background: rgba(249,115,22,.14); border-color: rgba(249,115,22,.4); }
+  18%  { background: linear-gradient(145deg, #FF8A45, #F97316 52%, #C94312); border-color: rgba(255,255,255,.14); box-shadow: 0 0 20px rgba(249,115,22,.24); }
+  28%  { background: rgba(249,115,22,.14); border-color: rgba(249,115,22,.4); }
+  38%, 100% { background: linear-gradient(145deg, rgba(249,249,249,.11), rgba(249,249,249,.035)); border-color: rgba(249,249,249,.20); box-shadow: inset 0 1px rgba(255,255,255,.04), 0 4px 12px rgba(0,0,0,.18); }
+}
+
+/* pause: offscreen, document hidden, or reduced motion — whole thing holds still */
+.bwx-stage[data-paused="true"] .bwx-cell { animation-play-state: paused; }
+
+/* ---------- reduced motion: one stable arrangement, center cell lit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .bwx-cell { animation: none !important; }
+  .bwx-cell[data-slot="4"] {
+    background: linear-gradient(145deg, #FF8A45, #F97316 52%, #C94312);
+    border-color: rgba(255,255,255,.14);
+    box-shadow: 0 0 20px rgba(249,115,22,.24);
+  }
+}
+
+/* ---------- mobile: slower cycle, same shape ---------- */
+@media (max-width: 767px) {
+  .bwx-stage { --bwx-cycle: 11s; }
+}

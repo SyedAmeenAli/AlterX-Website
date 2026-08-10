@@ -10,30 +10,37 @@ import EngineStory from "@/components/home/EngineStory";
 import Runway from "@/components/home/Runway";
 import Orbit from "@/components/home/Orbit";
 import VoiceDemo from "@/components/home/VoiceDemo";
-import CipherField from "@/components/home/CipherField";
 import { SECURITY_PRINCIPLES, WORK_ENTRIES, RESOURCES, COMPOSER_CHIPS } from "@/content/home";
 import NetSegment from "@/components/home/NetworkThread";
+import ScrollReveal from "@/components/ui/ScrollReveal";
+import LetterGlitch from "@/components/ui/LetterGlitch";
 
 const SecuritySection = () => (
-  <section className="bg-black text-[#fbfaf7] relative overflow-clip" data-testid="security-section">
-    <div className="absolute inset-0"><CipherField /></div>
-    <div className="absolute inset-y-0 left-0 w-full lg:w-[58%] pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(0,0,0,.96) 0%, rgba(0,0,0,.9) 55%, rgba(0,0,0,.55) 80%, rgba(0,0,0,0) 100%)" }} aria-hidden="true" />
+  <section className="text-[#fbfaf7] relative overflow-clip isolate" style={{ background: "#000", minHeight: "88vh" }} data-testid="security-section">
+    {/* full-bleed glitch field — the dominant visual across the whole section */}
+    <div className="absolute inset-0 z-0">
+      <LetterGlitch glitchSpeed={50} centerVignette={true} outerVignette={false} smooth={true} colors={["#ffffff", "#F97316", "#62686a"]} />
+    </div>
+    {/* text-safe veil — only enough to keep the copy readable, not a wall over the whole field */}
+    <div
+      className="absolute inset-0 pointer-events-none z-[1]"
+      style={{ background: "linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.55) 42%, rgba(0,0,0,.12) 68%, rgba(0,0,0,.05) 100%)" }}
+      aria-hidden="true"
+    />
     <NetSegment name="security" />
-    <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-44">
-      <div className="max-w-xl relative">
-        <div className="relative">
-          <ChapterHead num="06" eyebrow="Security" title="Control is built into the work." body="Approvals, permissions, workspace separation, evidence and clear ownership are part of the operating model, not an add-on." dark />
-          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-5 mb-10">
-            {SECURITY_PRINCIPLES.map((p) => (
-              <div key={p.t} className="border-t border-white/15 pt-3">
-                <p className="font-bold text-[15px]">{p.t}</p>
-                <p className="text-[13px] text-white/55 mt-1">{p.d}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-[13px] text-white/45 mb-8 max-w-md">AlterX is designed to support and enforce these controls. Formal audits and certifications will be published only when completed.</p>
-          <FillLink to="/security" dark data-testid="security-section-cta">Explore security</FillLink>
+    <div className="relative z-[2] max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-44">
+      <div className="max-w-xl relative security-readable">
+        <ChapterHead num="06" eyebrow="Security" title="Control is built into the work." body="Approvals, permissions, workspace separation, evidence and clear ownership are part of the operating model, not an add-on." dark />
+        <div className="grid sm:grid-cols-2 gap-x-8 gap-y-5 mb-10">
+          {SECURITY_PRINCIPLES.map((p) => (
+            <div key={p.t} className="border-t border-white/15 pt-3">
+              <p className="font-bold text-[15px]">{p.t}</p>
+              <p className="text-[13px] text-white/55 mt-1">{p.d}</p>
+            </div>
+          ))}
         </div>
+        <p className="text-[13px] text-white/45 mb-8 max-w-md">AlterX is designed to support and enforce these controls. Formal audits and certifications will be published only when completed.</p>
+        <FillLink to="/security" dark data-testid="security-section-cta">Explore security</FillLink>
       </div>
     </div>
   </section>
@@ -66,10 +73,10 @@ const WorkSection = () => (
 );
 
 const ResourcesSection = () => (
-  <section className="bg-[#f3f0e9] py-24 md:py-36 cv-auto relative" data-testid="resources-section">
+  <section className="py-24 md:py-36 cv-auto relative" style={{ background: "rgba(243,240,233,0.67)" }} data-testid="resources-section">
     <NetSegment name="resources" />
     <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
-      <ChapterHead num="08" eyebrow="Resources" title="The system behind visible work." />
+      <ChapterHead num="08" eyebrow="Resources" title="The system behind visible work." body="Built for operations leaders, transformation teams and enterprise decision-makers working on tasks that cross systems, need real decisions, need visible progress and can't fail silently." />
       <div className="border-b border-black/15">
         {RESOURCES.slice(0, 5).map((r, i) => (
           <EditorialRow key={r.slug} to={`/resources/${r.slug}`} index={i} kicker={r.type} title={r.title} desc={r.value} />
@@ -91,13 +98,15 @@ const Composer = () => {
     navigate(`/try-alter-engine/new?objective=${encodeURIComponent(v)}`);
   };
   return (
-    <section className="bg-black text-[#fbfaf7] py-28 md:py-40 relative overflow-clip" data-testid="composer-section">
+    <section className="text-[#fbfaf7] py-28 md:py-40 relative overflow-clip" style={{ background: "rgba(0,0,0,0.46)" }} data-testid="composer-section">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-dark)" }} aria-hidden="true" />
       <NetSegment name="composer" />
       <div className="relative z-10 max-w-[900px] mx-auto px-6 md:px-10 text-center">
         <Eyebrow dark className="justify-center mb-6">Start here</Eyebrow>
-        <h2 className="ax-display text-3xl sm:text-4xl lg:text-[56px]">What should AlterX organize first?</h2>
-        <p className="mt-5 text-white/60 max-w-xl mx-auto">Describe one business outcome. Start with the result, not the software.</p>
+        <ScrollReveal baseOpacity={0} enableBlur baseRotation={1.5} blurStrength={4}>
+          <h2 className="ax-display text-3xl sm:text-4xl lg:text-[56px]">What should AlterX organize first?</h2>
+        </ScrollReveal>
+        <p className="mt-5 text-white/60 max-w-xl mx-auto">Describe one business outcome. Start with the result, not the software — the goal is work that's easier to carry out without becoming harder to understand or control.</p>
         <form
           onSubmit={(e) => { e.preventDefault(); go(); }}
           className="mt-10 flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto"

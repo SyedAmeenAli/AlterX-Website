@@ -3,6 +3,26 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Camera, Check, MapPin, TrendingDown } from "lucide-react";
 import { PageHero, ChapterHead, DemoBadge, FillLink } from "@/components/kit";
 import { usePageMeta, Reveal } from "@/lib/anim";
+import InventoryDecisionSummary from "@/components/cognitive/InventoryDecisionSummary";
+import CognitiveCubeMatrix from "@/components/visuals/CognitiveCubeMatrix";
+
+/* Same cube matrix identity as the homepage Cognitive AI tile, larger and
+   self-hovering — abstract structure first, then the page moves into the
+   real capture/decision interface below. Pinned to the right of the hero,
+   no box/background — sits directly on the page, transparent. */
+const CognitiveHeroVisual = () => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="hidden lg:block absolute top-1/2 right-6 xl:right-16 -translate-y-1/2 w-[380px] h-[380px] pointer-events-auto"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      data-testid="cognitive-hero-visual"
+    >
+      <CognitiveCubeMatrix active={hovered} size="hero" />
+    </div>
+  );
+};
 
 const CAPTURE_STEPS = ["Capture", "Structure", "Confirm"];
 
@@ -73,19 +93,29 @@ export default function CognitiveAI() {
         title={["Take a picture.", "Start with the product."]}
         body="Cognitive AI turns product information into a structured inventory record ready for human confirmation, then keeps stock, locations, campaigns and decisions connected."
         ctas={<Link to="/contact" className="btn-primary" data-testid="cognitive-hero-cta">Request a walkthrough <ArrowRight size={15} className="ax-arrow" aria-hidden="true" /></Link>}
-      />
-      <section className="bg-[#fbfaf7] pb-24">
+      >
+        <CognitiveHeroVisual />
+      </PageHero>
+      <section className="pb-24" style={{ background: "var(--marketing-light-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-start mb-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
             <Reveal><CaptureDemo /></Reveal>
             <div className="lg:pt-8">
               <ChapterHead num="01" eyebrow="Capture and structure" title="From photo to confirmable record." body="A product image enters. Name, colour, material, category, type and a proposed SKU are extracted — and a person confirms before anything enters the catalogue." />
             </div>
           </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-start mb-24">
+            <div className="lg:pt-8 lg:order-2">
+              <ChapterHead num="02" eyebrow="Attention to decision" title="From a stock signal to a supplier order, waiting for approval." body="An item needs review. Cognitive AI surfaces the signal, prepares a supplier order preview against it, and stops — the order is prepared, not sent. Select a row to see it." />
+            </div>
+            <Reveal delay={0.1}><div className="lg:order-1"><InventoryDecisionSummary /></div></Reveal>
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/15 border border-black/15">
             {SECTIONS.map((s, i) => (
               <div key={s.t} className="bg-[#fbfaf7] p-8" data-testid={`cognitive-section-${i}`}>
-                <p className="text-[12px] font-medium text-[#c9360a] mb-3">{String(i + 2).padStart(2, "0")}</p>
+                <p className="text-[12px] font-medium text-[#c9360a] mb-3">{String(i + 3).padStart(2, "0")}</p>
                 <h2 className="text-xl font-bold tracking-tight mb-2">{s.t}</h2>
                 <p className="text-[14px] text-black/60">{s.d}</p>
               </div>

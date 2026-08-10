@@ -23,7 +23,8 @@ const Lane = ({ label, status, stop, active, engine }) => (
 export default function Runway() {
   const [active, setActive] = useState(null);
   return (
-    <section className="bg-[#fbfaf7] py-24 md:py-36 relative cv-auto" data-testid="runway-section">
+    <section className="py-24 md:py-36 relative cv-auto" style={{ background: "rgba(249,249,249,0.70)" }} data-testid="runway-section">
+      <NetSegment name="runway" />
       <div className="absolute inset-y-0 right-0 w-1/3 pointer-events-none" style={{ background: "var(--ax-atmo-light)" }} aria-hidden="true" />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <ChapterHead

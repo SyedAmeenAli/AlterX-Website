@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, AlertCircle } from "lucide-react";
 import { PageHero } from "@/components/kit";
 import { BUSINESS } from "@/content/navigation";
 import { usePageMeta } from "@/lib/anim";
+import ContactMap from "@/components/ContactMap";
 
 const ENDPOINT = process.env.REACT_APP_CONTACT_ENDPOINT;
 
@@ -73,7 +74,7 @@ export default function Contact() {
         title="Bring us the outcome."
         body="Tell AlterX what needs to change, which systems are involved and where human judgment belongs."
       />
-      <section className="bg-[#fbfaf7] pb-28">
+      <section className="pb-28" style={{ background: "rgba(249,249,249,0.65)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1fr_380px] gap-14">
           <form onSubmit={submit} noValidate className="max-w-2xl" data-testid="contact-form">
             {errors.length > 0 && (
@@ -128,13 +129,13 @@ export default function Contact() {
               <p className="ax-eyebrow text-black/50 mb-4 text-[10px]">AlterX</p>
               <p className="flex items-start gap-3 text-[14px] mb-3"><MapPin size={15} className="mt-0.5 shrink-0 text-[#c9360a]" aria-hidden="true" />{BUSINESS.address}</p>
               <p className="flex items-center gap-3 text-[14px] mb-1.5"><Mail size={15} className="shrink-0 text-[#c9360a]" aria-hidden="true" /><a href={`mailto:${BUSINESS.email}`} className="font-semibold hover:text-[#c9360a]">{BUSINESS.email}</a></p>
-              <p className="flex items-center gap-3 text-[14px] mb-1.5 pl-7 text-black/60">{BUSINESS.backupEmail}</p>
               <p className="flex items-center gap-3 text-[14px]"><Phone size={15} className="shrink-0 text-[#c9360a]" aria-hidden="true" />{BUSINESS.phone1} · {BUSINESS.phone2}</p>
             </div>
             <p className="text-[13px] text-black/50">AlterX never silently subscribes a contact to marketing. Updates are sent only when the optional consent box is ticked.</p>
           </aside>
         </div>
       </section>
+      <ContactMap />
     </>
   );
 }

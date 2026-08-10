@@ -6,15 +6,15 @@ import { WORK_ENTRIES } from "@/content/home";
 import { usePageMeta } from "@/lib/anim";
 
 export default function Work() {
-  usePageMeta("Work", "Real work, carefully built — AI-enabled websites, Cognitive AI inventory systems and operational software by AlterX.");
+  usePageMeta("Work", "Illustrative Alter Engine workflows — supplier comparison, inventory exceptions and order changes — shown as product behaviour, not customer case studies.");
   return (
     <>
       <PageHero
-        eyebrow="Selected work"
-        title={["Real work.", "Carefully built."]}
-        body="AlterX builds practical systems around real business needs. Every project is labelled truthfully — no invented outcomes, percentages or hidden client identities."
+        eyebrow="Illustrative workflows"
+        title={["How the work", "actually moves."]}
+        body="These are illustrative workflows, not customer case studies — no company, outcome or metric here is real. Each shows how Alter Engine structures a specific kind of work."
       />
-      <section className="bg-[#fbfaf7] pb-28">
+      <section className="pb-28" style={{ background: "var(--marketing-light-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 space-y-6">
           {WORK_ENTRIES.map((w, i) => (
             <Link

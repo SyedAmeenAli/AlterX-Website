@@ -1,0 +1,85 @@
+/* Security control items — thin editorial rows, orange interaction fill
+   for readability against LetterGlitch/grainient. Not cards: no radius,
+   no shadow, no glass. The orange is an interaction layer, not a permanent
+   background. */
+.securityItem {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  padding: 2rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.securityItem__fill {
+  position: absolute;
+  inset: 0;
+  background: #f97316;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+.securityItem:hover .securityItem__fill,
+.securityItem:focus-visible .securityItem__fill,
+.securityItem.is-tapped .securityItem__fill {
+  transform: scaleX(1);
+}
+
+.securityItem__content {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.securityItem__index {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #f97316;
+  transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.securityItem__title {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  color: #f9f9f9;
+  transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.securityItem__desc {
+  display: block;
+  font-size: 14px;
+  color: rgba(249, 249, 249, 0.6);
+  transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.securityItem:hover .securityItem__index,
+.securityItem:focus-visible .securityItem__index,
+.securityItem.is-tapped .securityItem__index,
+.securityItem:hover .securityItem__title,
+.securityItem:focus-visible .securityItem__title,
+.securityItem.is-tapped .securityItem__title {
+  color: #000000;
+}
+.securityItem:hover .securityItem__desc,
+.securityItem:focus-visible .securityItem__desc,
+.securityItem.is-tapped .securityItem__desc {
+  color: rgba(0, 0, 0, 0.72);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .securityItem__fill,
+  .securityItem__index,
+  .securityItem__title,
+  .securityItem__desc { transition: none; }
+}

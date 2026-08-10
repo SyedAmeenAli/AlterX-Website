@@ -40,7 +40,7 @@ export default function Tour({ onClose }) {
 
   return (
     <div className="fixed inset-0 z-[110]" role="dialog" aria-label="Product tour" data-testid="tour-overlay">
-      <div className="absolute inset-0 bg-black/45" style={{ backdropFilter: "blur(1.5px)" }} onClick={() => close(false)} />
+      <div className="absolute inset-0 bg-black/60" style={{ backdropFilter: "blur(5px)", WebkitBackdropFilter: "blur(5px)" }} onClick={() => close(false)} />
       {rect && (
         <div
           className="absolute border-2 border-[#ff4d0a] pointer-events-none transition-all duration-300"

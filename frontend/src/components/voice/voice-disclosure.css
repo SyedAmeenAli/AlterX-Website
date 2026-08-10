@@ -1,0 +1,84 @@
+.axv-disclosure {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  text-align: left;
+  background: #090909;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 14px 16px;
+  color: #fbfaf7;
+  font-family: "Hanken Grotesk", sans-serif;
+  transition: border-color 220ms ease;
+}
+.axv-disclosure:hover { border-color: rgba(255,77,10,.35); }
+
+.axv-collapsed { display: flex; align-items: center; gap: 10px; }
+
+.axv-mark {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.axv-mark--human { background: #c9c6bd; margin-right: -6px; }
+.axv-mark--engine { background: #ff4d0a; box-shadow: 0 0 8px 1px rgba(255,77,10,.5); }
+
+.axv-wave { display: flex; align-items: center; gap: 2px; height: 16px; margin-left: 4px; }
+.axv-wave span {
+  width: 2px;
+  height: 40%;
+  background: rgba(255,255,255,.35);
+  border-radius: 1px;
+  transition: height 220ms cubic-bezier(.25,1,.5,1), background 220ms ease;
+}
+.axv-disclosure:hover .axv-wave span,
+.axv-disclosure.is-open .axv-wave span { background: #ff8b45; }
+.axv-wave span:nth-child(3n+1) { height: 40%; }
+.axv-wave span:nth-child(3n+2) { height: 75%; }
+.axv-wave span:nth-child(3n+3) { height: 55%; }
+.axv-disclosure:hover .axv-wave span:nth-child(3n+1),
+.axv-disclosure.is-open .axv-wave span:nth-child(3n+1) { height: 55%; }
+.axv-disclosure:hover .axv-wave span:nth-child(3n+2),
+.axv-disclosure.is-open .axv-wave span:nth-child(3n+2) { height: 100%; }
+.axv-disclosure:hover .axv-wave span:nth-child(3n+3),
+.axv-disclosure.is-open .axv-wave span:nth-child(3n+3) { height: 70%; }
+
+.axv-label { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.6); margin-left: auto; white-space: nowrap; }
+
+.axv-expanded {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 420ms cubic-bezier(.25,1,.5,1), opacity 300ms ease, margin-top 420ms cubic-bezier(.25,1,.5,1);
+}
+.axv-disclosure.is-open .axv-expanded { max-height: 200px; opacity: 1; margin-top: 12px; }
+
+.axv-line {
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  margin: 0;
+}
+.axv-line--human { color: rgba(255,255,255,.85); }
+.axv-line--engine { color: #ffb98a; }
+.axv-speaker {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 2px;
+}
+
+.axv-approval {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 8px;
+  font-size: 12px; font-weight: 700;
+  color: #ff8b45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axv-wave span, .axv-expanded { transition: none !important; }
+}

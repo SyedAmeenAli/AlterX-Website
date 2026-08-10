@@ -57,9 +57,9 @@ export const getScenario = (key) => SCENARIOS.find((s) => s.key === key) || SCEN
 export const tourDone = () => read("ax_tour_done", false);
 export const setTourDone = () => write("ax_tour_done", true);
 
-export function exportEvidence(mission) {
+function evidencePayload(mission) {
   const scenario = getScenario(mission.scenarioKey);
-  const data = {
+  return {
     label: "Illustrative frontend demonstration — no real external action occurred",
     mission: { id: mission.id, objective: mission.objective, state: mission.state, createdAt: new Date(mission.createdAt).toISOString() },
     plan: scenario.steps.map((s) => ({ id: s.id, label: s.label, system: s.system, approval: !!s.approval })),
@@ -67,11 +67,26 @@ export function exportEvidence(mission) {
     recovery: mission.recovery,
     timeline: mission.history.map((h) => ({ at: new Date(h.ts).toISOString(), type: h.type, label: h.label, detail: h.detail })),
   };
+}
+
+function downloadJson(data, filename) {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${mission.id}-evidence.json`;
+  a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+export function exportEvidence(mission) {
+  downloadJson(evidencePayload(mission), `${mission.id}-evidence.json`);
+}
+
+// Bulk export — every mission's evidence trail in this workspace, one file.
+export function exportAllEvidence(missions) {
+  downloadJson(
+    { label: "Illustrative frontend demonstration — no real external action occurred", exportedAt: new Date().toISOString(), missions: missions.map(evidencePayload) },
+    `evidence-export-${new Date().toISOString().slice(0, 10)}.json`
+  );
 }

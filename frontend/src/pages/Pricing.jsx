@@ -9,7 +9,7 @@ export default function Pricing() {
   return (
     <>
       <PageHero dark eyebrow="Pricing" title={["Start with one mission.", "Scale with the work."]} body="AlterX engagements take three shapes. Public amounts are not listed — the shape of the work defines the shape of the cost." />
-      <section className="bg-black text-[#fbfaf7] pb-24">
+      <section className="text-[#fbfaf7] pb-24" style={{ background: "var(--marketing-dark-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid md:grid-cols-3 border-t border-l border-white/15">
           {PRICING_SHAPES.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08}>
@@ -29,7 +29,7 @@ export default function Pricing() {
           ))}
         </div>
       </section>
-      <section className="bg-[#fbfaf7] py-24 md:py-32">
+      <section className="py-24 md:py-32" style={{ background: "var(--marketing-light-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <ChapterHead num="02" eyebrow="What changes cost" title="Cost follows the work, not the seat count alone." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-black/15 border border-black/15">

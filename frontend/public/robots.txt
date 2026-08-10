@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /try-alter-engine
+Disallow: /pricing
+Disallow: /products
 
 Sitemap: https://alterx.co.in/sitemap.xml

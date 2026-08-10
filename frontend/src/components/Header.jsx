@@ -1,67 +1,91 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Menu, X, ChevronDown } from "lucide-react";
 import { NAV } from "@/content/navigation";
 import { EASE } from "@/lib/anim";
+import LetterGlitch from "@/components/ui/LetterGlitch";
+import ParticleLogo from "@/components/ui/ParticleLogo";
+import CognitiveCubeMatrix from "@/components/visuals/CognitiveCubeMatrix";
+import AlterEngineAssembly from "@/components/visuals/AlterEngineAssembly";
+import CustomWorkflowStack from "@/components/visuals/CustomWorkflowStack";
+import BuildWithAlterXGrid from "@/components/visuals/BuildWithAlterXGrid";
+import AIWebsiteAdaptiveGrid from "@/components/visuals/AIWebsiteAdaptiveGrid";
+import SolutionsRotatingCube from "@/components/visuals/SolutionsRotatingCube";
+import VoiceAgentOrb from "@/components/visuals/VoiceAgentOrb";
+import AlterXResourcesFolder from "@/components/visuals/AlterXResourcesFolder";
 
 const DARK_HERO_ROUTES = ["/", "/alter-engine", "/platform", "/security", "/company", "/pricing", "/developers"];
 
-const Wordmark = ({ light }) => (
-  <Link to="/" className="flex items-center shrink-0" aria-label="AlterX home" data-testid="header-logo">
-    <span className="text-[20px] font-semibold tracking-[-0.03em] leading-none" style={{ color: light ? "#fbfaf7" : "#090909" }}>
-      ALTER<span className="text-[#ff4d0a]">X</span>
-    </span>
-  </Link>
+/* nav hover activation — orange gooey fill + a few tight particles,
+   layered on the existing enter/leave + mega-menu state machine below.
+   Does not touch menu timing or positioning. */
+const GOOEY_COLORS = ["#F97316", "#FF5A1F", "#F9F9F9", "#C94312"];
+
+const Wordmark = ({ light }) => <ParticleLogo light={light} size={40} textSize={25} />;
+
+/* Solutions — one small scene, reused across all four solution rows, only
+   the emphasized element changes on hover. Same shape language as the
+   destination pages (attention dot / particle pair / reorganizing surface
+   / gated flow) — not four unrelated icons. */
+const SolutionsVisual = ({ emphasis }) => {
+  // One shared AlterXGeometry family across all four — cognitive/workflows
+  // use the cube variants already built; voice/websites use the calmer
+  // signal/planes variants. No flat SVG illustration for any of the four.
+  if (emphasis === "cognitive") return <div className="w-full h-32" style={{ background: "#090909", borderRadius: 6 }}><CognitiveCubeMatrix active size="home" interactive={false} /></div>;
+  if (emphasis === "workflows") return <div className="w-full h-32"><CustomWorkflowStack active size="nav" /></div>;
+  if (emphasis === "voice") return <div className="w-full h-40 flex items-center justify-center"><VoiceAgentOrb active size="nav" /></div>;
+  if (emphasis === "websites") return <div className="w-full h-32"><AIWebsiteAdaptiveGrid active size="nav" /></div>;
+  // nothing hovered — the parent Solutions identity itself
+  return <div className="w-full h-32"><SolutionsRotatingCube size="preview" /></div>;
+};
+
+/* Company — typography as the visual, not a diagram. */
+const CompanyVisual = ({ emphasis }) => (
+  <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
+    <text x="14" y="90" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="52" fill="#090909" letterSpacing="-0.01em">
+      ALTER<tspan fill={emphasis ? "#ff4d0a" : "#c9360a"}>X</tspan>
+    </text>
+    <text x="14" y="112" fontSize="10.5" fill="rgba(9,9,9,.45)" fontFamily="Hanken Grotesk" fontWeight="500" letterSpacing="0.1em">EST. HYDERABAD</text>
+  </svg>
 );
 
-const MenuVisual = ({ kind }) => {
-  const stroke = "#ff4d0a";
-  if (kind === "inventory")
+const MenuVisual = ({ kind, emphasis }) => {
+  if (kind === "solutions") return <SolutionsVisual emphasis={emphasis} />;
+  if (kind === "company") return <CompanyVisual emphasis={emphasis} />;
+  if (kind === "build") {
+    // Same continuously-shuffling grid identity for every Developers link —
+    // one consistent interaction across the whole menu, not a different
+    // visual per sub-item.
     return (
-      <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
-        {[0, 1, 2].map((i) => (
-          <g key={i} transform={`translate(${34 + i * 12} ${84 - i * 20})`}>
-            <path d={`M0 0 L66 -16 L132 0 L66 16 Z`} fill={i === 1 ? "rgba(255,77,10,.06)" : "none"} stroke={i === 1 ? stroke : "rgba(9,9,9,.3)"} strokeWidth="1.5" />
-          </g>
-        ))}
-        <circle cx="112" cy="44" r="4.5" fill={stroke} />
-        <path d="M112 49 L112 96" stroke={stroke} strokeWidth="1.5" strokeDasharray="3 4" fill="none" />
-      </svg>
+      <div className="relative w-full h-32" style={{ background: "#090909", borderRadius: 6 }}>
+        <BuildWithAlterXGrid active size="nav" />
+      </div>
     );
-  if (kind === "build")
+  }
+  if (kind === "resources") {
+    // Same folder identity for every Resources sub-link — only the paper
+    // arrangement changes per hovered link, so the object itself visibly
+    // reconfigures on each hover instead of swapping to a different visual.
+    const RES_STATE_MAP = { matrix: "all", guides: "guides", insights: "insights", featured: "featured" };
+    const resState = RES_STATE_MAP[emphasis] || "rest";
     return (
-      <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
-        <path d="M64 34 L52 34 L52 106 L64 106" fill="none" stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />
-        <path d="M156 34 L168 34 L168 106 L156 106" fill="none" stroke="rgba(9,9,9,.4)" strokeWidth="1.5" />
-        <rect x="84" y="52" width="52" height="36" fill="rgba(255,77,10,.07)" stroke={stroke} strokeWidth="1.5" />
-        <path d="M20 62 L84 62 M20 80 L84 80" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
-        <path d="M136 70 L200 70" stroke={stroke} strokeWidth="1.5" />
-        <circle cx="200" cy="70" r="4.5" fill={stroke} />
-      </svg>
+      <div className="w-full h-32 flex items-center justify-center">
+        <AlterXResourcesFolder size="nav" active={!!emphasis} state={resState} />
+      </div>
     );
-  if (kind === "company" || kind === "resources")
-    return (
-      <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
-        {[0, 1, 2, 3].map((i) => (
-          <path key={i} d={`M28 ${38 + i * 22} L${192 - i * 30} ${38 + i * 22}`} stroke={i === 0 ? stroke : "rgba(9,9,9,.3)"} strokeWidth="1.5" fill="none" />
-        ))}
-        <circle cx="192" cy="38" r="4.5" fill={stroke} />
-      </svg>
-    );
-  /* engine — five-stage route with approval gate */
+  }
+  /* engine — the same AlterEngineAssembly identity used on the homepage
+     tile and the Alter Engine page hero. Nav version is compact, no
+     pointer tilt (interactive=false inside the component for size="nav").
+     "How it works" and "Human approvals" get real distinct states, not
+     just the same object re-hovered. */
+  const ENGINE_STATE_MAP = { lifecycle: "sequence", authority: "boundary", platform: "platform", recovery: "split", try: "assemble" };
+  const engineVisState = ENGINE_STATE_MAP[emphasis] || "core";
   return (
-    <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
-      <path d="M14 70 L58 70 C 70 70 74 50 88 50 L110 50" fill="none" stroke={stroke} strokeWidth="2" />
-      <path d="M58 70 C 70 70 74 92 88 92 L110 92" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
-      <path d="M110 50 C 128 50 130 70 144 70" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
-      <path d="M110 92 C 128 92 130 70 144 70" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" />
-      <rect x="144" y="58" width="24" height="24" fill="none" stroke={stroke} strokeWidth="2" transform="rotate(45 156 70)" />
-      <path d="M168 70 L206 70" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.5" strokeDasharray="4 4" />
-      <circle cx="14" cy="70" r="4" fill={stroke} />
-      <circle cx="206" cy="70" r="4.5" fill="none" stroke={stroke} strokeWidth="2" />
-      <text x="14" y="124" fontSize="11" fill="rgba(9,9,9,.6)" fontFamily="Hanken Grotesk" fontWeight="500" letterSpacing="0.06em">Understand · Plan · Approve · Act · Check</text>
-    </svg>
+    <div className="w-full h-32">
+      <AlterEngineAssembly active={!!emphasis} size="nav" state={engineVisState} label={emphasis === "authority" ? "Approval required" : null} />
+    </div>
   );
 };
 
@@ -70,10 +94,72 @@ export default function Header() {
   const darkHero = DARK_HERO_ROUTES.includes(location.pathname);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(null);
+  const [hoveredLink, setHoveredLink] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const enterTimer = useRef();
   const leaveTimer = useRef();
   const navRef = useRef(null);
+  const reduce = useReducedMotion();
+  const itemRefs = useRef([]);
+  const gooeyRef = useRef(null);
+  const particleTimeouts = useRef([]);
+
+  const prevOpen = useRef(null);
+
+  const positionGooey = useCallback((key, coldStart) => {
+    const nav = navRef.current;
+    const idx = NAV.findIndex((n) => n.key === key);
+    const item = itemRefs.current[idx];
+    const gooey = gooeyRef.current;
+    if (!nav || !item || !gooey) return;
+    const navRect = nav.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    // cold start (nothing was active): slower, more visible formation.
+    // moving between adjacent items: the surface morphs, quicker.
+    gooey.style.transitionDuration = coldStart ? "520ms, 520ms, 520ms, 520ms, 220ms, 480ms" : "340ms, 340ms, 340ms, 340ms, 160ms, 300ms";
+    gooey.style.left = `${itemRect.left - navRect.left}px`;
+    gooey.style.top = `${itemRect.top - navRect.top}px`;
+    gooey.style.width = `${itemRect.width}px`;
+    gooey.style.height = `${itemRect.height}px`;
+  }, []);
+
+  const spawnParticles = useCallback(() => {
+    const gooey = gooeyRef.current;
+    if (!gooey || reduce) return;
+    particleTimeouts.current.forEach(clearTimeout);
+    particleTimeouts.current = [];
+    gooey.querySelectorAll("[data-nav-particle]").forEach((n) => n.remove());
+    const count = 11;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement("span");
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+      const distance = 24 + Math.random() * 22;
+      p.dataset.navParticle = "true";
+      p.className = "ax-nav-particle";
+      p.style.setProperty("--px", `${Math.cos(angle) * distance}px`);
+      p.style.setProperty("--py", `${Math.sin(angle) * distance}px`);
+      p.style.setProperty("--psize", `${2.5 + Math.random() * 2.5}px`);
+      // mostly orange — warm white rare
+      p.style.setProperty("--pcolor", Math.random() < 0.82 ? GOOEY_COLORS[Math.floor(Math.random() * 2)] : GOOEY_COLORS[Math.random() < 0.6 ? 2 : 3]);
+      p.style.setProperty("--pdelay", `${Math.random() * 100}ms`);
+      gooey.appendChild(p);
+      particleTimeouts.current.push(setTimeout(() => p.remove(), 850));
+    }
+  }, [reduce]);
+
+  useLayoutEffect(() => {
+    setHoveredLink(null);
+    if (!open) { prevOpen.current = null; return; }
+    positionGooey(open, prevOpen.current === null);
+    spawnParticles();
+    prevOpen.current = open;
+  }, [open, positionGooey, spawnParticles]);
+
+  useEffect(() => {
+    const onResize = () => { if (open) positionGooey(open); };
+    window.addEventListener("resize", onResize);
+    return () => { window.removeEventListener("resize", onResize); particleTimeouts.current.forEach(clearTimeout); };
+  }, [open, positionGooey]);
 
   useEffect(() => {
     let threshold = window.innerHeight * 0.72;
@@ -130,12 +216,15 @@ export default function Header() {
       >
         <div className="max-w-[1500px] mx-auto h-full px-6 md:px-8 grid items-center" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
           <div className="justify-self-start"><Wordmark light={light} /></div>
-          <nav ref={navRef} className="hidden lg:flex items-center h-full justify-self-center" aria-label="Primary" onMouseLeave={leave}>
+          <nav ref={navRef} className="hidden lg:flex items-center h-full justify-self-center relative" aria-label="Primary" onMouseLeave={leave}>
+            <div ref={gooeyRef} className={`ax-nav-gooey ${open ? "is-active" : ""}`} aria-hidden="true" />
             {NAV.map((item, idx) => (
               <button
                 key={item.key}
                 data-nav-root
-                className={`ax-fill h-[42px] px-4 text-[15px] font-medium flex items-center gap-1.5 ${light ? "text-[#fbfaf7]" : "text-[#090909]"}`}
+                ref={(el) => (itemRefs.current[idx] = el)}
+                className="ax-nav-trigger relative z-[2] h-[42px] px-4 text-[15px] font-medium flex items-center gap-1.5"
+                style={{ color: open === item.key ? "#090909" : light ? "#fbfaf7" : "#090909" }}
                 data-active={open === item.key}
                 onMouseEnter={() => enter(item.key)}
                 onFocus={() => enter(item.key)}
@@ -189,20 +278,64 @@ export default function Header() {
               data-testid={`mega-menu-${activeMenu.key}`}
             >
               <div className="bg-[#fbfaf7] border border-black/15 rounded-[4px] shadow-[0_40px_80px_rgba(0,0,0,.4)] grid grid-cols-[400px_1fr] max-h-[calc(100vh-var(--header-height)-40px)] overflow-y-auto">
-                <Link to={activeMenu.featured.to} className="group block bg-[#f3f0e9] p-9 border-r border-black/10" data-testid="mega-menu-featured">
-                  <MenuVisual kind={activeMenu.featured.visual} />
-                  <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#090909] leading-snug">{activeMenu.featured.title}</h3>
-                  <p className="text-sm text-black/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
-                  <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#c9360a]">
-                    Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-                  </span>
-                </Link>
+                {activeMenu.key === "security" ? (
+                  <Link to={activeMenu.featured.to} className="group relative block overflow-clip isolate border-r border-black/10" style={{ background: "#090909" }} data-testid="mega-menu-featured">
+                    <div className="absolute inset-0 z-0" aria-hidden="true">
+                      <LetterGlitch glitchSpeed={55} centerVignette={false} outerVignette={true} smooth={true} colors={["#ffffff", "#F97316", "#62686a"]} />
+                    </div>
+                    {/* extremely subtle black → burnt-orange, only near the active region — not over the whole field */}
+                    <div
+                      className="absolute inset-0 z-[1] pointer-events-none transition-opacity duration-300"
+                      style={{ background: "radial-gradient(circle at 30% 70%, rgba(201,67,10,.16), transparent 45%)", opacity: hoveredLink ? 1 : 0 }}
+                      aria-hidden="true"
+                    />
+                    <div className="relative z-[2] p-9">
+                      <h3 className="text-[22px] font-semibold tracking-tight mt-[104px] text-[#fbfaf7] leading-snug">{activeMenu.featured.title}</h3>
+                      <p className="text-sm text-white/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
+                      <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#ff4d0a]">
+                        Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                      </span>
+                    </div>
+                  </Link>
+                ) : ["engine", "developers", "solutions"].includes(activeMenu.key) ? (
+                  // MegaVisualStage — controlled dark stage, one shared
+                  // AlterXGeometry family object per section, atmospheric
+                  // orange gradient concentrating toward the active region.
+                  <Link to={activeMenu.featured.to} className="group relative block overflow-clip isolate border-r border-black/10" style={{ background: "#090909" }} data-testid="mega-menu-featured">
+                    <div
+                      className="absolute inset-0 z-0 pointer-events-none transition-[background] duration-300"
+                      style={{ background: `radial-gradient(circle at 60% 42%, rgba(249,115,22,${hoveredLink ? ".22" : ".14"}), transparent 32%), #090909` }}
+                      aria-hidden="true"
+                    />
+                    <div className="relative z-[1] p-9">
+                      <MenuVisual kind={activeMenu.featured.visual} emphasis={hoveredLink} />
+                      <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#fbfaf7] leading-snug whitespace-pre-line">{activeMenu.featured.title}</h3>
+                      <p className="text-sm text-white/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
+                      <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#ff4d0a]">
+                        Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                      </span>
+                    </div>
+                  </Link>
+                ) : (
+                  <Link to={activeMenu.featured.to} className="group block bg-[#f3f0e9] p-9 border-r border-black/10" data-testid="mega-menu-featured">
+                    <MenuVisual kind={activeMenu.featured.visual} emphasis={hoveredLink} />
+                    <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#090909] leading-snug whitespace-pre-line">{activeMenu.featured.title}</h3>
+                    <p className="text-sm text-black/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
+                    <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#c9360a]">
+                      Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                    </span>
+                  </Link>
+                )}
                 <div className="p-7 grid grid-cols-2 gap-x-2 gap-y-1 content-start">
                   {activeMenu.links.map((l) => (
                     <Link
                       key={l.label}
                       to={l.to}
                       className="ax-fill block px-5 py-4 rounded-[3px]"
+                      onMouseEnter={() => setHoveredLink(l.visualKey || null)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      onFocus={() => setHoveredLink(l.visualKey || null)}
+                      onBlur={() => setHoveredLink(null)}
                       data-testid={`mega-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                     >
                       <span className={`flex items-center gap-2 font-semibold text-[15px] ${l.accent ? "text-[#c9360a]" : "text-[#090909]"}`}>
@@ -236,9 +369,9 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, pointerEvents: "none" }}
+            animate={{ opacity: 1, pointerEvents: "auto" }}
+            exit={{ opacity: 0, pointerEvents: "none" }}
             transition={{ duration: 0.2 }}
             className="lg:hidden fixed inset-0 z-[95] bg-[#fbfaf7] overflow-y-auto"
             style={{ top: "var(--header-height)" }}

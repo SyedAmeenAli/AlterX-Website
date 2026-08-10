@@ -6,6 +6,7 @@ import { ENGINE_STORY } from "@/content/home";
 import { Eyebrow } from "@/components/kit";
 import { EASE } from "@/lib/anim";
 import NetSegment from "@/components/home/NetworkThread";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 /* ------------------------------------------------------------------ */
 /* AlterEngineLiveStory                                                */
@@ -35,13 +36,13 @@ const SCENE_BG =
 
 /* work objects positioned on the scene (percent coordinates) */
 const STEPS = [
-  { id: "collect", title: "Collect supplier records", out: "Supplier set", tint: C.blue, x: 13, y: 50 },
-  { id: "normalize", title: "Normalize pricing", out: "Comparable costs", tint: C.blue, x: 32, y: 50 },
-  { id: "commercial", title: "Commercial comparison", out: "Cost scorecard", tint: C.orange, x: 58, y: 24 },
-  { id: "quality", title: "Quality comparison", out: "Quality scorecard", tint: C.mint, x: 58, y: 76 },
-  { id: "score", title: "Score suppliers", out: "Weighted ranking", tint: C.lavender, x: 80, y: 50 },
+  { id: "collect", title: "Collect supplier records", out: "Supplier set", tint: C.blue, x: 8, y: 50 },
+  { id: "normalize", title: "Normalize pricing", out: "Comparable costs", tint: C.blue, x: 36, y: 50 },
+  { id: "commercial", title: "Commercial comparison", out: "Cost scorecard", tint: C.orange, x: 62, y: 22 },
+  { id: "quality", title: "Quality comparison", out: "Quality scorecard", tint: C.mint, x: 62, y: 78 },
+  { id: "score", title: "Score suppliers", out: "Weighted ranking", tint: C.lavender, x: 88, y: 50 },
 ];
-const GATE = { x: 45, y: 50 };
+const GATE = { x: 49, y: 50 };
 
 const SOURCES = [
   { id: "profiles", label: "Supplier profiles", tint: C.blue, from: { x: -8, y: 30 } },
@@ -87,30 +88,132 @@ const Pointer = ({ show, click }) => (
   </motion.svg>
 );
 
-/* ----- one work strip (editorial, not a node) ----- */
-const WorkStrip = ({ step, status, delay }) => {
-  const running = status === "running";
+/* ----- approved marker: the approval sheet's resolved state, flying
+   in from where the sheet sat and settling onto the route's gate — the
+   big panel is gone before this ever shows, so Act never opens under it ----- */
+const ApprovedMarker = ({ show }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        className="absolute z-30 left-[46%] top-1/2 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold"
+        style={{ background: C.orange, color: "#111" }}
+        initial={{ opacity: 0, x: 130, y: "-50%", scale: 1 }}
+        animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 0.9 }}
+        exit={{ opacity: 0, scale: 0.6 }}
+        transition={{ duration: 0.5, ease: EASE }}
+      >
+        <Check size={11} aria-hidden="true" /> Approved
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+/* ----- source objects: three different physical forms ----- */
+const SourceObject = ({ src }) => {
+  if (src.id === "profiles") {
+    // supplier records — a small stack of offset sheets, sharp corners
+    return (
+      <div className="w-[100px]" data-testid="source-profiles">
+        <div className="relative h-[52px]">
+          <div className="absolute inset-0 translate-x-[6px] translate-y-[6px] rounded-[2px] border border-white/10" style={{ background: "#0b0b0b" }} />
+          <div className="absolute inset-0 translate-x-[3px] translate-y-[3px] rounded-[2px] border border-white/12" style={{ background: "#0c0c0c" }} />
+          <div className="absolute inset-0 rounded-[2px] border relative" style={{ borderColor: `${C.blue}70`, background: "#0d0d0d" }}>
+            <span className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: C.blue }} />
+            <div className="pl-3.5 pr-2 pt-2 space-y-1">
+              <span className="block h-[3px] w-[60%] rounded-full" style={{ background: "rgba(255,255,255,0.24)" }} />
+              <span className="block h-[3px] w-[42%] rounded-full" style={{ background: "rgba(255,255,255,0.14)" }} />
+            </div>
+          </div>
+        </div>
+        <span className="block text-[10.5px] text-white/50 mt-2 text-center">{src.label}</span>
+      </div>
+    );
+  }
+  if (src.id === "quotes") {
+    // current quotes — overlapping paper-like sheets, warm-white, orange price marks
+    return (
+      <div className="w-[100px]" data-testid="source-quotes">
+        <div className="relative h-[52px]">
+          <div className="absolute inset-0 rotate-[3deg] rounded-[1px]" style={{ background: "rgba(247,245,240,0.1)", border: "1px solid rgba(247,245,240,0.18)" }} />
+          <div className="absolute inset-0 -rotate-[2deg] rounded-[1px]" style={{ background: "rgba(247,245,240,0.16)", border: "1px solid rgba(247,245,240,0.24)" }}>
+            <div className="px-3 pt-2 space-y-1">
+              <span className="block h-[2.5px] w-[70%] rounded-full" style={{ background: "rgba(255,255,255,0.3)" }} />
+              <span className="block h-[2.5px] w-[46%] rounded-full" style={{ background: "rgba(255,255,255,0.18)" }} />
+            </div>
+            <span className="absolute right-2 bottom-2 w-2 h-2 rounded-full" style={{ background: C.orange }} />
+          </div>
+        </div>
+        <span className="block text-[10.5px] text-white/50 mt-2 text-center">{src.label}</span>
+      </div>
+    );
+  }
+  // quality notes — one annotated evidence sheet, mint, attachment mark
+  return (
+    <div className="w-[92px]" data-testid="source-notes">
+      <div className="relative h-[58px] rounded-[2px] border" style={{ borderColor: `${C.mint}70`, background: "#0d0d0d" }}>
+        <span className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: C.mint }} />
+        <span className="absolute -top-1.5 right-3 w-2.5 h-2.5 rounded-full border" style={{ borderColor: C.mint, background: "#0d0d0d" }} aria-hidden="true" />
+        <div className="pl-3.5 pr-2 pt-3 space-y-1.5">
+          <span className="block h-[2.5px] w-[64%] rounded-full border-t border-dashed" style={{ borderColor: "rgba(255,255,255,0.3)" }} />
+          <span className="block h-[2.5px] w-[48%] rounded-full border-t border-dashed" style={{ borderColor: "rgba(255,255,255,0.2)" }} />
+          <span className="block h-[2.5px] w-[38%] rounded-full border-t border-dashed" style={{ borderColor: "rgba(255,255,255,0.2)" }} />
+        </div>
+      </div>
+      <span className="block text-[10.5px] text-white/50 mt-2 text-center">{src.label}</span>
+    </div>
+  );
+};
+
+/* ----- one work strip (editorial, not a node) -----
+   `converge` (commercial/quality/score only): at Check, these three don't
+   just fade under the result — they visibly slide/shrink toward the
+   result region and dissolve there, so the work reads as becoming the
+   output rather than a card appearing on top of it.
+   Non-converging steps (collect/normalize) stay on as quiet background
+   context at Check instead of vanishing outright. */
+const RESULT_IDS = ["commercial", "quality", "score"];
+const WorkStrip = ({ step, status, delay, stage, recheckPhrase }) => {
+  const rechecking = !!recheckPhrase;
+  const running = status === "running" || rechecking;
   const complete = status === "complete";
   const bar = running ? C.orange : complete ? C.mint : step.tint;
+  const converge = stage === 4 && RESULT_IDS.includes(step.id) && !rechecking;
+  const convergeIndex = RESULT_IDS.indexOf(step.id);
+  const background = stage === 4 && !converge && !rechecking; // collect/normalize recede, don't vanish
+  const target = rechecking
+    // send-back: the SAME object leaves its quiet Check position and
+    // re-enters lower-centre, below the decision brief, room already
+    // made for it there — never on top of readable result content.
+    ? { left: "50%", top: "88%", opacity: 1, x: "-50%", y: "-50%", scale: 1 }
+    : converge
+    ? { left: "50%", top: `${44 + Math.max(convergeIndex, 0) * 4}%`, opacity: 0, x: "-50%", y: "-50%", scale: 0.55 }
+    : { left: `${step.x}%`, top: `${step.y}%`, opacity: background ? 0.18 : status === "upcoming" ? 0.4 : 1, x: "-50%", y: "-50%", scale: 1 };
   return (
     <motion.div
-      className="absolute w-[150px]"
-      style={{ left: `${step.x}%`, top: `${step.y}%` }}
-      initial={{ opacity: 0, x: "-50%", y: "calc(-50% + 10px)" }}
-      animate={{ opacity: status === "upcoming" ? 0.4 : 1, x: "-50%", y: "-50%" }}
-      transition={{ duration: 0.4, delay, ease: EASE }}
+      className="absolute w-[136px]"
+      style={{ zIndex: rechecking ? 3 : 2 }}
+      initial={{ left: `${step.x}%`, top: `${step.y}%`, opacity: 0, x: "-50%", y: "calc(-50% + 10px)", scale: 1 }}
+      animate={target}
+      transition={{ duration: rechecking ? 0.5 : converge ? 0.55 : 0.4, delay: converge || rechecking ? 0 : delay, ease: EASE }}
     >
       <div
         className="rounded-[7px] border bg-[#0d0d0d]/85 backdrop-blur-[2px] px-3 py-2.5"
-        style={{ borderColor: running ? "rgba(255,90,31,0.55)" : "rgba(255,255,255,0.1)" }}
+        style={{ borderColor: rechecking ? "rgba(233,173,79,0.55)" : running ? "rgba(255,90,31,0.55)" : "rgba(255,255,255,0.1)" }}
       >
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: bar }} />
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: rechecking ? C.amber : bar }} />
           <span className="text-[12.5px] font-semibold text-white/90 leading-tight">{step.title}</span>
         </div>
         <div className="mt-1.5 flex items-center justify-between">
-          <span className="text-[10.5px] text-white/40">{step.out}</span>
-          {complete ? (
+          <AnimatePresence mode="wait">
+            <motion.span key={rechecking ? recheckPhrase : step.out} className="text-[10.5px] text-white/40"
+              initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -3 }} transition={{ duration: 0.2, ease: EASE }}>
+              {rechecking ? recheckPhrase : step.out}
+            </motion.span>
+          </AnimatePresence>
+          {rechecking ? (
+            <RotateCcw size={11} style={{ color: C.amber }} aria-hidden="true" />
+          ) : complete ? (
             <Check size={11} style={{ color: C.mint }} aria-hidden="true" />
           ) : running ? (
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.orange }} />
@@ -128,7 +231,7 @@ const seg = (a, b) => `M${a.x} ${a.y} L${b.x} ${b.y}`;
 const curve = (a, b) => `M${a.x} ${a.y} C ${(a.x + b.x) / 2} ${a.y}, ${(a.x + b.x) / 2} ${b.y}, ${b.x} ${b.y}`;
 const byId = (id) => STEPS.find((s) => s.id === id);
 
-const Route = ({ stage }) => {
+const Route = ({ stage, reduce }) => {
   const skeleton = stage >= 1 ? 1 : 0;
   const trunk = stage >= 2 ? 1 : 0;
   const exec = stage >= 3 ? 1 : 0;
@@ -148,18 +251,58 @@ const Route = ({ stage }) => {
     curve(byId("commercial"), byId("score")),
     curve(byId("quality"), byId("score")),
   ];
+
+  // travelling signal — rides the ACTUAL rendered path (getPointAtLength),
+  // not a manually animated x/y. Chain: gate → commercial → score.
+  const signalPathA = useRef(null);
+  const signalPathB = useRef(null);
+  const [signal, setSignal] = useState(null);
+
+  useEffect(() => {
+    if (stage !== 3 || reduce) { setSignal(null); return; }
+    const a = signalPathA.current, b = signalPathB.current;
+    if (!a || !b) return;
+    let raf = 0;
+    const lenA = a.getTotalLength(), lenB = b.getTotalLength();
+    const total = lenA + lenB;
+    const speed = 34; // viewBox units / second — sets a natural, non-instant pace
+    const duration = Math.max(0.9, total / speed);
+    const t0 = performance.now();
+    const tick = (t) => {
+      const elapsed = ((t - t0) / 1000) % duration;
+      const dist = (elapsed / duration) * total;
+      const pt = dist <= lenA ? a.getPointAtLength(dist) : b.getPointAtLength(Math.min(dist - lenA, lenB));
+      setSignal({ x: pt.x, y: pt.y });
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [stage, reduce]);
+
   return (
     <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full" aria-hidden="true">
       {skel.map((d, i) => (
-        <motion.path key={`s${i}`} d={d} fill="none" stroke="rgba(247,245,240,0.16)" strokeWidth="0.5"
+        <motion.path key={`s${i}`} d={d} fill="none" stroke="rgba(247,245,240,0.28)" strokeWidth="0.55"
+          strokeDasharray="2.2 2.2" strokeLinecap="round"
           vectorEffect="non-scaling-stroke" initial={{ pathLength: 0 }} animate={{ pathLength: skeleton }}
           transition={{ duration: 0.5, delay: stage === 1 ? 0.15 + i * 0.12 : 0, ease: EASE }} />
       ))}
       {segs.map((s, i) => (
-        <motion.path key={`e${i}`} d={s.d} fill="none" stroke={C.orange} strokeWidth="1.4"
+        <motion.path
+          key={`e${i}`}
+          ref={i === 2 ? signalPathA : i === 4 ? signalPathB : undefined}
+          d={s.d} fill="none" stroke={C.orange} strokeWidth="1.4"
           vectorEffect="non-scaling-stroke" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: s.on }}
           transition={{ duration: 0.5, delay: s.on && stage === 3 && i > 1 ? (i - 2) * 0.12 : 0, ease: EASE }} />
       ))}
+      {/* signal — physically stops at the gate through Approve, then rides
+          the gate→commercial→score chain once Act begins */}
+      {stage === 2 && (
+        <circle cx={GATE.x} cy={GATE.y} r="0.9" vectorEffect="non-scaling-stroke" fill={C.orange} data-testid="story-signal-stopped" />
+      )}
+      {stage === 3 && signal && (
+        <circle cx={signal.x} cy={signal.y} r="0.9" vectorEffect="non-scaling-stroke" fill={C.orange} data-testid="story-signal-moving" />
+      )}
       {/* approval gate */}
       <motion.circle cx={GATE.x} cy={GATE.y} r="1.6" vectorEffect="non-scaling-stroke"
         fill={stage >= 3 ? C.orange : "none"} stroke={stage === 2 ? C.amber : C.orange} strokeWidth="1.4"
@@ -212,11 +355,13 @@ const ApprovalSheet = ({ show, approved }) => (
 const BAR = { A: { com: 0.82, qual: 0.6, del: 0.7 }, B: { com: 0.64, qual: 0.86, del: 0.44 }, C: { com: 0.7, qual: 0.72, del: 0.66 } };
 const DecisionBrief = ({ checkPhase }) => {
   const needsReview = checkPhase >= 1 && checkPhase < 3;
+  const sendingBack = checkPhase === 2; // room for the real reactivated work object below
   return (
     <motion.div
-      className="absolute left-1/2 top-1/2 w-[74%] max-w-[440px] z-20"
-      initial={{ opacity: 0, x: "-50%", y: "-50%", scale: 0.98 }} animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
-      transition={{ duration: 0.5, ease: EASE }} data-testid="story-brief"
+      className="absolute left-1/2 w-[74%] max-w-[440px] z-20"
+      initial={{ opacity: 0, top: "50%", x: "-50%", y: "-50%", scale: 0.98 }}
+      animate={{ opacity: 1, top: sendingBack ? "40%" : "50%", x: "-50%", y: "-50%", scale: sendingBack ? 0.94 : 1 }}
+      transition={{ duration: sendingBack ? 0.42 : 0.4, delay: sendingBack ? 0 : 0.35, ease: EASE }} data-testid="story-brief"
     >
       <div className="rounded-[10px] border border-white/12 bg-[#0c0c0c]/95 backdrop-blur-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
@@ -228,7 +373,20 @@ const DecisionBrief = ({ checkPhase }) => {
         </div>
         <div className="p-5 space-y-3.5">
           <div className="grid grid-cols-[70px_1fr_1fr_1fr] gap-2 text-[10px] uppercase tracking-[0.12em] text-white/35">
-            <span></span><span>Commercial</span><span>Quality</span><span>Delivery</span>
+            <span></span>
+            {[
+              ["Commercial", checkPhase >= 1],
+              ["Quality", checkPhase >= 1],
+              ["Delivery", checkPhase >= 3],
+            ].map(([label, checked]) => (
+              <span key={label} className="flex items-center gap-1">
+                {label}
+                {checked && <Check size={9} style={{ color: C.mint }} aria-hidden="true" />}
+                {!checked && needsReview && label === "Delivery" && (
+                  <span className="w-1 h-1 rounded-full" style={{ background: C.amber }} aria-hidden="true" />
+                )}
+              </span>
+            ))}
           </div>
           {["A", "B", "C"].map((s) => {
             const flag = needsReview && s === "B";
@@ -287,27 +445,55 @@ const DecisionBrief = ({ checkPhase }) => {
 };
 
 /* ----- the stable product scene ----- */
-const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, reduce }) => {
-  const showSources = stage >= 0 && stage < 2 && submitted;
+const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, recheckPhrase, reduce, showApprovedMarker }) => {
+  // sources only belong to Understand — they must retract before Plan
+  // takes the scene, not sit alongside the plan's work strips.
+  const showSources = stage === 0 && submitted;
+  const dimPlan = stage === 2; // Approve: plan recedes to context, gate stays lit
   return (
     <div
       className="relative w-full h-full rounded-[12px] border border-white/10 overflow-hidden"
       style={{ background: SCENE_BG }}
       data-testid="story-scene"
     >
-      {/* execution route + strips (Plan → Check) */}
+      {/* route (Plan → Approve → Act, retires before Check) */}
       <AnimatePresence>
         {stage >= 1 && stage < 4 && (
-          <motion.div key="plan" className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-            <div className="absolute inset-[7%]">
-              <Route stage={stage} />
-              {STEPS.map((s, i) => (
-                <WorkStrip key={s.id} step={s} status={stepStatus(s.id, stage)} delay={stage === 1 ? 0.2 + i * 0.16 : 0} />
-              ))}
-            </div>
+          <motion.div key="plan" className="absolute inset-[7%]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease: EASE }}>
+            <motion.div animate={{ opacity: dimPlan ? 0.28 : 1 }} transition={{ duration: 0.16, ease: EASE }}>
+              <Route stage={stage} reduce={reduce} />
+            </motion.div>
+            {/* approval gate stays the one full-strength focal point during Approve */}
+            {dimPlan && (
+              <div className="absolute inset-0 pointer-events-none">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full" aria-hidden="true">
+                  <motion.circle cx={GATE.x} cy={GATE.y} r="1.6" vectorEffect="non-scaling-stroke"
+                    fill="none" stroke={C.amber} strokeWidth="1.4"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.1, ease: EASE }}
+                    style={{ transformBox: "fill-box", transformOrigin: "center" }} />
+                </svg>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* work objects — persist through Check: commercial/quality/score
+          converge into the result instead of the result covering them */}
+      {stage >= 1 && (
+        <motion.div className="absolute inset-[7%]" animate={{ opacity: dimPlan ? 0.28 : 1 }} transition={{ duration: 0.16, ease: EASE }}>
+          {STEPS.map((s, i) => (
+            <WorkStrip
+              key={s.id}
+              step={s}
+              status={stepStatus(s.id, stage)}
+              delay={stage === 1 ? 0.2 + i * 0.16 : 0}
+              stage={stage}
+              recheckPhrase={s.id === "quality" ? recheckPhrase : null}
+            />
+          ))}
+        </motion.div>
+      )}
 
       {/* objective composer — persistent */}
       <motion.div
@@ -332,7 +518,9 @@ const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, reduce }
         </div>
       </motion.div>
 
-      {/* source objects (Understand) */}
+      {/* source objects (Understand) — three different physical forms, not
+          one card recoloured three times: a document stack, overlapping
+          quote sheets, one annotated evidence note. */}
       <AnimatePresence>
         {showSources &&
           SOURCES.map((src, i) => (
@@ -343,19 +531,9 @@ const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, reduce }
               initial={{ opacity: 0, left: `${src.from.x}%`, top: `${src.from.y}%` }}
               animate={{ opacity: 1, left: `${18 + i * 24}%`, top: "34%" }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: EASE }}
+              transition={{ duration: 0.35 + i * 0.03, delay: i * 0.12, ease: EASE }}
             >
-              <div className="w-[104px]">
-                <div className="h-14 rounded-[6px] border relative" style={{ borderColor: `${src.tint}66`, background: "#0d0d0d" }}>
-                  <span className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full" style={{ background: src.tint }} />
-                  <div className="pl-4 pr-2 pt-2 space-y-1">
-                    <span className="block h-[3px] w-[70%] rounded-full" style={{ background: "rgba(255,255,255,0.22)" }} />
-                    <span className="block h-[3px] w-[52%] rounded-full" style={{ background: "rgba(255,255,255,0.14)" }} />
-                    <span className="block h-[3px] w-[60%] rounded-full" style={{ background: "rgba(255,255,255,0.14)" }} />
-                  </div>
-                </div>
-                <span className="block text-[10.5px] text-white/50 mt-1.5 text-center">{src.label}</span>
-              </div>
+              <SourceObject src={src} />
             </motion.div>
           ))}
       </AnimatePresence>
@@ -379,12 +557,14 @@ const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, reduce }
       {/* approval (Approve) */}
       <ApprovalSheet show={stage === 2} approved={approved} />
       {stage === 2 && !reduce && <Pointer show={!approved} click={approved} />}
+      <ApprovedMarker show={stage === 3 && showApprovedMarker} />
 
       {/* activity phrase (Act) */}
       <AnimatePresence>
         {stage === 3 && (
           <motion.div key="act" className="absolute left-1/2 -translate-x-1/2 bottom-[6%] z-20"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, delay: 0.2, ease: EASE }}>
             <div className="flex items-center gap-2.5 rounded-full border border-white/12 bg-black/50 px-4 py-1.5">
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.orange }} />
               <AnimatePresence mode="wait">
@@ -398,7 +578,8 @@ const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, reduce }
         )}
       </AnimatePresence>
 
-      {/* result (Check) */}
+      {/* result (Check) — send-back reactivates the real quality WorkStrip
+          above (recheckPhrase prop), no detached proxy element */}
       <AnimatePresence>{stage === 4 && <DecisionBrief key="brief" checkPhase={checkPhase} />}</AnimatePresence>
     </div>
   );
@@ -456,6 +637,8 @@ export default function AlterEngineLiveStory() {
   const [approved, setApproved] = useState(false);
   const [phrase, setPhrase] = useState(0);
   const [checkPhase, setCheckPhase] = useState(0);
+  const [recheckPhrase, setRecheckPhrase] = useState(null);
+  const [showApprovedMarker, setShowApprovedMarker] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -531,6 +714,15 @@ export default function AlterEngineLiveStory() {
     }
   }, [stage, inView, reduce]);
 
+  /* Approve → Act: the approved marker flies onto the route right as Act
+     begins, then settles — the panel is long gone by the time it shows. */
+  useEffect(() => {
+    if (stage !== 3) { setShowApprovedMarker(false); return; }
+    setShowApprovedMarker(true);
+    const t = setTimeout(() => setShowApprovedMarker(false), 900);
+    return () => clearTimeout(t);
+  }, [stage]);
+
   /* activity phrase rotation (Act) */
   useEffect(() => {
     if (stage !== 3 || !inView || reduce) return;
@@ -538,16 +730,22 @@ export default function AlterEngineLiveStory() {
     return () => clearInterval(id);
   }, [stage, inView, reduce]);
 
-  /* check sequence (Check) */
+  /* check sequence (Check) — phase 2 is the real send-back: the quality
+     work object reactivates in place (no proxy pill), runs two short
+     deterministic activity phrases, then phase 3 resolves it. Timings
+     extended from the first pass to give that reactivation room to read. */
   useEffect(() => {
-    if (stage !== 4) { setCheckPhase(0); return; }
+    if (stage !== 4) { setCheckPhase(0); setRecheckPhrase(null); return; }
     if (!inView) return;
-    if (reduce) { setCheckPhase(3); return; }
+    if (reduce) { setCheckPhase(3); setRecheckPhrase(null); return; }
     setCheckPhase(0);
+    setRecheckPhrase(null);
     const t1 = setTimeout(() => setCheckPhase(1), 900);
-    const t2 = setTimeout(() => setCheckPhase(2), 1900);
-    const t3 = setTimeout(() => setCheckPhase(3), 2900);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    const t2 = setTimeout(() => setCheckPhase(2), 2200);
+    const t2a = setTimeout(() => setRecheckPhrase("Re-checking delivery evidence…"), 2200);
+    const t2b = setTimeout(() => setRecheckPhrase("Matching evidence to comparison…"), 2900);
+    const t3 = setTimeout(() => { setCheckPhase(3); setRecheckPhrase(null); }, 3600);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t2a); clearTimeout(t2b); clearTimeout(t3); };
   }, [stage, inView, reduce]);
 
   const goStage = (i) => {
@@ -561,13 +759,15 @@ export default function AlterEngineLiveStory() {
   const Header = (
     <div className="mb-8">
       <Eyebrow dark className="mb-4">How Alter Engine works</Eyebrow>
-      <h2 className="ax-display text-3xl lg:text-5xl">One outcome. A visible path through the work.</h2>
+      <ScrollReveal baseOpacity={0} enableBlur baseRotation={1.5} blurStrength={4}>
+        <h2 className="ax-display text-3xl lg:text-5xl">One outcome. A visible path through the work.</h2>
+      </ScrollReveal>
       <p className="mt-4 text-white/60 max-w-2xl">Alter Engine keeps the objective, plan, decisions, progress and result connected from beginning to end.</p>
     </div>
   );
 
   return (
-    <section id="how-it-works" className="bg-black text-[#fbfaf7] relative" data-testid="engine-story-section">
+    <section id="how-it-works" className="text-[#fbfaf7] relative" style={{ background: "rgba(0,0,0,0.64)" }} data-testid="engine-story-section">
       <NetSegment name="engine" />
       <div className="absolute inset-y-0 right-0 w-[40%] pointer-events-none" style={{ background: "var(--ax-edge-burn)", transform: "scaleX(-1)" }} aria-hidden="true" />
 
@@ -578,7 +778,7 @@ export default function AlterEngineLiveStory() {
               {Header}
               <div className="grid grid-cols-[63%_1fr] gap-8 items-center" style={{ height: "min(62vh, 580px)" }}>
                 <div className="h-full">
-                  <Scene stage={stage} typed={typed} submitted={submitted} approved={approved} phrase={phrase} checkPhase={checkPhase} reduce={reduce} />
+                  <Scene stage={stage} typed={typed} submitted={submitted} approved={approved} phrase={phrase} checkPhase={checkPhase} recheckPhrase={recheckPhrase} reduce={reduce} showApprovedMarker={showApprovedMarker} />
                 </div>
                 <Rail stage={stage} onHover={(i) => setStage(i)} onSelect={goStage} />
               </div>

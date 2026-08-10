@@ -1,0 +1,30 @@
+.ax-letter-glitch {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ax-letter-glitch canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.94;
+}
+/* light corner shadow only — not a wall that buries the field */
+.ax-letter-glitch.has-center-vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(ellipse at 14% 20%, rgba(0,0,0,.55), transparent 40%);
+  pointer-events: none;
+}
+.ax-letter-glitch.has-outer-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.4) 100%);
+  pointer-events: none;
+}

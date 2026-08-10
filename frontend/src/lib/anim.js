@@ -39,15 +39,39 @@ export const MaskLines = ({ lines, className, lineClass, delay = 0, as: Tag = "d
   );
 };
 
+const setMetaByProp = (attr, key, content) => {
+  let el = document.querySelector(`meta[${attr}="${key}"]`);
+  if (!el) { el = document.createElement("meta"); el.setAttribute(attr, key); document.head.appendChild(el); }
+  el.setAttribute("content", content);
+};
+
 export function usePageMeta(title, description) {
   useEffect(() => {
-    document.title = title ? `${title} — AlterX` : "AlterX — From intent to completed, reviewable work";
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) { m = document.createElement("meta"); m.name = "description"; document.head.appendChild(m); }
-    m.content = description || "AlterX builds Alter Engine — turn an outcome into planned, approved, visible and checked work.";
+    const fullTitle = title ? `${title} — AlterX` : "AlterX — Turn outcomes into visible work";
+    const desc = description || "AlterX builds Alter Engine — turn an outcome into planned, approved, visible and checked work.";
+    const url = `https://alterx.co.in${window.location.pathname}`;
+    const image = "https://alterx.co.in/og/alterx-social.png";
+
+    document.title = fullTitle;
+    setMetaByProp("name", "description", desc);
+
     let c = document.querySelector('link[rel="canonical"]');
     if (!c) { c = document.createElement("link"); c.rel = "canonical"; document.head.appendChild(c); }
-    c.href = `https://alterx.co.in${window.location.pathname}`;
+    c.href = url;
+
+    // Open Graph / Twitter — same title/description/canonical, one source of
+    // truth, no per-page metadata logic. Social image is a single static
+    // asset shared across routes.
+    setMetaByProp("property", "og:type", "website");
+    setMetaByProp("property", "og:site_name", "AlterX");
+    setMetaByProp("property", "og:url", url);
+    setMetaByProp("property", "og:title", fullTitle);
+    setMetaByProp("property", "og:description", desc);
+    setMetaByProp("property", "og:image", image);
+    setMetaByProp("name", "twitter:card", "summary_large_image");
+    setMetaByProp("name", "twitter:title", fullTitle);
+    setMetaByProp("name", "twitter:description", desc);
+    setMetaByProp("name", "twitter:image", image);
   }, [title, description]);
 }
 

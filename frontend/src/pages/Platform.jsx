@@ -103,7 +103,7 @@ export default function Platform() {
         body="Start in conversation. Move into a visible plan. Watch work travel through systems, data and people while the Platform keeps context, decisions, approvals and evidence together."
         ctas={<Link to="/try-alter-engine" className="btn-primary" data-testid="platform-hero-cta">Try Alter Engine <ArrowRight size={15} className="ax-arrow" aria-hidden="true" /></Link>}
       />
-      <section className="bg-black text-[#fbfaf7] pb-24">
+      <section className="text-[#fbfaf7] pb-24" style={{ background: "var(--marketing-dark-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <Reveal><Prototype /></Reveal>
           <p className="mt-4 text-[13px] text-white/45 max-w-2xl">The AlterX Platform is the interface through which people describe outcomes, review plans, approve actions, observe work, inspect failures and review results. It is not a separate flagship product — it is how you use Alter Engine.</p>
@@ -118,7 +118,7 @@ export default function Platform() {
           </div>
         </div>
       </section>
-      <section className="bg-[#fbfaf7] py-24">
+      <section className="py-24" style={{ background: "var(--marketing-light-medium)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <ChapterHead num="03" eyebrow="Next" title="Open the Platform experience." />
           <Link to="/try-alter-engine" className="btn-primary -mt-6" data-testid="platform-final-cta">Try Alter Engine <ArrowRight size={15} className="ax-arrow" aria-hidden="true" /></Link>

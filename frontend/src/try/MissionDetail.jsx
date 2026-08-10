@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, ShieldCheck, X, Pause, Play, AlertTriangle, RotateCcw, Download, Repeat } from "lucide-react";
 import { getMission, saveMission, getScenario, logEvent, exportEvidence, saveWorkflow } from "@/lib/store";
 import { EASE } from "@/lib/anim";
+import EngineDock from "@/components/try-engine/EngineDock";
+import MissionProgressPath from "@/components/try-engine/MissionProgressPath";
+import MissionContextPanel from "@/try/MissionContextPanel";
 
 const STATE_LABEL = { clarify: "Understand", plan: "Plan ready for review", approval: "Needs your decision", run: "In progress", failure: "Needs recovery", verify: "Ready to review", complete: "Complete", stopped: "Stopped" };
 
@@ -250,7 +253,7 @@ export default function MissionDetail() {
   };
 
   return (
-    <div className="p-5 md:p-8 max-w-[1060px]" data-testid="mission-detail">
+    <div className="p-5 md:p-8 max-w-[1480px]" data-testid="mission-detail">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-5">
         <Link to="/try-alter-engine/missions" className="text-[13px] font-medium text-white/45 hover:text-[#ff4d0a]">Missions</Link>
         <span className="text-white/25">/</span>
@@ -258,7 +261,7 @@ export default function MissionDetail() {
         <span className="text-[13px] font-semibold text-[#ff8a3d]" data-testid="mission-state-badge">{STATE_LABEL[mission.state]}</span>
       </div>
 
-      <div className="flex gap-1 mb-9 max-w-2xl" aria-hidden="true">
+      <div className="flex gap-1 mb-6 max-w-2xl" aria-hidden="true">
         {["clarify", "plan", "approval", "run", "verify"].map((s, i) => {
           const order = { clarify: 0, plan: 1, approval: 2, run: 3, failure: 3, verify: 4, complete: 5, stopped: 3 };
           const cur = order[mission.state];
@@ -266,6 +269,14 @@ export default function MissionDetail() {
         })}
       </div>
 
+      {/* mission position — one derived state (missionStage.js) drives both;
+          they can never disagree with each other or with the page above */}
+      <div className="mb-9 flex flex-col gap-4">
+        <MissionProgressPath missionState={mission.state} />
+        <EngineDock missionState={mission.state} />
+      </div>
+
+      <div className="grid xl:grid-cols-[1fr_360px] gap-10 items-start">
       <div className="min-w-0">
         {/* CLARIFY — editorial composition, not four boxes */}
         {mission.state === "clarify" && (
@@ -537,6 +548,9 @@ export default function MissionDetail() {
             </AnimatePresence>
           </div>
         </div>
+      </div>
+
+      <MissionContextPanel mission={mission} scenario={scenario} currentStep={currentStep} steps={steps} weakResolved={weakResolved} />
       </div>
 
       <Inspector step={inspected} mission={mission} onClose={() => setInspected(null)} />

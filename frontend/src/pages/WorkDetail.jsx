@@ -23,7 +23,7 @@ export default function WorkDetail() {
             <p className="relative ax-display text-[16vw] md:text-[9vw] leading-none opacity-90" style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }}>
               {w.name}<span className="text-[#ff4d0a]">.</span>
             </p>
-            <p className="relative text-[11px] font-medium uppercase tracking-widest text-white/40 mt-4">Editorial treatment — approved project imagery pending customer review</p>
+            <p className="relative text-[11px] font-medium uppercase tracking-widest text-white/40 mt-4">Editorial treatment — illustrative workflow, not a customer case study</p>
           </div>
           <div className="grid md:grid-cols-2 gap-px bg-black/15 border border-black/15 mb-16">
             <div className="bg-[#f3f0e9] p-8">

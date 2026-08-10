@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, CornerDownLeft } from "lucide-react";
 import { listMissions, listWorkflows } from "@/lib/store";
 
-export default function CommandBar({ open, onClose, onStartTour, onToggleSidebar }) {
+export default function CommandBar({ open, onClose, onStartTour }) {
   const [q, setQ] = useState("");
   const [sel, setSel] = useState(0);
   const inputRef = useRef();
@@ -15,7 +15,6 @@ export default function CommandBar({ open, onClose, onStartTour, onToggleSidebar
       { type: "Command", label: "Open approvals", run: () => navigate("/try-alter-engine/approvals") },
       { type: "Command", label: "Open evidence", run: () => navigate("/try-alter-engine/evidence") },
       { type: "Command", label: "Start tour", run: onStartTour },
-      { type: "Command", label: "Toggle sidebar", run: onToggleSidebar },
     ];
     const nav = ["missions", "workflows", "connections", "knowledge", "usage", "settings"].map((n) => ({
       type: "Navigate", label: n.charAt(0).toUpperCase() + n.slice(1), run: () => navigate(`/try-alter-engine/${n}`),
@@ -25,7 +24,7 @@ export default function CommandBar({ open, onClose, onStartTour, onToggleSidebar
     const all = [...commands, ...nav, ...missions, ...wfs];
     if (!q.trim()) return all.slice(0, 10);
     return all.filter((i) => i.label.toLowerCase().includes(q.toLowerCase())).slice(0, 10);
-  }, [q, navigate, onStartTour, onToggleSidebar]);
+  }, [q, navigate, onStartTour]);
 
   useEffect(() => { if (open) { setQ(""); setSel(0); setTimeout(() => inputRef.current?.focus(), 40); } }, [open]);
   useEffect(() => { setSel(0); }, [q]);

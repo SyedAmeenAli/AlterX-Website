@@ -1,0 +1,14 @@
+/* Shared restrained motion for Try Alter Engine inspector panels.
+   One-shot pulse (never looping) for "Approval required" emphasis. */
+@keyframes ax-pulse-once {
+  0% { opacity: .45; transform: scaleX(.6); }
+  60% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+.ax-pulse-once {
+  animation: ax-pulse-once 700ms cubic-bezier(.25, 1, .5, 1) both;
+  transform-origin: left center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ax-pulse-once { animation: none; }
+}

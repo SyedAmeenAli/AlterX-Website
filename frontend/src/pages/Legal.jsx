@@ -10,7 +10,7 @@ export default function Legal({ slug }) {
   const doc = LEGAL[slug];
   usePageMeta(doc.title, doc.summary);
   return (
-    <div className="bg-[#fbfaf7] text-[#090909]" style={{ paddingTop: "calc(var(--header-height) + 56px)" }}>
+    <div className="text-[#090909]" style={{ paddingTop: "calc(var(--header-height) + 56px)", background: "var(--marketing-legal)" }}>
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-24">
         <div className="border-b border-black/15 pb-8 mb-10">
           <p className="ax-eyebrow text-[#c9360a] mb-4">Legal</p>
@@ -53,7 +53,7 @@ export default function Legal({ slug }) {
               </section>
             ))}
             <section className="mt-12 pt-6 border-t border-black/15">
-              <p className="text-[13px] text-black/55">Contact and grievance: {BUSINESS.email} · alternate {BUSINESS.backupEmail} · {BUSINESS.phone1}</p>
+              <p className="text-[13px] text-black/55">Contact and grievance: {BUSINESS.email} · {BUSINESS.phone1}</p>
             </section>
           </article>
         </div>

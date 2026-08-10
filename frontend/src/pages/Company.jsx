@@ -1,6 +1,7 @@
 import React from "react";
 import { PageHero, ChapterHead, FillLink } from "@/components/kit";
 import { PRINCIPLES } from "@/content/pages";
+import { COMPANY_DESCRIPTION } from "@/content/navigation";
 import { usePageMeta, Reveal } from "@/lib/anim";
 
 const ANCHORS = [
@@ -17,9 +18,9 @@ export default function Company() {
         dark
         eyebrow="About AlterX"
         title={["We build AI systems with", "control, clarity and proof."]}
-        body="AlterX exists to turn objectives into outcomes. We combine orchestration, intelligence and governance to build systems that keep important work visible and reviewable."
+        body={COMPANY_DESCRIPTION}
       />
-      <section className="bg-black text-[#fbfaf7] pb-24">
+      <section className="text-[#fbfaf7] pb-24" style={{ background: "rgba(0,0,0,0.62)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-3 border border-white/15 mb-28">
             {ANCHORS.map((a, i) => (
