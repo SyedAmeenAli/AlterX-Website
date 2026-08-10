@@ -38,7 +38,7 @@ export default function Security() {
           aria-hidden="true"
         />
         <div className="relative z-[2] max-w-[1400px] mx-auto px-6 md:px-10 pb-24 text-[#fbfaf7]" style={{ paddingTop: "calc(var(--header-height) + 60px)" }}>
-          <div className="max-w-xl relative">
+          <div className="max-w-xl relative security-readable">
             <Reveal><Eyebrow dark className="mb-6">Security</Eyebrow></Reveal>
             <MaskLines as="h1" lines={["Control is", "not an add-on."]} className="ax-display text-5xl sm:text-6xl lg:text-[72px] text-[#fbfaf7]" />
             <Reveal delay={0.2}>

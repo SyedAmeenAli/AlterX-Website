@@ -20,7 +20,7 @@
   height: var(--unit);
   transform-style: preserve-3d;
   transform: rotateX(-18deg) rotateY(-32deg) rotateX(var(--tiltX)) rotateY(var(--tiltY));
-  transition: transform 260ms cubic-bezier(.25,1,.5,1);
+  transition: transform 460ms cubic-bezier(.25,1,.5,1);
 }
 
 .axg-domlabel {
@@ -34,7 +34,7 @@
   letter-spacing: .02em;
   color: #ff8b45;
   white-space: nowrap;
-  transition: opacity 260ms cubic-bezier(.25,1,.5,1), transform 260ms cubic-bezier(.25,1,.5,1);
+  transition: opacity 460ms cubic-bezier(.25,1,.5,1), transform 460ms cubic-bezier(.25,1,.5,1);
 }
 .axg-domlabel[data-visible="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -309,7 +309,7 @@
   background: #ff4d0a;
   opacity: 0;
   transform: translateZ(calc(var(--unit) / 2 + 6px)) translateX(-14px);
-  transition: opacity 200ms ease;
+  transition: opacity 280ms ease;
 }
 .axg-signal[data-state="active"] .axg-sig--left {
   animation: axg-sig-pulse 900ms cubic-bezier(.25,1,.5,1) 1;

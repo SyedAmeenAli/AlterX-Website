@@ -39,7 +39,7 @@
 .cws-tilt {
   --cws-active-scale: 1;
   transform: scale(calc(var(--cws-scale) * var(--cws-active-scale))) rotateX(var(--cws-tiltX)) rotateY(var(--cws-tiltY));
-  transition: transform 320ms cubic-bezier(.25,1,.5,1);
+  transition: transform 480ms cubic-bezier(.25,1,.5,1);
 }
 /* hovering anywhere on the stage — whole object grows a touch, feels reactive */
 .cws-stage[data-active="true"] .cws-tilt { --cws-active-scale: 1.14; }
@@ -86,7 +86,7 @@
 .cws-face {
   position: absolute;
   border: 1px solid rgba(249, 115, 22, .6);
-  transition: background 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+  transition: background 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
 }
 .cws-face--top {
   width: var(--cws-unit);

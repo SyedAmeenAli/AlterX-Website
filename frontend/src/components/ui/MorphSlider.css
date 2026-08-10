@@ -38,7 +38,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+  transition: color 340ms ease, border-color 340ms ease, background 340ms ease;
 }
 .ax-morph-slider__controls button.is-active {
   color: #090909;

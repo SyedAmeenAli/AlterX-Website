@@ -116,7 +116,7 @@ export default function Header() {
     const itemRect = item.getBoundingClientRect();
     // cold start (nothing was active): slower, more visible formation.
     // moving between adjacent items: the surface morphs, quicker.
-    gooey.style.transitionDuration = coldStart ? "520ms, 520ms, 520ms, 520ms, 220ms, 480ms" : "340ms, 340ms, 340ms, 340ms, 160ms, 300ms";
+    gooey.style.transitionDuration = coldStart ? "520ms, 520ms, 520ms, 520ms, 220ms, 480ms" : "420ms, 420ms, 420ms, 420ms, 220ms, 380ms";
     gooey.style.left = `${itemRect.left - navRect.left}px`;
     gooey.style.top = `${itemRect.top - navRect.top}px`;
     gooey.style.width = `${itemRect.width}px`;
@@ -235,7 +235,7 @@ export default function Header() {
                 data-testid={`nav-trigger-${item.key}`}
               >
                 {item.label}
-                <ChevronDown size={13} className={`transition-transform duration-200 ${open === item.key ? "rotate-180" : ""}`} aria-hidden="true" />
+                <ChevronDown size={13} className={`transition-transform duration-300 ${open === item.key ? "rotate-180" : ""}`} aria-hidden="true" />
               </button>
             ))}
           </nav>
@@ -258,9 +258,8 @@ export default function Header() {
           {activeMenu && (
             <motion.div
               initial={{ opacity: 0, y: -8, x: "-50%" }}
-              animate={{ opacity: 1, y: 0, x: "-50%" }}
-              exit={{ opacity: 0, y: -6, x: "-50%" }}
-              transition={{ duration: 0.24, ease: EASE }}
+              animate={{ opacity: 1, y: 0, x: "-50%", transition: { duration: 0.44, ease: EASE } }}
+              exit={{ opacity: 0, y: -6, x: "-50%", transition: { duration: 0.32, ease: EASE } }}
               className="megaMenu hidden lg:block"
               style={{
                 position: "fixed",
@@ -293,7 +292,7 @@ export default function Header() {
                       <h3 className="text-[22px] font-semibold tracking-tight mt-[104px] text-[#fbfaf7] leading-snug">{activeMenu.featured.title}</h3>
                       <p className="text-sm text-white/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
                       <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#ff4d0a]">
-                        Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                        Explore <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                       </span>
                     </div>
                   </Link>
@@ -312,7 +311,7 @@ export default function Header() {
                       <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#fbfaf7] leading-snug whitespace-pre-line">{activeMenu.featured.title}</h3>
                       <p className="text-sm text-white/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
                       <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#ff4d0a]">
-                        Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                        Explore <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                       </span>
                     </div>
                   </Link>
@@ -322,7 +321,7 @@ export default function Header() {
                     <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#090909] leading-snug whitespace-pre-line">{activeMenu.featured.title}</h3>
                     <p className="text-sm text-black/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
                     <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#c9360a]">
-                      Explore <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                      Explore <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                     </span>
                   </Link>
                 )}
@@ -357,7 +356,7 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.36 }}
             className="hidden lg:block fixed inset-0 z-[90] bg-black/55"
             style={{ top: "var(--header-height)" }}
             onClick={() => setOpen(null)}
@@ -370,9 +369,8 @@ export default function Header() {
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, pointerEvents: "none" }}
-            animate={{ opacity: 1, pointerEvents: "auto" }}
-            exit={{ opacity: 0, pointerEvents: "none" }}
-            transition={{ duration: 0.2 }}
+            animate={{ opacity: 1, pointerEvents: "auto", transition: { duration: 0.4 } }}
+            exit={{ opacity: 0, pointerEvents: "none", transition: { duration: 0.32 } }}
             className="lg:hidden fixed inset-0 z-[95] bg-[#fbfaf7] overflow-y-auto"
             style={{ top: "var(--header-height)" }}
             data-testid="mobile-menu"

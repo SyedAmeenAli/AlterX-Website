@@ -53,14 +53,14 @@
   --ccm-tiltY: 0deg;
   transform-style: preserve-3d;
   transform: rotateX(var(--ccm-tiltX)) rotateY(var(--ccm-tiltY));
-  transition: transform 240ms cubic-bezier(.25,1,.5,1);
+  transition: transform 460ms cubic-bezier(.25,1,.5,1);
 }
 
 /* layer 3 — "rotate toward viewer" on hover, 120ms delay per spec timeline */
 .ccm-viewer {
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 230ms cubic-bezier(.25,1,.5,1);
+  transition: transform 460ms cubic-bezier(.25,1,.5,1);
 }
 .ccm-stage[data-active="true"] .ccm-viewer {
   transform: rotateX(-4deg) rotateY(-6deg) translateZ(4px);
@@ -79,7 +79,7 @@
     calc(var(--y) * (var(--ccm-w) + var(--ccm-gap))),
     calc(var(--z) * (var(--ccm-w) + var(--ccm-gap)))
   );
-  transition: transform 260ms cubic-bezier(.25,1,.5,1);
+  transition: transform 460ms cubic-bezier(.25,1,.5,1);
 }
 
 .ccm-face {
@@ -91,7 +91,7 @@
   border: 1.5px solid rgba(9, 9, 9, .55);
   box-shadow: inset 0 0 12px rgba(255, 255, 255, .025);
   backface-visibility: hidden;
-  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  transition: background 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
 }
 .ccm-face--front  { transform: translateZ(calc(var(--ccm-w) / 2)); }
 .ccm-face--back   { transform: rotateY(180deg) translateZ(calc(var(--ccm-w) / 2)); filter: brightness(.7); }
@@ -137,7 +137,7 @@
   background: var(--cog-orange);
   border-color: rgba(255,255,255,.38);
   box-shadow: 0 0 18px rgba(249,115,22,.45), 0 0 42px rgba(249,115,22,.15);
-  transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  transition: background 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
 }
 
 /* ---------- reduced motion: stable orientation, no rotation/tilt ---------- */

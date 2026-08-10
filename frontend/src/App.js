@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -41,14 +41,49 @@ import Evidence from "@/try/Evidence";
 import Usage from "@/try/Usage";
 import TrySettings from "@/try/TrySettings";
 
+// Single deterministic scroll controller for the whole app — nothing else
+// (no native hash auto-scroll, no per-page effect) should move the
+// viewport on navigation. Rule: cross-route = instant/auto positioning,
+// same-page anchor = smooth scroll. Cross-route hash links (e.g. the
+// footer's /alter-engine#faq from any other page) previously always used
+// "smooth", which animated from wherever the OLD page had scrolled to —
+// visually reading as "stuck near the footer" when that old position
+// happened to overlap the new page's footer-ish region.
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
+  const prevPathname = useRef(pathname);
+
   useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const routeChanged = prevPathname.current !== pathname;
+    prevPathname.current = pathname;
+
     if (hash) {
-      const el = document.querySelector(hash);
-      if (el) { el.scrollIntoView({ behavior: "smooth" }); return; }
+      const id = decodeURIComponent(hash.slice(1));
+      // route just changed underneath this hash — the target section may
+      // not be laid out yet in the same tick (fonts/images/animated
+      // entrances can still shift it); wait two frames so its position is
+      // final, then jump instantly. Never animate across a route change.
+      if (routeChanged) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.getElementById(id)?.scrollIntoView({ behavior: "auto", block: "start" });
+          });
+        });
+        return;
+      }
+      // same route, just the hash changed (e.g. clicking another in-page
+      // anchor) — smooth scroll makes sense here.
+      document.getElementById(id)?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      return;
     }
-    window.scrollTo(0, 0);
+
+    // route change to a different page with no hash — land at top
+    // instantly, never a long smooth scroll back up from wherever the
+    // previous page left off. Explicit "auto" is required: with global
+    // `scroll-behavior: smooth` on <html>, an unqualified scrollTo would
+    // otherwise inherit that and animate.
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [pathname, hash]);
   return null;
 }

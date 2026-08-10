@@ -32,7 +32,7 @@
   --sc-tiltPx: 0px;
   position: relative;
   transform: rotateX(var(--sc-tiltX)) translateX(var(--sc-tiltPx));
-  transition: transform 280ms cubic-bezier(.25,1,.5,1);
+  transition: transform 460ms cubic-bezier(.25,1,.5,1);
 }
 
 .sc-cube-loader {
@@ -40,7 +40,7 @@
   width: var(--cube-size);
   height: var(--cube-size);
   transform-style: preserve-3d;
-  transition: transform 350ms cubic-bezier(.25,1,.5,1);
+  transition: transform 500ms cubic-bezier(.25,1,.5,1);
 }
 .sc-stage[data-hover="true"] .sc-cube-loader { transform: scale(1.05) translateY(-4px); }
 

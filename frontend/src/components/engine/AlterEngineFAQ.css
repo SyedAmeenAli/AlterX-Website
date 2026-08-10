@@ -17,7 +17,7 @@
   text-align: left;
   cursor: pointer;
   padding: 22px 0;
-  transition: transform 250ms cubic-bezier(.22, .61, .36, 1);
+  transition: transform var(--motion-base) var(--ease-standard);
 }
 .ax-faq-question:hover { transform: translateX(3px); }
 
@@ -26,7 +26,7 @@
   height: 0;
   flex-shrink: 0;
   background: #F97316;
-  transition: height 250ms cubic-bezier(.22, .61, .36, 1);
+  transition: height 400ms cubic-bezier(.22, .61, .36, 1);
 }
 .ax-faq-row[data-open="true"] .ax-faq-rule { height: 32px; }
 
@@ -36,14 +36,14 @@
   font-size: 18px;
   font-weight: 500;
   color: #f9f9f9;
-  transition: color 200ms ease;
+  transition: color var(--motion-fast) ease;
 }
 .ax-faq-row[data-open="true"] .ax-faq-question-text { color: #f9f9f9; }
 
 .ax-faq-plus {
   flex-shrink: 0;
   color: rgba(249, 249, 249, .5);
-  transition: transform 300ms cubic-bezier(.22, .61, .36, 1), color 300ms cubic-bezier(.22, .61, .36, 1);
+  transition: transform 360ms cubic-bezier(.22, .61, .36, 1), color 360ms cubic-bezier(.22, .61, .36, 1);
 }
 .ax-faq-question:hover .ax-faq-plus { color: #F97316; }
 .ax-faq-row[data-open="true"] .ax-faq-plus { color: #F97316; transform: rotate(45deg); }
@@ -54,7 +54,7 @@
   grid-template-rows: 0fr;
   opacity: 0;
   transform: translateY(4px);
-  transition: grid-template-rows 300ms cubic-bezier(.22, .61, .36, 1), opacity 260ms ease, transform 300ms cubic-bezier(.22, .61, .36, 1);
+  transition: grid-template-rows 400ms cubic-bezier(.22, .61, .36, 1), opacity 340ms ease, transform 400ms cubic-bezier(.22, .61, .36, 1);
 }
 .ax-faq-row[data-open="true"] .ax-faq-answer-wrap {
   grid-template-rows: 1fr;
@@ -78,7 +78,7 @@
   font-size: 14px;
   font-weight: 600;
   color: #F97316;
-  transition: color 200ms ease;
+  transition: color 320ms ease;
 }
 .ax-faq-cta:hover { color: #FF8A45; }
 

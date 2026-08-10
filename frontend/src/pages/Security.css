@@ -45,7 +45,7 @@
   font-weight: 500;
   margin-bottom: 0.75rem;
   color: #f97316;
-  transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: color 320ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 .securityItem__title {
   display: block;
@@ -54,13 +54,13 @@
   letter-spacing: -0.01em;
   margin-bottom: 0.5rem;
   color: #f9f9f9;
-  transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: color 320ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 .securityItem__desc {
   display: block;
   font-size: 14px;
   color: rgba(249, 249, 249, 0.6);
-  transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: color 320ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .securityItem:hover .securityItem__index,

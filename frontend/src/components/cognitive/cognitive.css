@@ -29,7 +29,7 @@
   border-radius: 5px;
   color: rgba(255,255,255,.6);
   background: transparent;
-  transition: border-color 180ms ease, color 180ms ease;
+  transition: border-color 360ms ease, color 360ms ease;
 }
 .axc-iconbtn:hover { border-color: rgba(255,77,10,.5); color: #ff8b45; }
 .axc-spin { animation: axc-spin 700ms linear; }
@@ -47,7 +47,7 @@
   border-top: 1px solid rgba(255,255,255,.08);
   background: transparent;
   color: inherit;
-  transition: background 180ms ease;
+  transition: background 360ms ease;
 }
 .axc-row:last-child { border-bottom: 1px solid rgba(255,255,255,.08); }
 .axc-row:hover, .axc-row.is-selected { background: rgba(255,255,255,.03); }
@@ -63,11 +63,11 @@
   border-radius: 4px;
   padding: 3px 7px;
   white-space: nowrap;
-  transition: color 200ms ease, border-color 200ms ease;
+  transition: color 360ms ease, border-color 360ms ease;
 }
 .axc-tag[data-selected="true"] { color: #ff8b45; border-color: rgba(255,77,10,.5); }
 
-.axc-row__chevron { color: rgba(255,255,255,.3); transition: transform 200ms ease; }
+.axc-row__chevron { color: rgba(255,255,255,.3); transition: transform 360ms ease; }
 .axc-row.is-selected .axc-row__chevron { color: #ff4d0a; transform: translateX(2px); }
 
 .axc-detail {
