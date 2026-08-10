@@ -29,7 +29,7 @@ export default function CardSwap({
   onActiveChange,
 }) {
   const items = useMemo(() => Children.toArray(children), [children]);
-  const refs = useMemo(() => items.map(() => ({ current: null })), [items.length]);
+  const refs = useMemo(() => items.map(() => ({ current: null })), [items]);
 
   const rootRef = useRef(null);
   const orderRef = useRef(Array.from({ length: items.length }, (_, i) => i));
