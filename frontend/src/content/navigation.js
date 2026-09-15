@@ -16,6 +16,7 @@ export const NAV = [
     },
     links: [
       { label: "Alter Engine overview", to: "/alter-engine", desc: "The flagship execution product", visualKey: "overview" },
+      { label: "AxInventory", to: "/axinventory", desc: "Inventory, POS, GST and accounting for retail", visualKey: "axinventory" },
       { label: "How it works", to: "/alter-engine#lifecycle", desc: "Understand · Plan · Approve · Act · Check", visualKey: "lifecycle" },
       { label: "AlterX Platform", to: "/platform", desc: "The workspace for supervising Engine work", visualKey: "platform" },
       { label: "Human approvals", to: "/alter-engine#authority", desc: "Decisions return to people", visualKey: "authority" },
@@ -98,6 +99,7 @@ export const FOOTER_COLS = [
     title: "Product",
     links: [
       { label: "Alter Engine", to: "/alter-engine" },
+      { label: "AxInventory", to: "/axinventory" },
       { label: "AlterX Platform", to: "/platform" },
       { label: "Try Alter Engine", to: "/try-alter-engine" },
       { label: "FAQ", to: "/alter-engine#faq" },

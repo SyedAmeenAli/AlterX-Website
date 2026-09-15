@@ -149,6 +149,35 @@ const ResourcesSection = () => (
   </section>
 );
 
+/* Product ecosystem — one engine, one real product built on the same
+   engineering discipline. */
+const ProductEcosystemSection = () => (
+  <section className="py-24 md:py-32 relative" style={{ background: "#0d2117" }} data-testid="product-ecosystem-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <Reveal><Eyebrow dark className="mb-6">Product ecosystem</Eyebrow></Reveal>
+      <MaskLines as="h2" lines={["One engine.", "Different kinds of work."]} className="ax-display text-3xl md:text-[44px] text-[#e8f7ee] mb-14" />
+      <div className="grid md:grid-cols-2 gap-10">
+        <Reveal delay={0.05}>
+          <Link to="/alter-engine" className="block border-t border-[#9fffc0]/15 pt-6 group" data-testid="ecosystem-alter-engine">
+            <Eyebrow dark className="mb-3">Alter Engine</Eyebrow>
+            <h3 className="text-2xl font-bold tracking-tight text-[#e8f7ee] mb-3">The execution layer.</h3>
+            <p className="text-white/60 leading-relaxed mb-4">It plans, runs, checks and recovers.</p>
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#9fffc0]">Explore Alter Engine <ArrowRight size={14} className="ax-arrow" aria-hidden="true" /></span>
+          </Link>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <Link to="/axinventory" className="block border-t border-[#9fffc0]/15 pt-6 group" data-testid="ecosystem-axinventory">
+            <Eyebrow dark className="mb-3">AxInventory</Eyebrow>
+            <h3 className="text-2xl font-bold tracking-tight text-[#e8f7ee] mb-3">A real business product built by the same team.</h3>
+            <p className="text-white/60 leading-relaxed mb-4">Inventory, POS, purchasing, GST and accounting for Indian retail — a real application of the engineering mindset behind AlterX.</p>
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#9fffc0]">Explore AxInventory <ArrowRight size={14} className="ax-arrow" aria-hidden="true" /></span>
+          </Link>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
 /* "Why ALTERX" — the company's belief, quiet and direct, not a manifesto. */
 const WhyAlterXSection = () => (
   <section className="text-[#e8f7ee] py-24 md:py-32 relative" style={{ background: "#06120c" }} data-testid="why-alterx-section">
@@ -247,6 +276,7 @@ export default function Home() {
       <SecuritySection />
       <WorkSection />
       <ResourcesSection />
+      <ProductEcosystemSection />
       <WhyAlterXSection />
       <VisionSection />
       <Composer />

@@ -7,6 +7,7 @@ import MarketingGrainientBackground from "@/components/marketing/MarketingGraini
 import Home from "@/pages/Home";
 import AlterEngine from "@/pages/AlterEngine";
 import Platform from "@/pages/Platform";
+import AxInventory from "@/pages/AxInventory";
 import CognitiveAI from "@/pages/CognitiveAI";
 import Solutions from "@/pages/Solutions";
 import SolutionDetail from "@/pages/SolutionDetail";
@@ -112,6 +113,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/alter-engine" element={<AlterEngine />} />
           <Route path="/platform" element={<Platform />} />
+          <Route path="/axinventory" element={<AxInventory />} />
           {/* /products was a duplicate index of Alter Engine content; no
               longer part of primary navigation — redirect, don't 404. */}
           <Route path="/products" element={<Navigate to="/alter-engine" replace />} />
