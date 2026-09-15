@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { PageHero, FillLink, Eyebrow } from "@/components/kit";
 import { usePageMeta } from "@/lib/anim";
 import SolutionsRotatingCube from "@/components/visuals/SolutionsRotatingCube";
-import CognitiveCubeMatrix from "@/components/visuals/CognitiveCubeMatrix";
 import CustomWorkflowStack from "@/components/visuals/CustomWorkflowStack";
 import AIWebsiteAdaptiveGrid from "@/components/visuals/AIWebsiteAdaptiveGrid";
 import VoiceAgentOrb from "@/components/visuals/VoiceAgentOrb";
@@ -17,24 +16,15 @@ const SolutionsHeroVisual = () => (
   </div>
 );
 
-/* Four ways AlterX applies the Engine — not four equal flagship products.
+/* Three ways AlterX applies the Engine — not equal flagship products.
    Source of truth for the solutions taxonomy: this file and the mega menu
-   (content/navigation.js) share the same four names/destinations, and the
-   same visual language (AlterXGeometry for cognitive/workflows, abstract
-   marks for voice, adaptive-surface for websites) — nav is the abstract
-   preview, this page is where it becomes concrete. No card background
-   around the item; the image itself is the object. */
+   (content/navigation.js) share the same names/destinations, and the same
+   visual language (AlterXGeometry for workflows, abstract marks for voice,
+   adaptive-surface for websites) — nav is the abstract preview, this page
+   is where it becomes concrete. No card background around the item; the
+   image itself is the object. */
 
 const ZONES = [
-  {
-    key: "cognitive",
-    title: "Cognitive AI",
-    kicker: "Inventory operations",
-    copy: "Inventory operations powered by Alter Engine — product truth, stock attention and decisions in one connected view.",
-    cta: "Explore Cognitive AI",
-    to: "/cognitive-ai",
-    render: (active) => <CognitiveCubeMatrix active={active} size="home" interactive={false} />,
-  },
   {
     key: "voice",
     title: "Voice workflows",
@@ -65,7 +55,7 @@ const ZONES = [
 ];
 
 export default function Solutions() {
-  usePageMeta("Solutions", "Different contexts, the same need for visible work — Cognitive AI, voice workflows, AI websites and custom workflows.");
+  usePageMeta("Solutions", "Different contexts, the same need for visible work — voice workflows, AI websites and custom workflows.");
   const [active, setActive] = useState(null);
   return (
     <>

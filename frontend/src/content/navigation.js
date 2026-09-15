@@ -1,9 +1,11 @@
-// Hierarchy: AlterX (company) > Alter Engine (flagship product) >
-// AlterX Platform (the workspace for operating the Engine, not a second
-// product) > Solutions (ways the Engine is applied: Cognitive AI, Voice
-// workflows, AI websites, Custom workflows) > Build with AlterX (developer
-// integration route). "Products" is intentionally not a top-level item —
-// it competed with Alter Engine for the same mental slot.
+// Hierarchy: AlterX (company) > Alter Engine (execution technology) >
+// AxInventory (the real product built on it) > AlterX Platform (the
+// workspace for operating the Engine, not a second product) > Solutions
+// (other ways the Engine is applied: Voice workflows, AI websites, Custom
+// workflows) > Build with AlterX (developer integration route). "Products"
+// is intentionally not a top-level item — it competed with Alter Engine
+// for the same mental slot. There is no separate "Cognitive AI" product —
+// that concept is AxInventory.
 export const NAV = [
   {
     label: "Products",
@@ -34,7 +36,6 @@ export const NAV = [
       visual: "solutions",
     },
     links: [
-      { label: "Cognitive AI", to: "/cognitive-ai", desc: "Inventory operations, powered by Alter Engine", visualKey: "cognitive" },
       { label: "Voice workflows", to: "/solutions/voice-workflows", desc: "Conversations that become structured, approved work", visualKey: "voice" },
       { label: "AI websites", to: "/solutions/ai-websites", desc: "Digital experiences that understand intent", visualKey: "websites" },
       { label: "Custom workflows", to: "/solutions/custom-workflows", desc: "Built around your systems and approval points", visualKey: "workflows" },
@@ -108,7 +109,6 @@ export const FOOTER_COLS = [
   {
     title: "Solutions",
     links: [
-      { label: "Cognitive AI", to: "/cognitive-ai" },
       { label: "Voice workflows", to: "/solutions/voice-workflows" },
       { label: "AI websites", to: "/solutions/ai-websites" },
       { label: "Custom workflows", to: "/solutions/custom-workflows" },

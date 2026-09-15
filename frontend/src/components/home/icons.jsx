@@ -27,26 +27,6 @@ export const EngineIcon = () => (
   </svg>
 );
 
-export const CognitiveIcon = () => (
-  <svg viewBox="0 0 240 200" className="w-full h-full" aria-hidden="true">
-    <g stroke="currentColor" strokeWidth="1.6" fill="none">
-      {[0, 1, 2].map((i) => (
-        <path key={i} d={`M40 ${140 - i * 34} L120 ${100 - i * 34} L200 ${140 - i * 34} L120 ${180 - i * 34} Z`} opacity={i === 2 ? 1 : 0.6} />
-      ))}
-    </g>
-    <g stroke="currentColor" strokeWidth="1.4" opacity=".7">
-      <circle cx="88" cy="118" r="3" fill="currentColor" />
-      <circle cx="150" cy="130" r="3" fill="currentColor" />
-    </g>
-    <g className="ico-signal">
-      <line x1="120" y1="30" x2="120" y2="66" stroke={O} strokeWidth="2" strokeDasharray="3 4" />
-      <circle cx="120" cy="26" r="5" fill={O} />
-      <circle cx="120" cy="72" r="4" fill="none" stroke={OB} strokeWidth="2" />
-      <path d="M40 106 L120 66 L200 106" stroke={O} strokeWidth="1.6" fill="none" />
-    </g>
-  </svg>
-);
-
 export const WorkflowsIcon = () => (
   <svg viewBox="0 0 240 200" className="w-full h-full" aria-hidden="true">
     <g stroke="currentColor" strokeWidth="1.6" fill="none">
@@ -85,7 +65,6 @@ export const BuildIcon = () => (
 
 export const PANEL_ICONS = {
   engine: EngineIcon,
-  cognitive: CognitiveIcon,
   workflows: WorkflowsIcon,
   build: BuildIcon,
 };

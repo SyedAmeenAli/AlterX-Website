@@ -6,12 +6,12 @@ import { PRODUCT_PANELS, STAGES } from "@/content/home";
 import { usePageMeta, Reveal } from "@/lib/anim";
 
 export default function Products() {
-  usePageMeta("Products", "Alter Engine is the foundation. Cognitive AI, custom workflows and developer access put it to work.");
+  usePageMeta("Products", "Alter Engine is the foundation. AxInventory, custom workflows and developer access put it to work.");
   return (
     <>
       <PageHero
         eyebrow="Products"
-        title={["One Engine.", "Four ways to put it to work."]}
+        title={["One Engine.", "A few ways to put it to work."]}
         body="Alter Engine is the flagship execution product. The AlterX Platform is the interface through which people describe outcomes, review plans, approve actions, observe work and review results — not a competing product."
       />
       <section className="pb-24" style={{ background: "var(--marketing-light-medium)" }}>
@@ -21,7 +21,7 @@ export default function Products() {
               <EditorialRow key={p.key} to={p.to} index={i} kicker={p.category} title={p.title} desc={p.description} />
             ))}
           </div>
-          <ChapterHead num="02" eyebrow="Product lifecycle" title="Every product follows the same spine." body="Whatever the surface — Engine, Cognitive AI, a custom workflow or an integration — the work moves through the same five accountable stages." />
+          <ChapterHead num="02" eyebrow="Product lifecycle" title="Every product follows the same spine." body="Whatever the surface — Engine, AxInventory, a custom workflow or an integration — the work moves through the same five accountable stages." />
           <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-black/15 border border-black/15">
             {STAGES.map((s, i) => (
               <Reveal key={s} delay={i * 0.06}>

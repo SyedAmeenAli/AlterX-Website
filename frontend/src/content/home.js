@@ -3,7 +3,7 @@ export const HERO = {
   line1: "AI can do the steps.",
   line2: "ALTERX makes the process",
   phrases: ["survive them."],
-  paragraph: "ALTERX turns a business objective into work a system can run, check and recover from. The goal is simple: hand over work that matters without having to watch every step.",
+  paragraph: "ALTERX is building systems that can do real work, check what they did and respond when something goes wrong.",
 };
 
 export const STAGES = ["Understand", "Plan", "Approve", "Act", "Check"];
@@ -16,14 +16,6 @@ export const PRODUCT_PANELS = [
     description: "Turn one objective into a clear sequence of work. Review the plan, approve important actions and inspect the result.",
     cta: "Explore Alter Engine",
     to: "/alter-engine",
-  },
-  {
-    key: "cognitive",
-    category: "INVENTORY OPERATIONS",
-    title: "Cognitive AI",
-    description: "Bring product information, stock attention, location activity and inventory decisions into one operating view.",
-    cta: "Explore Cognitive AI",
-    to: "/cognitive-ai",
   },
   {
     key: "workflows",

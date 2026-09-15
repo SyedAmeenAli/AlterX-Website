@@ -6,7 +6,6 @@ import { NAV } from "@/content/navigation";
 import { EASE } from "@/lib/anim";
 import LetterGlitch from "@/components/ui/LetterGlitch";
 import ParticleLogo from "@/components/ui/ParticleLogo";
-import CognitiveCubeMatrix from "@/components/visuals/CognitiveCubeMatrix";
 import AlterEngineAssembly from "@/components/visuals/AlterEngineAssembly";
 import CustomWorkflowStack from "@/components/visuals/CustomWorkflowStack";
 import BuildWithAlterXGrid from "@/components/visuals/BuildWithAlterXGrid";
@@ -29,10 +28,9 @@ const Wordmark = ({ light }) => <ParticleLogo light={light} size={40} textSize={
    destination pages (attention dot / particle pair / reorganizing surface
    / gated flow) — not four unrelated icons. */
 const SolutionsVisual = ({ emphasis }) => {
-  // One shared AlterXGeometry family across all four — cognitive/workflows
-  // use the cube variants already built; voice/websites use the calmer
-  // signal/planes variants. No flat SVG illustration for any of the four.
-  if (emphasis === "cognitive") return <div className="w-full h-32" style={{ background: "#090909", borderRadius: 6 }}><CognitiveCubeMatrix active size="home" interactive={false} /></div>;
+  // One shared AlterXGeometry family across the solution rows — workflows
+  // uses the cube variant already built; voice/websites use the calmer
+  // signal/planes variants. No flat SVG illustration for any of them.
   if (emphasis === "workflows") return <div className="w-full h-32"><CustomWorkflowStack active size="nav" /></div>;
   if (emphasis === "voice") return <div className="w-full h-40 flex items-center justify-center"><VoiceAgentOrb active size="nav" /></div>;
   if (emphasis === "websites") return <div className="w-full h-32"><AIWebsiteAdaptiveGrid active size="nav" /></div>;

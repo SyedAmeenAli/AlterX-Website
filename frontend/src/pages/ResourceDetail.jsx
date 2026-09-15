@@ -47,8 +47,8 @@ const BODIES = {
     ],
   },
   "one-connected-record": {
-    capability: "Cognitive AI",
-    next: { label: "Explore Cognitive AI", to: "/cognitive-ai" },
+    capability: "AxInventory",
+    next: { label: "Explore AxInventory", to: "/axinventory" },
     paras: [
       "Inventory problems are rarely inventory problems. They are record problems: the catalogue says one thing, the shelf says another, the campaign was planned against a third, and every team trusts its own copy.",
       "Disconnected tools create disconnected decisions. A markdown decided without movement history, a campaign planned without stock truth, a reorder placed without location context — each locally reasonable, collectively expensive.",
@@ -57,17 +57,17 @@ const BODIES = {
     ],
   },
   "image-based-capture": {
-    capability: "Cognitive AI capture",
-    next: { label: "See the capture flow", to: "/cognitive-ai" },
+    capability: "AxInventory capture",
+    next: { label: "See AxInventory", to: "/axinventory" },
     paras: [
       "The most expensive field in any catalogue is the one a person typed for the four-hundredth time. Repetitive entry is not just slow — it is where errors are manufactured.",
       "Image-based capture inverts the flow: the product photo arrives first, and the structured record — name, colour, material, category, type, proposed SKU — is extracted as a proposal. The person's job changes from typing to confirming.",
-      "Confirmation is the important part. Extraction can be wrong, and a wrong record entered confidently is worse than no record. In Cognitive AI, nothing enters the catalogue until a person has reviewed the proposal — the human checkpoint is the design, not a fallback.",
+      "Confirmation is the important part. Extraction can be wrong, and a wrong record entered confidently is worse than no record. In AxInventory, nothing enters the catalogue until a person has reviewed the proposal — the human checkpoint is the design, not a fallback.",
       "The result is a catalogue built at the speed of a camera with the accuracy of a reviewer — and an entry process people no longer avoid.",
     ],
   },
   "understanding-stagnant-stock": {
-    capability: "Attention signals in Cognitive AI",
+    capability: "Attention signals in AxInventory",
     next: { label: "Run the stagnant inventory demo", to: "/try-alter-engine/new?objective=Review stagnant inventory and propose actions" },
     paras: [
       "Stagnant stock is quiet. It does not break anything, it does not page anyone — it just sits, tying up cash and space while newer stock moves around it.",
@@ -77,8 +77,8 @@ const BODIES = {
     ],
   },
   "campaigns-to-inventory": {
-    capability: "Campaign connection in Cognitive AI",
-    next: { label: "Explore Cognitive AI", to: "/cognitive-ai" },
+    capability: "Campaign connection in AxInventory",
+    next: { label: "Explore AxInventory", to: "/axinventory" },
     paras: [
       "Campaigns are promises about inventory. A promotion promises stock exists; a launch promises it will arrive; a clearance promises it should leave. When campaign tools cannot see inventory truth, those promises are guesses.",
       "The failure modes are familiar: the hero product that sold out on day two, the clearance that discounted stock which was already moving, the campaign planned against a catalogue that no longer matched the shelf.",

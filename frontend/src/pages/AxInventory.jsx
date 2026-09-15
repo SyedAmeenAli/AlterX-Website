@@ -17,13 +17,13 @@ import { usePageMeta, Reveal, MaskLines } from "@/lib/anim";
    in the brief text itself — so none of it is asserted as fact on this
    page. Those sections are deferred until confirmed. */
 
-const AREAS = [
-  { t: "Point of sale", d: "Take sales at the till." },
-  { t: "Inventory", d: "Know what is in stock and how that stock got there." },
-  { t: "Purchasing", d: "Manage incoming stock and suppliers." },
-  { t: "GST", d: "Handle Indian tax records as part of the system." },
-  { t: "Accounting", d: "Keep real books underneath the operation." },
-  { t: "Analytics", d: "Understand what happened across the business." },
+const FLOW = [
+  "A sale happens.",
+  "Stock changes.",
+  "Payment is recorded.",
+  "The accounting entry is created.",
+  "GST information stays attached.",
+  "The owner can see what happened.",
 ];
 
 const FIGURES = [
@@ -51,18 +51,18 @@ export default function AxInventory() {
         }
       />
 
-      <section className="py-24 md:py-32 relative" style={{ background: "#020806" }} data-testid="axinventory-areas">
+      <section className="py-24 md:py-32 relative" style={{ background: "#020806" }} data-testid="axinventory-flow">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <Reveal><Eyebrow dark className="mb-6">What it covers</Eyebrow></Reveal>
-          <MaskLines as="h2" lines={["One system,", "the whole operation."]} className="ax-display text-3xl md:text-[44px] text-[#e8f7ee] mb-14" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
-            {AREAS.map((a, i) => (
-              <Reveal key={a.t} delay={i * 0.05}>
-                <div className="border-t border-[#9fffc0]/15 pt-5">
-                  <span className="text-[12px] font-semibold text-[#9fffc0]">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="text-xl font-bold tracking-tight text-[#e8f7ee] mt-2 mb-2">{a.t}</h3>
-                  <p className="text-white/55 leading-relaxed">{a.d}</p>
+          <Reveal><Eyebrow dark className="mb-6">How the pieces connect</Eyebrow></Reveal>
+          <MaskLines as="h2" lines={["One system,", "not six separate tools."]} className="ax-display text-3xl md:text-[44px] text-[#e8f7ee] mb-14" />
+          <div className="max-w-md">
+            {FLOW.map((f, i) => (
+              <Reveal key={f} delay={i * 0.06}>
+                <div className="flex items-start gap-4 py-3">
+                  <span className="text-[12px] font-semibold text-[#9fffc0] mt-1 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="text-lg text-[#e8f7ee]">{f}</p>
                 </div>
+                {i < FLOW.length - 1 && <div className="ml-[26px] h-5 w-px bg-[#9fffc0]/20" aria-hidden="true" />}
               </Reveal>
             ))}
           </div>

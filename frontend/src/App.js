@@ -8,7 +8,6 @@ import Home from "@/pages/Home";
 import AlterEngine from "@/pages/AlterEngine";
 import Platform from "@/pages/Platform";
 import AxInventory from "@/pages/AxInventory";
-import CognitiveAI from "@/pages/CognitiveAI";
 import Solutions from "@/pages/Solutions";
 import SolutionDetail from "@/pages/SolutionDetail";
 import CustomWorkflows from "@/pages/CustomWorkflows";
@@ -117,9 +116,11 @@ function App() {
           {/* /products was a duplicate index of Alter Engine content; no
               longer part of primary navigation — redirect, don't 404. */}
           <Route path="/products" element={<Navigate to="/alter-engine" replace />} />
-          <Route path="/cognitive-ai" element={<CognitiveAI />} />
+          {/* Cognitive AI was folded into AxInventory — it is the same
+              product, not a second one. Old links redirect, not 404. */}
+          <Route path="/cognitive-ai" element={<Navigate to="/axinventory" replace />} />
+          <Route path="/solutions/cognitive-ai" element={<Navigate to="/axinventory" replace />} />
           <Route path="/solutions" element={<Solutions />} />
-          <Route path="/solutions/cognitive-ai" element={<CognitiveAI />} />
           <Route path="/solutions/custom-workflows" element={<CustomWorkflows />} />
           <Route path="/solutions/voice-workflows" element={<VoiceWorkflows />} />
           <Route path="/solutions/:slug" element={<SolutionDetail />} />
