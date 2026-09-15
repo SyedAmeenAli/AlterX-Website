@@ -30,8 +30,8 @@ export default function WhyAlterParticleSculpture({ activeIndex }) {
     const getColor = () => {
       const r = Math.random();
       if (r > 0.95) return "#F9F9F9"; // warm white — ~5%
-      if (r > 0.85) return "#F97316"; // orange core — ~10%
-      if (r > 0.72) return "#FF5A1F"; // bright orange — ~13% (~28% orange total)
+      if (r > 0.85) return "#5BEA99"; // orange core — ~10%
+      if (r > 0.72) return "#5BEA99"; // bright orange — ~13% (~28% orange total)
       if (r > 0.38) return "#4a4a4a"; // charcoal
       return "#242424";               // deep dark
     };
@@ -113,7 +113,7 @@ export default function WhyAlterParticleSculpture({ activeIndex }) {
           const r = Math.pow(p.rSeed, 0.5) * taper;
           ty = Math.cos(p.a + time) * r;
           tz = Math.sin(p.a + time) * r;
-          if (p.x > 80 && p.rSeed < 0.3) { pColor = "#F97316"; alphaTarget = 1; }
+          if (p.x > 80 && p.rSeed < 0.3) { pColor = "#5BEA99"; alphaTarget = 1; }
         } else if (idx === 1) {
           // HUMAN AUTHORITY — narrows toward a threshold, movement slows there
           tx = -180 + p.xSeed * 360;
@@ -129,7 +129,7 @@ export default function WhyAlterParticleSculpture({ activeIndex }) {
           ty = Math.cos(p.a + time) * r;
           tz = Math.sin(p.a + time) * r;
           const activeBand = Math.floor((time * 3) % 6);
-          if (p.band === activeBand) { alphaTarget = 1; if (Math.random() > 0.8) pColor = "#F97316"; } else { alphaTarget = 0.25; }
+          if (p.band === activeBand) { alphaTarget = 1; if (Math.random() > 0.8) pColor = "#5BEA99"; } else { alphaTarget = 0.25; }
         } else if (idx === 3) {
           // CHECKED RESULTS — compact, ordered, a scan plane sweeps through
           const phi = Math.acos(1 - 2 * p.xSeed);

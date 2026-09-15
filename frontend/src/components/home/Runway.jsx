@@ -8,8 +8,8 @@ import NetSegment from "@/components/home/NetworkThread";
 const Lane = ({ label, status, stop, active, engine }) => (
   <div className="min-w-0">
     <div className="flex items-baseline justify-between gap-2">
-      <span className={`text-[11px] font-medium uppercase tracking-[0.14em] ${engine ? "text-[#c9360a]" : "text-black/40"}`}>{label}</span>
-      <span className={`text-[13px] font-semibold truncate ${status === "Yes" ? (engine ? "text-[#c9360a]" : "text-black/75") : "text-black/55"}`}>{status}</span>
+      <span className={`text-[11px] font-medium uppercase tracking-[0.14em] ${engine ? "text-[#123D27]" : "text-black/40"}`}>{label}</span>
+      <span className={`text-[13px] font-semibold truncate ${status === "Yes" ? (engine ? "text-[#123D27]" : "text-black/75") : "text-black/55"}`}>{status}</span>
     </div>
     <div className="h-[3px] bg-black/10 mt-1.5 relative overflow-hidden">
       <div

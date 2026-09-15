@@ -35,7 +35,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link to={l.to} className="text-[14px] text-white/70 hover:text-[#ff4d0a] transition-colors duration-150" data-testid={`footer-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}>
+                    <Link to={l.to} className="text-[14px] text-white/70 hover:text-[#5BEA99] transition-colors duration-150" data-testid={`footer-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}>
                       {l.label}
                     </Link>
                   </li>
@@ -50,25 +50,25 @@ export default function Footer() {
             <p className="font-semibold text-white/75">{BUSINESS.name}</p>
             <p className="max-w-md">{BUSINESS.address}</p>
             <p>
-              <a href={`mailto:${BUSINESS.email}`} className="hover:text-[#ff4d0a] transition-colors" data-testid="footer-email">{BUSINESS.email}</a>
+              <a href={`mailto:${BUSINESS.email}`} className="hover:text-[#5BEA99] transition-colors" data-testid="footer-email">{BUSINESS.email}</a>
             </p>
             <p>
-              <a href={`tel:${BUSINESS.phone1.replace(/\s/g, "")}`} className="hover:text-[#ff4d0a] transition-colors">{BUSINESS.phone1}</a>
+              <a href={`tel:${BUSINESS.phone1.replace(/\s/g, "")}`} className="hover:text-[#5BEA99] transition-colors">{BUSINESS.phone1}</a>
               {" · "}
-              <a href={`tel:${BUSINESS.phone2.replace(/\s/g, "")}`} className="hover:text-[#ff4d0a] transition-colors">{BUSINESS.phone2}</a>
+              <a href={`tel:${BUSINESS.phone2.replace(/\s/g, "")}`} className="hover:text-[#5BEA99] transition-colors">{BUSINESS.phone2}</a>
             </p>
           </div>
           <div className="flex flex-col md:items-end justify-end gap-3">
             {SOCIALS.length > 0 && (
               <div className="flex gap-5">
                 {SOCIALS.map((s) => (
-                  <a key={s.key} href={s.url} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#ff4d0a] transition-colors font-medium">
+                  <a key={s.key} href={s.url} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#5BEA99] transition-colors font-medium">
                     {s.key}
                   </a>
                 ))}
               </div>
             )}
-            <p>© {new Date().getFullYear()} AlterX · <a href={BUSINESS.site} className="hover:text-[#ff4d0a] transition-colors">alterx.co.in</a></p>
+            <p>© {new Date().getFullYear()} AlterX · <a href={BUSINESS.site} className="hover:text-[#5BEA99] transition-colors">alterx.co.in</a></p>
           </div>
         </div>
       </div>

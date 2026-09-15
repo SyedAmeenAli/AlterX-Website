@@ -40,11 +40,11 @@ export const GradientRibbon = ({ className = "", flip = false, opacity = 1, id =
   >
     <defs>
       <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stopColor="#ff8a3d" stopOpacity="0" />
-        <stop offset="0.22" stopColor="#ff8a3d" stopOpacity="0.55" />
-        <stop offset="0.5" stopColor="#ff4d0a" stopOpacity="0.9" />
-        <stop offset="0.78" stopColor="#c9360a" stopOpacity="0.5" />
-        <stop offset="1" stopColor="#c9360a" stopOpacity="0" />
+        <stop offset="0" stopColor="#D8FFE7" stopOpacity="0" />
+        <stop offset="0.22" stopColor="#D8FFE7" stopOpacity="0.55" />
+        <stop offset="0.5" stopColor="#5BEA99" stopOpacity="0.9" />
+        <stop offset="0.78" stopColor="#123D27" stopOpacity="0.5" />
+        <stop offset="1" stopColor="#123D27" stopOpacity="0" />
       </linearGradient>
     </defs>
     <path

@@ -15,7 +15,7 @@ import Grainient from "./Grainient";
 */
 
 const BASE = {
-  color1: "#F97316",
+  color1: "#5BEA99",
   color2: "#f9f9f9",
   color3: "#000000",
   timeSpeed: 1.9,

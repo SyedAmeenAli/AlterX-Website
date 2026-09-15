@@ -29,7 +29,7 @@ export default function Security() {
       <section className="relative overflow-clip isolate" style={{ minHeight: "95svh", background: "#000" }} data-testid="security-scene">
         {/* full-bleed glitch field — the dominant visual across the whole section */}
         <div className="absolute inset-0 z-0">
-          <LetterGlitch glitchSpeed={50} centerVignette={true} outerVignette={false} smooth={true} colors={["#ffffff", "#F97316", "#62686a"]} />
+          <LetterGlitch glitchSpeed={50} centerVignette={true} outerVignette={false} smooth={true} colors={["#ffffff", "#5BEA99", "#62686a"]} />
         </div>
         {/* text-safe veil — only enough to keep the headline/copy readable, not a wall over the whole field */}
         <div

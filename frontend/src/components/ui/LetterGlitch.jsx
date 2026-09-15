@@ -10,7 +10,7 @@ const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 */
 export default function LetterGlitch({
   glitchSpeed = 70,
-  colors = ["#F97316", "#FF5A1F", "#F9F9F9", "#62686A", "#2A130A"],
+  colors = ["#5BEA99", "#5BEA99", "#F9F9F9", "#62686A", "#2A130A"],
   centerVignette = true,
   outerVignette = true,
 }) {

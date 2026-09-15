@@ -29,7 +29,7 @@ const FILE_NAMES = {
 };
 
 /* ---------- MorphSlider scenes — DOM/SVG only, no imagery ---------- */
-const ORANGE = "#ff4d0a";
+const ORANGE = "#5BEA99";
 const OBJECTIVE = "Prepare a decision-ready supplier comparison.";
 
 const SceneFrame = ({ children }) => (
@@ -80,7 +80,7 @@ const ApprovalScene = () => (
       <span className="flex-1 h-px border-t border-dashed border-white/15" />
       <span className="text-[13px] text-white/30">Act</span>
     </div>
-    <div className="rounded-[6px] border p-5 max-w-sm" style={{ borderColor: "rgba(233,173,79,0.4)" }}>
+    <div className="rounded-[6px] border p-5 max-w-sm" style={{ borderColor: "rgba(216,255,231,0.4)" }}>
       <span className="text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: "#e9ad4f" }}>Human decision</span>
       <p className="text-white/95 text-[14px] font-semibold mt-2 mb-4">Approve comparison criteria?</p>
       <div className="flex gap-2">
@@ -138,7 +138,7 @@ export default function Developers() {
 
       <section className="pb-24" style={{ background: "var(--marketing-light-medium)" }}>
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#c9360a] border border-[#c9360a]/40 inline-block px-3 py-1.5 mb-14" data-testid="dev-managed-notice">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#123D27] border border-[#123D27]/40 inline-block px-3 py-1.5 mb-14" data-testid="dev-managed-notice">
             Conceptual preview — API access is managed. No public SDK or endpoints are published yet.
           </p>
 

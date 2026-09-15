@@ -1,9 +1,9 @@
 export const HERO = {
-  eyebrow: "ALTER ENGINE",
-  line1: "Start with the outcome.",
-  line2: "Watch it become",
-  phrases: ["a clear plan.", "work in motion.", "the right approval.", "a checked result."],
-  paragraph: "Alter Engine structures complex work, carries out approved steps and keeps important decisions open to review.",
+  eyebrow: "AUTONOMOUS EXECUTION",
+  line1: "AI can do the steps.",
+  line2: "ALTERX makes the process",
+  phrases: ["survive them."],
+  paragraph: "ALTERX turns a business objective into work a system can run, check and recover from. The goal is simple: hand over work that matters without having to watch every step.",
 };
 
 export const STAGES = ["Understand", "Plan", "Approve", "Act", "Check"];

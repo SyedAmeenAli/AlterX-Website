@@ -96,7 +96,7 @@ export default function Solutions() {
                     className="relative overflow-clip transition-[background] duration-300"
                     style={{
                       height: 300,
-                      background: `radial-gradient(circle at 58% 42%, rgba(249,115,22,${on ? ".16" : ".09"}), transparent 45%)`,
+                      background: `radial-gradient(circle at 58% 42%, rgba(91,234,153,${on ? ".16" : ".09"}), transparent 45%)`,
                     }}
                   >
                     <div className="absolute inset-0 flex items-center justify-center p-10">
@@ -107,7 +107,7 @@ export default function Solutions() {
                     <Eyebrow className="mb-2.5 text-black/55">{z.kicker}</Eyebrow>
                     <h2 className="text-2xl md:text-[28px] font-semibold tracking-tight">{z.title}</h2>
                     <p className={`text-sm mt-2.5 max-w-md leading-relaxed transition-opacity duration-300 ${on ? "opacity-90" : "opacity-60"}`}>{z.copy}</p>
-                    <span className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold transition-colors ${on ? "text-[#ff4d0a]" : "text-[#c9360a]"}`}>
+                    <span className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold transition-colors ${on ? "text-[#5BEA99]" : "text-[#123D27]"}`}>
                       {z.cta} <ArrowRight size={14} className={`transition-transform duration-200 ${on ? "translate-x-1" : ""}`} aria-hidden="true" />
                     </span>
                   </div>

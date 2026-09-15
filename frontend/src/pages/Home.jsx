@@ -19,7 +19,7 @@ const SecuritySection = () => (
   <section className="text-[#fbfaf7] relative overflow-clip isolate" style={{ background: "#000", minHeight: "88vh" }} data-testid="security-section">
     {/* full-bleed glitch field — the dominant visual across the whole section */}
     <div className="absolute inset-0 z-0">
-      <LetterGlitch glitchSpeed={50} centerVignette={true} outerVignette={false} smooth={true} colors={["#ffffff", "#F97316", "#62686a"]} />
+      <LetterGlitch glitchSpeed={50} centerVignette={true} outerVignette={false} smooth={true} colors={["#ffffff", "#5BEA99", "#62686a"]} />
     </div>
     {/* text-safe veil — only enough to keep the copy readable, not a wall over the whole field */}
     <div
@@ -60,7 +60,7 @@ const WorkSection = () => (
                 <span className="block text-xl md:text-[26px] font-semibold tracking-tight leading-snug">{w.title}</span>
                 <span className="block text-sm opacity-65 mt-1.5 max-w-2xl">{w.description}</span>
                 <span className="inline-flex items-center gap-2 text-[12px] font-medium mt-3 opacity-60">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d0a] inline-block" aria-hidden="true" />{w.label}
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5BEA99] inline-block" aria-hidden="true" />{w.label}
                 </span>
               </span>
               <ArrowUpRight size={22} className="ax-arrow shrink-0" aria-hidden="true" />
@@ -117,7 +117,7 @@ const Composer = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Describe the outcome you need..."
-            className="flex-1 bg-[#090909] border border-white/20 px-5 py-4 text-[15px] text-white placeholder:text-white/35 focus:border-[#ff4d0a] focus:outline-none"
+            className="flex-1 bg-[#090909] border border-white/20 px-5 py-4 text-[15px] text-white placeholder:text-white/35 focus:border-[#5BEA99] focus:outline-none"
             data-testid="composer-input"
           />
           <button type="submit" className="btn-primary justify-center" data-testid="composer-submit">

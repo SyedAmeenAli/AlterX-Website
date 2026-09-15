@@ -82,7 +82,7 @@ export default function VoiceDemo() {
               role="tab"
               aria-selected={tab === i}
               onClick={() => setTab(i)}
-              className={`ax-fill px-5 py-2.5 font-semibold text-[14px] border ${tab === i ? "border-[#ff4d0a]" : "border-black/15"} text-[#090909]`}
+              className={`ax-fill px-5 py-2.5 font-semibold text-[14px] border ${tab === i ? "border-[#5BEA99]" : "border-black/15"} text-[#090909]`}
               data-active={tab === i}
               data-testid={`voice-tab-${v.key}`}
             >
@@ -95,7 +95,7 @@ export default function VoiceDemo() {
         <div className="grid lg:grid-cols-[1.4fr_1fr] border border-black/15 bg-black text-[#fbfaf7]">
           <div className="p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-white/12">
             <div className="flex items-center justify-between mb-6">
-              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#ff4d0a]">Illustrative customer-conversation workflow</span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#5BEA99]">Illustrative customer-conversation workflow</span>
               <div className="flex gap-2">
                 <button onClick={play} className="btn-primary !py-1.5 !px-3.5 !text-[12px]" disabled={playing || awaiting} data-testid="voice-play-btn">
                   <Play size={12} aria-hidden="true" /> {line >= 0 ? "Restart" : "Play"}
@@ -107,7 +107,7 @@ export default function VoiceDemo() {
             </div>
             <div className={`flex items-center gap-[3px] h-9 mb-6 ${playing ? "ax-wave-on" : ""}`} aria-hidden="true" data-testid="voice-waveform">
               {Array.from({ length: 36 }).map((_, i) => (
-                <span key={i} className="ax-wave-bar w-[3px] bg-[#ff4d0a]" style={{ height: `${28 + (i % 5) * 12}%`, animationDelay: `${(i % 7) * 0.09}s` }} />
+                <span key={i} className="ax-wave-bar w-[3px] bg-[#5BEA99]" style={{ height: `${28 + (i % 5) * 12}%`, animationDelay: `${(i % 7) * 0.09}s` }} />
               ))}
             </div>
             <div className="space-y-3 min-h-[280px]" aria-live="polite">
@@ -121,11 +121,11 @@ export default function VoiceDemo() {
                       className={`max-w-[85%] ${t.who === "customer" ? "" : t.who === "sys" ? "mx-auto w-full max-w-full" : "ml-auto"}`}
                     >
                       {t.who === "sys" ? (
-                        <div className={`border px-4 py-2.5 text-[12px] font-medium ${t.approval ? "border-[#ff4d0a]/60 text-[#ff641d]" : "border-white/15 text-white/55"}`}>
+                        <div className={`border px-4 py-2.5 text-[12px] font-medium ${t.approval ? "border-[#5BEA99]/60 text-[#9FFFC0]" : "border-white/15 text-white/55"}`}>
                           {t.approval && <ShieldCheck size={11} className="inline mr-2 -mt-0.5" aria-hidden="true" />}{t.text}
                         </div>
                       ) : (
-                        <div className={`px-4 py-3 text-[14px] ${t.who === "customer" ? "bg-white/[.07] text-white/85" : "bg-[#ff4d0a]/[.12] border border-[#ff4d0a]/25 text-white/90"}`}>
+                        <div className={`px-4 py-3 text-[14px] ${t.who === "customer" ? "bg-white/[.07] text-white/85" : "bg-[#5BEA99]/[.12] border border-[#5BEA99]/25 text-white/90"}`}>
                           <span className="block text-[10px] font-medium uppercase tracking-[0.14em] opacity-50 mb-1">{t.who === "customer" ? "Customer" : "Workflow"}</span>
                           {t.text}
                         </div>
@@ -143,7 +143,7 @@ export default function VoiceDemo() {
             <ul className="space-y-2.5 mb-8">
               {ind.understood.map((u, i) => (
                 <li key={u} className={`flex items-start gap-2.5 text-[14px] transition-opacity duration-300 ${line >= i + 1 ? "opacity-100 text-white/85" : "opacity-30 text-white/50"}`}>
-                  <Check size={13} className="text-[#ff4d0a] mt-1 shrink-0" aria-hidden="true" /> {u}
+                  <Check size={13} className="text-[#5BEA99] mt-1 shrink-0" aria-hidden="true" /> {u}
                 </li>
               ))}
             </ul>
@@ -154,10 +154,10 @@ export default function VoiceDemo() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="border border-[#ff4d0a]/60 p-4 mb-6"
+                  className="border border-[#5BEA99]/60 p-4 mb-6"
                   data-testid="voice-approval-card"
                 >
-                  <p className="text-[11px] font-medium text-[#ff4d0a] uppercase tracking-[0.16em] mb-2">Human approval required</p>
+                  <p className="text-[11px] font-medium text-[#5BEA99] uppercase tracking-[0.16em] mb-2">Human approval required</p>
                   <p className="text-[13px] text-white/80 mb-4">{ind.transcript[line]?.text}</p>
                   <button onClick={approve} className="btn-primary !py-2 !px-4 !text-[13px]" data-testid="voice-approve-btn">
                     Approve and continue
@@ -167,7 +167,7 @@ export default function VoiceDemo() {
             </AnimatePresence>
             {done && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border border-white/15 p-4" data-testid="voice-outcome">
-                <p className="text-[11px] font-medium text-[#ff4d0a] uppercase tracking-[0.16em] mb-2">Resolved outcome</p>
+                <p className="text-[11px] font-medium text-[#5BEA99] uppercase tracking-[0.16em] mb-2">Resolved outcome</p>
                 <p className="text-[13px] text-white/80">{ind.outcome}</p>
               </motion.div>
             )}

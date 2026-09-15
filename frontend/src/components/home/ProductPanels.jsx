@@ -137,7 +137,7 @@ export default function ProductPanels() {
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
                       <div
                         className="w-[54%] h-[54%] rounded-full transition-opacity duration-300"
-                        style={{ opacity: isActive ? 0.55 : 0, background: "radial-gradient(circle, rgba(255,77,10,.4) 0%, rgba(255,77,10,0) 70%)" }}
+                        style={{ opacity: isActive ? 0.55 : 0, background: "radial-gradient(circle, rgba(91,234,153,.4) 0%, rgba(91,234,153,0) 70%)" }}
                       />
                     </div>
                     <div className="relative w-[72%] h-[72%]">
@@ -172,8 +172,8 @@ export default function ProductPanels() {
               >
                 {/* LEFT — active-product statement */}
                 <div>
-                  <span className="ax-eyebrow text-[#ff8a3d] flex items-center gap-3 mb-4">
-                    <span className="inline-block w-6 h-[2px] bg-[#ff4d0a]" aria-hidden="true" />
+                  <span className="ax-eyebrow text-[#D8FFE7] flex items-center gap-3 mb-4">
+                    <span className="inline-block w-6 h-[2px] bg-[#5BEA99]" aria-hidden="true" />
                     {DETAILS[active] && PRODUCT_PANELS.find((p) => p.key === active)?.title}
                   </span>
                   <p className="text-[22px] md:text-[27px] font-semibold tracking-tight leading-snug max-w-[16ch]" data-testid="product-detail-statement">
@@ -193,7 +193,7 @@ export default function ProductPanels() {
                   <dl className="space-y-3 mb-7">
                     {d.points.map((pt) => (
                       <div key={pt.t} className="flex gap-3 items-baseline">
-                        <dt className="text-[13px] font-semibold text-[#ff8a3d] w-[86px] shrink-0">{pt.t}</dt>
+                        <dt className="text-[13px] font-semibold text-[#D8FFE7] w-[86px] shrink-0">{pt.t}</dt>
                         <dd className="text-[13px] text-white/65">{pt.d}</dd>
                       </div>
                     ))}

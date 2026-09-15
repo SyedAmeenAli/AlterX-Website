@@ -29,7 +29,7 @@ export default function Careers() {
             <div className="bg-black text-[#fbfaf7] p-8">
               <h2 className="text-xl font-bold tracking-tight mb-2">Disciplines</h2>
               <ul className="text-[15px] text-white/70 space-y-1.5 mt-3">
-                {DISCIPLINES.map((d) => <li key={d} className="border-l-2 border-[#ff4d0a] pl-3">{d}</li>)}
+                {DISCIPLINES.map((d) => <li key={d} className="border-l-2 border-[#5BEA99] pl-3">{d}</li>)}
               </ul>
             </div>
           </div>

@@ -36,8 +36,8 @@ export default function ParticleLogo({ light, size = 28, textSize }) {
     offCtx.font = `900 ${Math.round(size * 1.18)}px Montserrat, Arial, sans-serif`;
     offCtx.textAlign = "center";
     offCtx.textBaseline = "middle";
-    // the whole X is the brand orange, no white/dark portion
-    offCtx.fillStyle = "#ff4d0a";
+    // the whole X is the brand emerald, no white/dark portion
+    offCtx.fillStyle = "#5bea99";
     offCtx.fillText("X", size / 2, size / 2 + size * 0.04);
 
     const imgData = offCtx.getImageData(0, 0, size, size).data;

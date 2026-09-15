@@ -20,7 +20,7 @@
 .securityItem__fill {
   position: absolute;
   inset: 0;
-  background: #f97316;
+  background: #5BEA99;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 280ms cubic-bezier(0.25, 1, 0.5, 1);
@@ -44,7 +44,7 @@
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 0.75rem;
-  color: #f97316;
+  color: #5BEA99;
   transition: color 320ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 .securityItem__title {

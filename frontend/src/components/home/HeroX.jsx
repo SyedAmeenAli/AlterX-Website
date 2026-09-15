@@ -99,8 +99,8 @@ export default function HeroX() {
 
       <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col justify-center pointer-events-none">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15, ease: EASE }}>
-          <div className="ax-eyebrow text-[#ff4d0a] flex items-center gap-3 mb-6">
-            <span className="inline-block w-6 h-[2px] bg-[#ff4d0a]" aria-hidden="true" />
+          <div className="ax-eyebrow text-[#5BEA99] flex items-center gap-3 mb-6">
+            <span className="inline-block w-6 h-[2px] bg-[#5BEA99]" aria-hidden="true" />
             {HERO.eyebrow}
           </div>
         </motion.div>
@@ -124,12 +124,12 @@ export default function HeroX() {
           </span>
           <span className="block relative" style={{ height: "1.06em" }} data-testid="hero-phrase-line">
             {reduce ? (
-              <span className="text-[#ff4d0a]">{HERO.phrases[0]}</span>
+              <span className="text-[#5BEA99]">{HERO.phrases[0]}</span>
             ) : (
               <AnimatePresence mode="wait">
                 <motion.span
                   key={idx}
-                  className="absolute left-0 top-0 text-[#ff4d0a] whitespace-nowrap"
+                  className="absolute left-0 top-0 text-[#5BEA99] whitespace-nowrap"
                   initial={{ opacity: 0, y: "36%" }}
                   animate={{ opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.04, ease: EASE } }}
                   exit={{ opacity: 0, y: "-28%", transition: { duration: 0.15 } }}
@@ -160,12 +160,12 @@ export default function HeroX() {
           transition={{ duration: 0.55, delay: 0.62, ease: EASE }}
           className="mt-9 flex flex-wrap gap-4 pointer-events-auto"
         >
-          <Link to="/try-alter-engine" className="btn-primary" data-testid="hero-primary-cta">
-            Try Alter Engine <ArrowRight size={16} className="ax-arrow" aria-hidden="true" />
-          </Link>
-          <a href="#how-it-works" className="btn-ghost-dark ax-fill" data-testid="hero-secondary-cta">
-            See how it works
+          <a href="#how-it-works" className="btn-primary" data-testid="hero-primary-cta">
+            See how it works <ArrowRight size={16} className="ax-arrow" aria-hidden="true" />
           </a>
+          <Link to="/contact" className="btn-ghost-dark ax-fill" data-testid="hero-secondary-cta">
+            Talk to us
+          </Link>
         </motion.div>
       </div>
     </section>

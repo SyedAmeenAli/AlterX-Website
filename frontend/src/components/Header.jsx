@@ -20,7 +20,7 @@ const DARK_HERO_ROUTES = ["/", "/alter-engine", "/platform", "/security", "/comp
 /* nav hover activation — orange gooey fill + a few tight particles,
    layered on the existing enter/leave + mega-menu state machine below.
    Does not touch menu timing or positioning. */
-const GOOEY_COLORS = ["#F97316", "#FF5A1F", "#F9F9F9", "#C94312"];
+const GOOEY_COLORS = ["#5BEA99", "#5BEA99", "#F9F9F9", "#123D27"];
 
 const Wordmark = ({ light }) => <ParticleLogo light={light} size={40} textSize={25} />;
 
@@ -44,7 +44,7 @@ const SolutionsVisual = ({ emphasis }) => {
 const CompanyVisual = ({ emphasis }) => (
   <svg viewBox="0 0 220 140" className="w-full h-32" aria-hidden="true">
     <text x="14" y="90" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="52" fill="#090909" letterSpacing="-0.01em">
-      ALTER<tspan fill={emphasis ? "#ff4d0a" : "#c9360a"}>X</tspan>
+      ALTER<tspan fill={emphasis ? "#5BEA99" : "#123D27"}>X</tspan>
     </text>
     <text x="14" y="112" fontSize="10.5" fill="rgba(9,9,9,.45)" fontFamily="Hanken Grotesk" fontWeight="500" letterSpacing="0.1em">EST. HYDERABAD</text>
   </svg>
@@ -280,18 +280,18 @@ export default function Header() {
                 {activeMenu.key === "security" ? (
                   <Link to={activeMenu.featured.to} className="group relative block overflow-clip isolate border-r border-black/10" style={{ background: "#090909" }} data-testid="mega-menu-featured">
                     <div className="absolute inset-0 z-0" aria-hidden="true">
-                      <LetterGlitch glitchSpeed={55} centerVignette={false} outerVignette={true} smooth={true} colors={["#ffffff", "#F97316", "#62686a"]} />
+                      <LetterGlitch glitchSpeed={55} centerVignette={false} outerVignette={true} smooth={true} colors={["#ffffff", "#5BEA99", "#62686a"]} />
                     </div>
                     {/* extremely subtle black → burnt-orange, only near the active region — not over the whole field */}
                     <div
                       className="absolute inset-0 z-[1] pointer-events-none transition-opacity duration-300"
-                      style={{ background: "radial-gradient(circle at 30% 70%, rgba(201,67,10,.16), transparent 45%)", opacity: hoveredLink ? 1 : 0 }}
+                      style={{ background: "radial-gradient(circle at 30% 70%, rgba(18,61,39,.16), transparent 45%)", opacity: hoveredLink ? 1 : 0 }}
                       aria-hidden="true"
                     />
                     <div className="relative z-[2] p-9">
                       <h3 className="text-[22px] font-semibold tracking-tight mt-[104px] text-[#fbfaf7] leading-snug">{activeMenu.featured.title}</h3>
                       <p className="text-sm text-white/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
-                      <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#ff4d0a]">
+                      <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#5BEA99]">
                         Explore <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                       </span>
                     </div>
@@ -303,14 +303,14 @@ export default function Header() {
                   <Link to={activeMenu.featured.to} className="group relative block overflow-clip isolate border-r border-black/10" style={{ background: "#090909" }} data-testid="mega-menu-featured">
                     <div
                       className="absolute inset-0 z-0 pointer-events-none transition-[background] duration-300"
-                      style={{ background: `radial-gradient(circle at 60% 42%, rgba(249,115,22,${hoveredLink ? ".22" : ".14"}), transparent 32%), #090909` }}
+                      style={{ background: `radial-gradient(circle at 60% 42%, rgba(91,234,153,${hoveredLink ? ".22" : ".14"}), transparent 32%), #090909` }}
                       aria-hidden="true"
                     />
                     <div className="relative z-[1] p-9">
                       <MenuVisual kind={activeMenu.featured.visual} emphasis={hoveredLink} />
                       <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#fbfaf7] leading-snug whitespace-pre-line">{activeMenu.featured.title}</h3>
                       <p className="text-sm text-white/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
-                      <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#ff4d0a]">
+                      <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#5BEA99]">
                         Explore <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                       </span>
                     </div>
@@ -320,7 +320,7 @@ export default function Header() {
                     <MenuVisual kind={activeMenu.featured.visual} emphasis={hoveredLink} />
                     <h3 className="text-[22px] font-semibold tracking-tight mt-5 text-[#090909] leading-snug whitespace-pre-line">{activeMenu.featured.title}</h3>
                     <p className="text-sm text-black/65 mt-2.5 leading-relaxed">{activeMenu.featured.body}</p>
-                    <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#c9360a]">
+                    <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-[#123D27]">
                       Explore <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                     </span>
                   </Link>
@@ -337,7 +337,7 @@ export default function Header() {
                       onBlur={() => setHoveredLink(null)}
                       data-testid={`mega-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                     >
-                      <span className={`flex items-center gap-2 font-semibold text-[15px] ${l.accent ? "text-[#c9360a]" : "text-[#090909]"}`}>
+                      <span className={`flex items-center gap-2 font-semibold text-[15px] ${l.accent ? "text-[#123D27]" : "text-[#090909]"}`}>
                         {l.label} <ArrowRight size={13} className="ax-arrow" aria-hidden="true" />
                       </span>
                       <span className="block text-[13px] text-black/60 mt-0.5">{l.desc}</span>

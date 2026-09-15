@@ -1,7 +1,7 @@
 import React from "react";
 
-const O = "#ff4d0a";
-const OB = "#ff641d";
+const O = "#5BEA99";
+const OB = "#9FFFC0";
 
 /* Original dimensional icon family — shared isometric depth, line weight and lighting logic. */
 

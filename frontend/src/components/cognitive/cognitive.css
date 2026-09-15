@@ -31,7 +31,7 @@
   background: transparent;
   transition: border-color 360ms ease, color 360ms ease;
 }
-.axc-iconbtn:hover { border-color: rgba(255,77,10,.5); color: #ff8b45; }
+.axc-iconbtn:hover { border-color: rgba(91,234,153,.5); color: #9FFFC0; }
 .axc-spin { animation: axc-spin 700ms linear; }
 @keyframes axc-spin { to { transform: rotate(360deg); } }
 
@@ -65,10 +65,10 @@
   white-space: nowrap;
   transition: color 360ms ease, border-color 360ms ease;
 }
-.axc-tag[data-selected="true"] { color: #ff8b45; border-color: rgba(255,77,10,.5); }
+.axc-tag[data-selected="true"] { color: #9FFFC0; border-color: rgba(91,234,153,.5); }
 
 .axc-row__chevron { color: rgba(255,255,255,.3); transition: transform 360ms ease; }
-.axc-row.is-selected .axc-row__chevron { color: #ff4d0a; transform: translateX(2px); }
+.axc-row.is-selected .axc-row__chevron { color: #5BEA99; transform: translateX(2px); }
 
 .axc-detail {
   margin-top: 12px;
@@ -110,7 +110,7 @@
   display: inline-flex; align-items: center; gap: 6px;
   margin-top: 10px;
   font-size: 12px; font-weight: 700;
-  color: #c9360a;
+  color: #123D27;
 }
 
 @media (prefers-reduced-motion: reduce) {

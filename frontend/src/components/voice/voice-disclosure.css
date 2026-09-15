@@ -11,7 +11,7 @@
   font-family: "Hanken Grotesk", sans-serif;
   transition: border-color 220ms ease;
 }
-.axv-disclosure:hover { border-color: rgba(255,77,10,.35); }
+.axv-disclosure:hover { border-color: rgba(91,234,153,.35); }
 
 .axv-collapsed { display: flex; align-items: center; gap: 10px; }
 
@@ -21,7 +21,7 @@
   flex-shrink: 0;
 }
 .axv-mark--human { background: #c9c6bd; margin-right: -6px; }
-.axv-mark--engine { background: #ff4d0a; box-shadow: 0 0 8px 1px rgba(255,77,10,.5); }
+.axv-mark--engine { background: #5BEA99; box-shadow: 0 0 8px 1px rgba(91,234,153,.5); }
 
 .axv-wave { display: flex; align-items: center; gap: 2px; height: 16px; margin-left: 4px; }
 .axv-wave span {
@@ -32,7 +32,7 @@
   transition: height 220ms cubic-bezier(.25,1,.5,1), background 220ms ease;
 }
 .axv-disclosure:hover .axv-wave span,
-.axv-disclosure.is-open .axv-wave span { background: #ff8b45; }
+.axv-disclosure.is-open .axv-wave span { background: #9FFFC0; }
 .axv-wave span:nth-child(3n+1) { height: 40%; }
 .axv-wave span:nth-child(3n+2) { height: 75%; }
 .axv-wave span:nth-child(3n+3) { height: 55%; }
@@ -61,7 +61,7 @@
   margin: 0;
 }
 .axv-line--human { color: rgba(255,255,255,.85); }
-.axv-line--engine { color: #ffb98a; }
+.axv-line--engine { color: #D8FFE7; }
 .axv-speaker {
   display: block;
   font-size: 10px;
@@ -76,7 +76,7 @@
   display: inline-flex; align-items: center; gap: 6px;
   margin-top: 8px;
   font-size: 12px; font-weight: 700;
-  color: #ff8b45;
+  color: #9FFFC0;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -83,28 +83,28 @@ export default function CustomWorkflows() {
                   <div className={`${c.side === "right" ? "md:order-1" : ""} hidden md:flex justify-center`} aria-hidden="true">
                     {c.gate ? (
                       <svg viewBox="0 0 120 120" className="w-[110px]">
-                        <rect x="38" y="38" width="44" height="44" transform="rotate(45 60 60)" fill="rgba(255,77,10,.06)" stroke="#ff4d0a" strokeWidth="2.4" />
-                        <path d="M60 0 L60 30" stroke="#ff4d0a" strokeWidth="2" />
+                        <rect x="38" y="38" width="44" height="44" transform="rotate(45 60 60)" fill="rgba(91,234,153,.06)" stroke="#5BEA99" strokeWidth="2.4" />
+                        <path d="M60 0 L60 30" stroke="#5BEA99" strokeWidth="2" />
                         <path d="M60 90 L60 120" stroke="rgba(9,9,9,.25)" strokeWidth="2" strokeDasharray="4 4" />
                       </svg>
                     ) : c.branch ? (
                       <svg viewBox="0 0 140 120" className="w-[130px]">
-                        <path d="M20 60 L70 60" stroke="#ff4d0a" strokeWidth="2" fill="none" />
-                        <path d="M70 60 C 90 60, 95 30, 120 30" stroke="#ff4d0a" strokeWidth="2" fill="none" />
+                        <path d="M20 60 L70 60" stroke="#5BEA99" strokeWidth="2" fill="none" />
+                        <path d="M70 60 C 90 60, 95 30, 120 30" stroke="#5BEA99" strokeWidth="2" fill="none" />
                         <path d="M70 60 C 90 60, 95 90, 120 90" stroke="rgba(9,9,9,.3)" strokeWidth="1.6" strokeDasharray="4 4" fill="none" />
-                        <circle cx="120" cy="30" r="5" fill="#ff4d0a" />
+                        <circle cx="120" cy="30" r="5" fill="#5BEA99" />
                         <circle cx="120" cy="90" r="5" fill="none" stroke="rgba(9,9,9,.35)" strokeWidth="1.6" />
                       </svg>
                     ) : c.end ? (
                       <svg viewBox="0 0 120 120" className="w-[110px]">
-                        <circle cx="60" cy="60" r="26" fill="none" stroke="#ff4d0a" strokeWidth="2.4" />
-                        <path d="M48 60 L57 69 L74 50" fill="none" stroke="#ff4d0a" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="60" cy="60" r="26" fill="none" stroke="#5BEA99" strokeWidth="2.4" />
+                        <path d="M48 60 L57 69 L74 50" fill="none" stroke="#5BEA99" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     ) : (
                       <svg viewBox="0 0 140 90" className="w-[130px]">
-                        <circle cx="70" cy="45" r="10" fill="none" stroke="#ff4d0a" strokeWidth="2.2" />
+                        <circle cx="70" cy="45" r="10" fill="none" stroke="#5BEA99" strokeWidth="2.2" />
                         <path d="M10 45 L58 45 M82 45 L130 45" stroke="rgba(9,9,9,.3)" strokeWidth="1.8" fill="none" />
-                        <circle cx="10" cy="45" r="3.5" fill="#ff4d0a" />
+                        <circle cx="10" cy="45" r="3.5" fill="#5BEA99" />
                       </svg>
                     )}
                   </div>

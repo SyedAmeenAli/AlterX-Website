@@ -29,7 +29,7 @@ export default function useParticleX(canvasRef, reduce) {
       octx.fillStyle = "#FFFFFF";
       octx.fillText("X", S / 2, S * 0.54);
       octx.globalCompositeOperation = "source-atop";
-      octx.fillStyle = "#FF5A1F";
+      octx.fillStyle = "#5BEA99";
       octx.fillRect(0, 0, S * 0.42, S * 0.5);
       const img = octx.getImageData(0, 0, S, S).data;
       const gap = Math.max(4, Math.round(S / (mobile ? 30 : 46)));
@@ -48,7 +48,7 @@ export default function useParticleX(canvasRef, reduce) {
               angle: rnd() * Math.PI * 2,
               speed: 0.01 + rnd() * 0.04,
               drift: 2 + rnd() * 3,
-              color: orange ? "#ff4d0a" : "#f5f2ea",
+              color: orange ? "#5BEA99" : "#f5f2ea",
               size: (1.2 + rnd() * 1.5) * (mobile ? 0.8 : 1),
               delay: rnd() * 0.35,
             });

@@ -39,7 +39,7 @@ export default function Work() {
                   </div>
                 </div>
                 <div className="flex md:flex-col items-center gap-4">
-                  <span className="ax-display text-6xl md:text-8xl opacity-10 group-hover:opacity-100 group-hover:text-[#ff4d0a] transition-all duration-300" style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }}>{w.name.charAt(0)}</span>
+                  <span className="ax-display text-6xl md:text-8xl opacity-10 group-hover:opacity-100 group-hover:text-[#5BEA99] transition-all duration-300" style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }}>{w.name.charAt(0)}</span>
                   <ArrowUpRight size={26} className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true" />
                 </div>
               </div>

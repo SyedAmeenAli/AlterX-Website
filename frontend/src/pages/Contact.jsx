@@ -78,8 +78,8 @@ export default function Contact() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1fr_380px] gap-14">
           <form onSubmit={submit} noValidate className="max-w-2xl" data-testid="contact-form">
             {errors.length > 0 && (
-              <div role="alert" className="border border-[#c9360a] bg-[#c9360a]/5 p-4 mb-8" data-testid="contact-error-summary">
-                <p className="flex items-center gap-2 font-bold text-[#c9360a] text-[14px] mb-2"><AlertCircle size={15} aria-hidden="true" /> Please fix the following</p>
+              <div role="alert" className="border border-[#123D27] bg-[#123D27]/5 p-4 mb-8" data-testid="contact-error-summary">
+                <p className="flex items-center gap-2 font-bold text-[#123D27] text-[14px] mb-2"><AlertCircle size={15} aria-hidden="true" /> Please fix the following</p>
                 <ul className="list-disc pl-5 text-[13px] text-black/70 space-y-1">
                   {errors.map((e) => <li key={e}>{e}</li>)}
                 </ul>
@@ -88,22 +88,22 @@ export default function Contact() {
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
               {FIELDS.map((f) => (
                 <div key={f.k} className={f.type === "textarea" ? "sm:col-span-2" : ""}>
-                  <label htmlFor={`c-${f.k}`} className="block text-[13px] font-bold mb-1.5">{f.label}{f.required && <span className="text-[#c9360a]"> *</span>}</label>
+                  <label htmlFor={`c-${f.k}`} className="block text-[13px] font-bold mb-1.5">{f.label}{f.required && <span className="text-[#123D27]"> *</span>}</label>
                   {f.type === "textarea" ? (
-                    <textarea id={`c-${f.k}`} rows={3} value={values[f.k] || ""} onChange={(e) => set(f.k, e.target.value)} className="w-full border border-black/20 bg-white px-4 py-3 text-[15px] focus:border-[#ff4d0a] focus:outline-none" data-testid={`contact-field-${f.k}`} />
+                    <textarea id={`c-${f.k}`} rows={3} value={values[f.k] || ""} onChange={(e) => set(f.k, e.target.value)} className="w-full border border-black/20 bg-white px-4 py-3 text-[15px] focus:border-[#5BEA99] focus:outline-none" data-testid={`contact-field-${f.k}`} />
                   ) : (
-                    <input id={`c-${f.k}`} type={f.type} value={values[f.k] || ""} onChange={(e) => set(f.k, e.target.value)} className="w-full border border-black/20 bg-white px-4 py-3 text-[15px] focus:border-[#ff4d0a] focus:outline-none" data-testid={`contact-field-${f.k}`} />
+                    <input id={`c-${f.k}`} type={f.type} value={values[f.k] || ""} onChange={(e) => set(f.k, e.target.value)} className="w-full border border-black/20 bg-white px-4 py-3 text-[15px] focus:border-[#5BEA99] focus:outline-none" data-testid={`contact-field-${f.k}`} />
                   )}
                 </div>
               ))}
             </div>
             <div className="mt-8 space-y-3">
               <label className="flex items-start gap-3 text-[14px] text-black/70 cursor-pointer">
-                <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 accent-[#ff4d0a]" data-testid="contact-consent" />
-                I consent to AlterX processing this enquiry in line with the Privacy Policy. <span className="text-[#c9360a]">*</span>
+                <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 accent-[#5BEA99]" data-testid="contact-consent" />
+                I consent to AlterX processing this enquiry in line with the Privacy Policy. <span className="text-[#123D27]">*</span>
               </label>
               <label className="flex items-start gap-3 text-[14px] text-black/70 cursor-pointer">
-                <input type="checkbox" checked={updates} onChange={(e) => setUpdates(e.target.checked)} className="mt-1 accent-[#ff4d0a]" data-testid="contact-updates" />
+                <input type="checkbox" checked={updates} onChange={(e) => setUpdates(e.target.checked)} className="mt-1 accent-[#5BEA99]" data-testid="contact-updates" />
                 Optionally, keep me informed about AlterX product updates.
               </label>
             </div>
@@ -113,7 +113,7 @@ export default function Contact() {
               <p className="mt-6 border border-black/20 bg-[#f3f0e9] p-4 text-[14px]" role="status" data-testid="contact-success">Your enquiry has been submitted. AlterX will reply from {BUSINESS.email}.</p>
             )}
             {status === "error" && (
-              <p className="mt-6 border border-[#c9360a] p-4 text-[14px] text-[#c9360a]" role="alert" data-testid="contact-endpoint-error">The submission endpoint did not accept the request. Please use the email option: <a className="underline font-bold" href={mailtoHref()}>open a prefilled email</a>.</p>
+              <p className="mt-6 border border-[#123D27] p-4 text-[14px] text-[#123D27]" role="alert" data-testid="contact-endpoint-error">The submission endpoint did not accept the request. Please use the email option: <a className="underline font-bold" href={mailtoHref()}>open a prefilled email</a>.</p>
             )}
             {status === "email-fallback" && (
               <div className="mt-6 border border-black/20 bg-[#f3f0e9] p-5" role="status" data-testid="contact-email-fallback">
@@ -127,9 +127,9 @@ export default function Contact() {
           <aside className="space-y-6 lg:pt-2">
             <div className="border border-black/15 bg-[#f3f0e9] p-6">
               <p className="ax-eyebrow text-black/50 mb-4 text-[10px]">AlterX</p>
-              <p className="flex items-start gap-3 text-[14px] mb-3"><MapPin size={15} className="mt-0.5 shrink-0 text-[#c9360a]" aria-hidden="true" />{BUSINESS.address}</p>
-              <p className="flex items-center gap-3 text-[14px] mb-1.5"><Mail size={15} className="shrink-0 text-[#c9360a]" aria-hidden="true" /><a href={`mailto:${BUSINESS.email}`} className="font-semibold hover:text-[#c9360a]">{BUSINESS.email}</a></p>
-              <p className="flex items-center gap-3 text-[14px]"><Phone size={15} className="shrink-0 text-[#c9360a]" aria-hidden="true" />{BUSINESS.phone1} · {BUSINESS.phone2}</p>
+              <p className="flex items-start gap-3 text-[14px] mb-3"><MapPin size={15} className="mt-0.5 shrink-0 text-[#123D27]" aria-hidden="true" />{BUSINESS.address}</p>
+              <p className="flex items-center gap-3 text-[14px] mb-1.5"><Mail size={15} className="shrink-0 text-[#123D27]" aria-hidden="true" /><a href={`mailto:${BUSINESS.email}`} className="font-semibold hover:text-[#123D27]">{BUSINESS.email}</a></p>
+              <p className="flex items-center gap-3 text-[14px]"><Phone size={15} className="shrink-0 text-[#123D27]" aria-hidden="true" />{BUSINESS.phone1} · {BUSINESS.phone2}</p>
             </div>
             <p className="text-[13px] text-black/50">AlterX never silently subscribes a contact to marketing. Updates are sent only when the optional consent box is ticked.</p>
           </aside>

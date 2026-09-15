@@ -15,7 +15,7 @@ export default function ContactMap() {
         <div className="flex items-end justify-between flex-wrap gap-4 mb-6">
           <p className="ax-eyebrow text-black/50 text-[10px]">Location</p>
           {instagram && (
-            <a href={instagram.url} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-[#c9360a] hover:text-[#ff4d0a] inline-flex items-center gap-1.5" data-testid="contact-instagram-link">
+            <a href={instagram.url} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-[#123D27] hover:text-[#5BEA99] inline-flex items-center gap-1.5" data-testid="contact-instagram-link">
               Instagram <ArrowRight size={13} aria-hidden="true" />
             </a>
           )}

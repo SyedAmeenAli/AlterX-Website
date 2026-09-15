@@ -25,7 +25,7 @@ export default function Company() {
           <div className="grid md:grid-cols-3 border border-white/15 mb-28">
             {ANCHORS.map((a, i) => (
               <div key={a.t} className={`p-8 ${i < 2 ? "md:border-r border-white/15" : ""} ${i < 2 ? "border-b md:border-b-0" : ""}`}>
-                <p className="text-[12px] font-medium text-[#ff4d0a] uppercase tracking-wider mb-3">{a.t}</p>
+                <p className="text-[12px] font-medium text-[#5BEA99] uppercase tracking-wider mb-3">{a.t}</p>
                 <p className="text-xl font-bold tracking-tight">{a.d}</p>
               </div>
             ))}
@@ -49,10 +49,10 @@ export default function Company() {
             <Reveal delay={0.2}>
               <div className="border border-white/15 bg-[#090909] p-7 sticky top-[110px]" aria-hidden="true">
                 <div className="flex items-center justify-between mb-8">
-                  <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }} className="text-2xl">ALTER<span className="text-[#ff4d0a]">X</span></span>
+                  <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }} className="text-2xl">ALTER<span className="text-[#5BEA99]">X</span></span>
                   <span className="text-[11px] font-medium text-white/40">EST. HYDERABAD</span>
                 </div>
-                <div className="h-[2px] bg-[#ff4d0a] w-14 mb-8" />
+                <div className="h-[2px] bg-[#5BEA99] w-14 mb-8" />
                 <p className="text-[12px] font-medium text-white/45 leading-loose">
                   OUTCOME → PLAN<br />PLAN → APPROVAL<br />APPROVAL → ACTION<br />ACTION → CHECK<br />CHECK → EVIDENCE
                 </p>

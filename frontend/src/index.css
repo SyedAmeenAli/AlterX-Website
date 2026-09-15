@@ -13,22 +13,49 @@
   --ax-paper: #f3f0e9;
   --ax-paper-2: #e9e4da;
 
-  --ax-orange: #ff4d0a;
-  --ax-orange-hot: #ff641d;
-  --ax-orange-light: #ff8a3d;
-  --ax-orange-deep: #c9360a;
+  /* ---------- ALTERX V2 — canonical green identity ----------
+     Primary source of truth. Everything below (--ax-orange* etc) is now
+     an ALIAS onto these so the ~40 files that already reference the old
+     token names repaint automatically, without a blind hex find/replace
+     that would ignore each color's actual role. */
+  --alterx-bg: #020806;
+  --alterx-bg-soft: #06120c;
+  --alterx-surface: #091810;
+  --alterx-surface-2: #0d2117;
+
+  --alterx-green-deep: #123d27;
+  --alterx-green: #32c97a;
+  --alterx-emerald: #5bea99;
+  --alterx-mint: #9fffc0;
+  --alterx-mint-soft: #d8ffe7;
+
+  --alterx-white: #f4fff8;
+  --alterx-text: #e8f7ee;
+  --alterx-muted: #92aa9b;
+
+  --alterx-border: rgba(159, 255, 192, 0.15);
+  --alterx-border-strong: rgba(159, 255, 192, 0.3);
+  --alterx-glow: rgba(91, 234, 153, 0.2);
+
+  /* aliases — role mapping, not a literal 1:1 hex swap:
+     primary accent -> emerald, hover/bright -> mint, dark/deep -> green-deep,
+     softest highlight -> mint-soft */
+  --ax-orange: var(--alterx-emerald);
+  --ax-orange-hot: var(--alterx-mint);
+  --ax-orange-light: var(--alterx-mint-soft);
+  --ax-orange-deep: var(--alterx-green-deep);
 
   --ax-line-light: rgba(9, 9, 9, 0.15);
-  --ax-line-dark: rgba(255, 255, 255, 0.16);
-  --ax-line-on-dark: rgba(255, 255, 255, 0.16);
+  --ax-line-dark: var(--alterx-border);
+  --ax-line-on-dark: var(--alterx-border);
   --ax-line-on-light: rgba(9, 9, 9, 0.15);
   --ax-text-light-secondary: rgba(251, 250, 247, 0.7);
   --ax-text-dark-secondary: rgba(9, 9, 9, 0.68);
 
-  --ax-grad-orange: linear-gradient(135deg, #ff8a3d 0%, #ff641d 38%, #ff4d0a 64%, #c9360a 100%);
-  --ax-atmo-dark: radial-gradient(ellipse at 68% 50%, rgba(255, 77, 10, 0.23) 0%, rgba(255, 77, 10, 0.08) 32%, rgba(255, 77, 10, 0) 68%);
-  --ax-atmo-light: radial-gradient(ellipse at 80% 36%, rgba(255, 100, 29, 0.13) 0%, rgba(255, 100, 29, 0.045) 38%, rgba(255, 100, 29, 0) 72%);
-  --ax-edge-burn: linear-gradient(105deg, rgba(255, 77, 10, 0.16) 0%, rgba(201, 54, 10, 0.05) 34%, rgba(0, 0, 0, 0) 62%);
+  --ax-grad-orange: linear-gradient(135deg, #9fffc0 0%, #5bea99 38%, #32c97a 64%, #123d27 100%);
+  --ax-atmo-dark: radial-gradient(ellipse at 68% 50%, rgba(91, 234, 153, 0.18) 0%, rgba(91, 234, 153, 0.07) 32%, rgba(91, 234, 153, 0) 68%);
+  --ax-atmo-light: radial-gradient(ellipse at 80% 36%, rgba(50, 201, 122, 0.11) 0%, rgba(50, 201, 122, 0.04) 38%, rgba(50, 201, 122, 0) 72%);
+  --ax-edge-burn: linear-gradient(105deg, rgba(91, 234, 153, 0.14) 0%, rgba(18, 61, 39, 0.06) 34%, rgba(0, 0, 0, 0) 62%);
 
   --ax-ease: cubic-bezier(0.25, 1, 0.5, 1);
   --header-height: 72px;
@@ -220,7 +247,7 @@ b, strong { font-weight: 600; }
 .productVisual, .productVisual svg { pointer-events: none; }
 
 /* engine story — human typing caret */
-.ax-caret { display: inline-block; width: 1px; height: 1em; background: #ff5a1f; margin-left: 2px; vertical-align: -0.14em; animation: axcaret 1s steps(1) infinite; }
+.ax-caret { display: inline-block; width: 1px; height: 1em; background: #5BEA99; margin-left: 2px; vertical-align: -0.14em; animation: axcaret 1s steps(1) infinite; }
 @keyframes axcaret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 
 /* ---------- runway ---------- */
@@ -264,7 +291,7 @@ b, strong { font-weight: 600; }
   --mx: 50%;
   --my: 50%;
 }
-.ax-footer-wordmark-link:focus-visible { outline: 2px solid #F97316; outline-offset: 10px; border-radius: 2px; }
+.ax-footer-wordmark-link:focus-visible { outline: 2px solid var(--alterx-emerald); outline-offset: 10px; border-radius: 2px; }
 
 .ax-footer-wordmark-stack { position: relative; display: block; }
 .ax-footer-wordmark-outline {
@@ -275,19 +302,19 @@ b, strong { font-weight: 600; }
   position: absolute;
   inset: 0;
   color: transparent;
-  background: radial-gradient(ellipse 42% 42% at var(--mx) var(--my), #FF8A45 0%, #F97316 42%, #FF641D 70%, rgba(249, 115, 22, .3) 100%);
+  background: radial-gradient(ellipse 42% 42% at var(--mx) var(--my), #D8FFE7 0%, #5BEA99 42%, #32C97A 70%, rgba(91, 234, 153, .3) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   opacity: 0;
   transition: opacity 450ms ease;
   pointer-events: none;
-  text-shadow: 0 0 30px rgba(249, 115, 22, 0);
+  text-shadow: 0 0 30px rgba(91, 234, 153, 0);
 }
 .ax-footer-wordmark-link:hover .ax-footer-wordmark-fill,
 .ax-footer-wordmark-link:focus-visible .ax-footer-wordmark-fill,
 .ax-footer-wordmark-link:active .ax-footer-wordmark-fill {
   opacity: 1;
-  text-shadow: 0 0 30px rgba(249, 115, 22, .10);
+  text-shadow: 0 0 30px rgba(91, 234, 153, .10);
 }
 .ax-footer-wordmark-link:hover .ax-footer-wordmark-stack,
 .ax-footer-wordmark-link:focus-visible .ax-footer-wordmark-stack {
@@ -366,7 +393,7 @@ b, strong { font-weight: 600; }
   height: 0;
   z-index: 1;
   border-radius: 5px;
-  background: linear-gradient(135deg, #ff7a1f 0%, #f97316 48%, #c94312 100%);
+  background: linear-gradient(135deg, #ff7a1f 0%, #5BEA99 48%, #123D27 100%);
   opacity: 0;
   pointer-events: none;
   transform: scale(0.82);

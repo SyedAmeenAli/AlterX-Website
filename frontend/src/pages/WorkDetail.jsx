@@ -21,7 +21,7 @@ export default function WorkDetail() {
           <div className="border border-black/15 bg-black text-[#fbfaf7] p-10 md:p-14 mb-16 relative overflow-clip" aria-hidden="true">
             <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-dark)" }} />
             <p className="relative ax-display text-[16vw] md:text-[9vw] leading-none opacity-90" style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 900 }}>
-              {w.name}<span className="text-[#ff4d0a]">.</span>
+              {w.name}<span className="text-[#5BEA99]">.</span>
             </p>
             <p className="relative text-[11px] font-medium uppercase tracking-widest text-white/40 mt-4">Editorial treatment — illustrative workflow, not a customer case study</p>
           </div>
@@ -31,7 +31,7 @@ export default function WorkDetail() {
               <p className="text-[16px] text-black/75">{w.condition}</p>
             </div>
             <div className="bg-black text-[#fbfaf7] p-8">
-              <p className="ax-eyebrow text-[#ff4d0a] mb-3 text-[10px]">The required outcome</p>
+              <p className="ax-eyebrow text-[#5BEA99] mb-3 text-[10px]">The required outcome</p>
               <p className="text-[16px] text-white/85">{w.outcome}</p>
             </div>
           </div>
@@ -41,14 +41,14 @@ export default function WorkDetail() {
               <ol className="space-y-3">
                 {w.path.map((p, i) => (
                   <li key={p} className="flex gap-3 text-[14px] font-semibold">
-                    <span className="text-[11px] font-medium text-[#c9360a] pt-0.5">{String(i + 1).padStart(2, "0")}</span>{p}
+                    <span className="text-[11px] font-medium text-[#123D27] pt-0.5">{String(i + 1).padStart(2, "0")}</span>{p}
                   </li>
                 ))}
               </ol>
             </div>
             <div className="bg-[#fbfaf7] p-8">
               <p className="ax-eyebrow text-black/50 mb-4 text-[10px]">The systems involved</p>
-              <ul className="space-y-2">{w.systems.map((s) => <li key={s} className="text-[14px] font-semibold border-l-2 border-[#ff4d0a] pl-3">{s}</li>)}</ul>
+              <ul className="space-y-2">{w.systems.map((s) => <li key={s} className="text-[14px] font-semibold border-l-2 border-[#5BEA99] pl-3">{s}</li>)}</ul>
             </div>
             <div className="bg-[#fbfaf7] p-8">
               <p className="ax-eyebrow text-black/50 mb-4 text-[10px]">The human decision point</p>

@@ -13,7 +13,7 @@
   height: 560px;
   transition: border-color 400ms ease;
 }
-.contact-map:hover { border-color: rgba(249, 115, 22, .24); }
+.contact-map:hover { border-color: rgba(91, 234, 153, .24); }
 
 .contact-map::before {
   content: "";
@@ -21,7 +21,7 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: radial-gradient(circle at 78% 18%, rgba(249, 115, 22, .14), transparent 32%);
+  background: radial-gradient(circle at 78% 18%, rgba(91, 234, 153, .14), transparent 32%);
   transition: opacity 400ms ease;
 }
 .contact-map:hover::before { opacity: 1.4; }
@@ -33,7 +33,7 @@
   top: 0;
   width: 90px;
   height: 2px;
-  background: linear-gradient(90deg, #F97316, transparent);
+  background: linear-gradient(90deg, #5BEA99, transparent);
   pointer-events: none;
   z-index: 2;
 }

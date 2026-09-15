@@ -17,7 +17,7 @@ import BuildWithAlterXGrid from "@/components/visuals/BuildWithAlterXGrid";
 // surface color (two tiles are light, two are dark), so the orange 3D
 // object always reads against dark ground per the shared material system.
 const Stage = ({ children }) => (
-  <div className="relative w-full h-full rounded-[6px] overflow-hidden" style={{ background: "radial-gradient(circle at 50% 46%, rgba(249,115,22,.14) 0%, rgba(249,115,22,.045) 25%, transparent 48%), #090909" }}>
+  <div className="relative w-full h-full rounded-[6px] overflow-hidden" style={{ background: "radial-gradient(circle at 50% 46%, rgba(91,234,153,.14) 0%, rgba(91,234,153,.045) 25%, transparent 48%), #090909" }}>
     {children}
   </div>
 );

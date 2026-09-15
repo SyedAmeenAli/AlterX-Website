@@ -35,7 +35,7 @@
   letter-spacing: -0.01em;
 }
 .ax-option-wheel__item.is-active { opacity: 1; filter: none; }
-.ax-option-wheel__index { color: #ff4d0a; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; }
+.ax-option-wheel__index { color: #5BEA99; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; }
 
 /* short marker on the active item only — follows it, not a fixed rail */
 .ax-option-wheel__active-mark {
@@ -44,7 +44,7 @@
   top: 50%;
   width: 28px;
   height: 2px;
-  background: #ff4d0a;
+  background: #5BEA99;
   transform: translateY(-50%);
 }
 

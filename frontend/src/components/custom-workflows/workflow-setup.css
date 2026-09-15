@@ -5,7 +5,7 @@
   font-family: "Hanken Grotesk", sans-serif;
 }
 
-.axw-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #c9360a; margin: 0 0 10px; }
+.axw-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #123D27; margin: 0 0 10px; }
 .axw-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin: 0 0 20px; max-width: 420px; }
 
 .axw-steps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
@@ -17,7 +17,7 @@
   border-radius: 5px;
   transition: color 360ms ease, border-color 360ms ease;
 }
-.axw-step.is-active { color: #ff4d0a; border-color: rgba(255,77,10,.45); }
+.axw-step.is-active { color: #5BEA99; border-color: rgba(91,234,153,.45); }
 .axw-step.is-done { color: rgba(9,9,9,.55); border-color: rgba(9,9,9,.2); }
 
 .axw-panel { min-height: 130px; margin-bottom: 20px; animation: axw-fade 260ms cubic-bezier(.25,1,.5,1) both; }
@@ -36,7 +36,7 @@
   resize: vertical;
   background: #fff;
 }
-.axw-textarea:focus { outline: none; border-color: #ff4d0a; }
+.axw-textarea:focus { outline: none; border-color: #5BEA99; }
 
 .axw-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .axw-chip {
@@ -49,7 +49,7 @@
   padding: 8px 13px;
   transition: border-color 360ms ease, color 360ms ease, background 360ms ease;
 }
-.axw-chip.is-selected { color: #fff; background: #ff4d0a; border-color: #ff4d0a; }
+.axw-chip.is-selected { color: #fff; background: #5BEA99; border-color: #5BEA99; }
 
 .axw-nav { display: flex; gap: 10px; }
 .axw-btn-primary {
@@ -59,7 +59,7 @@
   border-radius: 6px;
   transition: background 360ms ease;
 }
-.axw-btn-primary:hover { background: #ff4d0a; }
+.axw-btn-primary:hover { background: #5BEA99; }
 .axw-btn-ghost {
   font-size: 13.5px; font-weight: 700;
   color: rgba(9,9,9,.55);
@@ -87,8 +87,8 @@
 }
 .axw-block {
   font-size: 10.5px; font-weight: 600;
-  color: #ff8b45;
-  border: 1px solid rgba(255,77,10,.4);
+  color: #9FFFC0;
+  border: 1px solid rgba(91,234,153,.4);
   border-radius: 5px;
   padding: 4px 8px;
   animation: axw-block-in 320ms cubic-bezier(.25,1,.5,1) both;

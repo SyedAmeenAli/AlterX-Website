@@ -18,7 +18,7 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 /* ------------------------------------------------------------------ */
 
 const C = {
-  orange: "#ff5a1f",
+  orange: "#5BEA99",
   blue: "#6f8cff",
   mint: "#69c7aa",
   amber: "#e9ad4f",
@@ -28,10 +28,10 @@ const C = {
 const OBJECTIVE = "Prepare a decision-ready supplier comparison.";
 
 const SCENE_BG =
-  "radial-gradient(ellipse at 18% 62%, rgba(255,90,31,0.30), transparent 42%)," +
+  "radial-gradient(ellipse at 18% 62%, rgba(91,234,153,0.30), transparent 42%)," +
   "radial-gradient(ellipse at 84% 26%, rgba(32,54,95,0.26), transparent 46%)," +
   "radial-gradient(ellipse at 78% 80%, rgba(13,69,66,0.22), transparent 40%)," +
-  "radial-gradient(ellipse at 40% 12%, rgba(216,135,40,0.14), transparent 44%)," +
+  "radial-gradient(ellipse at 40% 12%, rgba(18,61,39,0.14), transparent 44%)," +
   "#070707";
 
 /* work objects positioned on the scene (percent coordinates) */
@@ -198,7 +198,7 @@ const WorkStrip = ({ step, status, delay, stage, recheckPhrase }) => {
     >
       <div
         className="rounded-[7px] border bg-[#0d0d0d]/85 backdrop-blur-[2px] px-3 py-2.5"
-        style={{ borderColor: rechecking ? "rgba(233,173,79,0.55)" : running ? "rgba(255,90,31,0.55)" : "rgba(255,255,255,0.1)" }}
+        style={{ borderColor: rechecking ? "rgba(216,255,231,0.55)" : running ? "rgba(91,234,153,0.55)" : "rgba(255,255,255,0.1)" }}
       >
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: rechecking ? C.amber : bar }} />
@@ -326,7 +326,7 @@ const ApprovalSheet = ({ show, approved }) => (
         initial={{ opacity: 0, x: 30, y: "-50%" }} animate={{ opacity: 1, x: 0, y: "-50%" }} exit={{ opacity: 0, x: 30, y: "-50%" }}
         transition={{ duration: 0.45, ease: EASE }} data-testid="story-approval-sheet"
       >
-        <div className="rounded-[10px] border p-5 bg-[#0e0d0c]/95 backdrop-blur-sm" style={{ borderColor: "rgba(233,173,79,0.4)" }}>
+        <div className="rounded-[10px] border p-5 bg-[#0e0d0c]/95 backdrop-blur-sm" style={{ borderColor: "rgba(216,255,231,0.4)" }}>
           <span className="text-[10px] font-semibold uppercase tracking-[0.16em]" style={{ color: C.amber }}>Human decision</span>
           <p className="text-[15px] font-semibold text-white/95 mt-2 leading-snug">Approve supplier comparison criteria?</p>
           <div className="mt-4 space-y-2">
@@ -510,7 +510,7 @@ const Scene = ({ stage, typed, submitted, approved, phrase, checkPhase, recheckP
           </span>
           <motion.span
             className="w-7 h-7 rounded-[6px] grid place-items-center shrink-0"
-            animate={{ background: submitted ? C.orange : "rgba(255,90,31,0.22)" }}
+            animate={{ background: submitted ? C.orange : "rgba(91,234,153,0.22)" }}
             transition={{ duration: 0.25 }}
           >
             <ArrowRight size={14} style={{ color: submitted ? "#111" : C.orange }} aria-hidden="true" />
@@ -605,7 +605,7 @@ const Rail = ({ stage, onHover, onSelect }) => (
           <motion.span className="absolute left-0 top-2 bottom-2 w-[2px] rounded-full" style={{ background: C.orange }}
             initial={false} animate={{ scaleY: active ? 1 : 0, opacity: active ? 1 : 0 }} transition={{ duration: 0.3, ease: EASE }} />
           <span className="flex items-baseline gap-3">
-            <span className={`text-[12px] font-semibold tabular-nums transition-colors duration-300 ${active ? "text-[#ff5a1f]" : "text-white/35"}`}>
+            <span className={`text-[12px] font-semibold tabular-nums transition-colors duration-300 ${active ? "text-[#5BEA99]" : "text-white/35"}`}>
               0{i + 1}
             </span>
             <span className={`text-[19px] font-semibold tracking-tight transition-colors duration-300 ${active ? "text-[#f7f5f0]" : "text-white/45"}`}>
@@ -792,7 +792,7 @@ export default function AlterEngineLiveStory() {
             {ENGINE_STORY.map((s, i) => (
               <div key={s.stage}>
                 <div className="flex items-baseline gap-3 mb-3">
-                  <span className="text-[12px] font-semibold text-[#ff5a1f]">0{i + 1}</span>
+                  <span className="text-[12px] font-semibold text-[#5BEA99]">0{i + 1}</span>
                   <span className="text-2xl font-semibold tracking-tight">{s.stage}</span>
                 </div>
                 <p className="text-white/65 mb-5 max-w-prose">{s.copy}</p>

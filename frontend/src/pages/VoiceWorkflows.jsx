@@ -65,7 +65,7 @@ export default function VoiceWorkflows() {
             {PRINCIPLES.map((p, i) => (
               <Reveal key={p.t} delay={i * 0.06}>
                 <div className="border-t border-black/15 pt-5" data-testid={`voice-principle-${i}`}>
-                  {i === 1 && <ShieldCheck size={16} className="text-[#ff4d0a] mb-3" aria-hidden="true" />}
+                  {i === 1 && <ShieldCheck size={16} className="text-[#5BEA99] mb-3" aria-hidden="true" />}
                   <h3 className="text-xl font-bold tracking-tight mb-2">{p.t}</h3>
                   <p className="text-black/65 leading-relaxed">{p.d}</p>
                 </div>

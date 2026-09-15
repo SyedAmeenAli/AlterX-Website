@@ -41,7 +41,7 @@ const Sparkline = ({ points, active }) => {
   const d = norm.map((v, i) => `${i === 0 ? "M" : "L"} ${(i / (norm.length - 1)) * 60} ${20 - v * 16}`).join(" ");
   return (
     <svg viewBox="0 0 60 20" className="w-[52px] h-[16px]" aria-hidden="true">
-      <path d={d} fill="none" stroke={active ? "#ff4d0a" : "rgba(255,255,255,.35)"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={active ? "#5BEA99" : "rgba(255,255,255,.35)"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };

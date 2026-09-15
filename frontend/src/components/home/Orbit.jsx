@@ -62,7 +62,7 @@ export default function Orbit() {
                     exit={{ opacity: 0, position: "absolute", transition: { duration: 0.16, ease: EASE } }}
                     data-testid="orbit-explanation"
                   >
-                    <span className="block text-[#ff4d0a] text-[12px] font-semibold uppercase tracking-[0.14em] mb-2">
+                    <span className="block text-[#5BEA99] text-[12px] font-semibold uppercase tracking-[0.14em] mb-2">
                       {String(active + 1).padStart(2, "0")} · {ORBIT_NODES[active].label}
                     </span>
                     <p className="text-white/70 text-[15px] leading-relaxed">{ORBIT_NODES[active].copy}</p>

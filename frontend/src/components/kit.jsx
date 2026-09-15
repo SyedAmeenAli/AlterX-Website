@@ -4,8 +4,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal, MaskLines } from "@/lib/anim";
 
 export const Eyebrow = ({ children, dark, className = "" }) => (
-  <div className={`ax-eyebrow flex items-center gap-3 ${dark ? "text-[#ff4d0a]" : "text-[#c9360a]"} ${className}`}>
-    <span className="inline-block w-6 h-[2px] bg-[#ff4d0a]" aria-hidden="true" />
+  <div className={`ax-eyebrow flex items-center gap-3 ${dark ? "text-[#5BEA99]" : "text-[#123D27]"} ${className}`}>
+    <span className="inline-block w-6 h-[2px] bg-[#5BEA99]" aria-hidden="true" />
     {children}
   </div>
 );
@@ -88,7 +88,7 @@ export const Marquee = ({ items, dark }) => (
           {items.map((it, i) => (
             <span key={`${rep}-${i}`} className={`flex items-center gap-8 px-8 ax-display text-2xl md:text-4xl whitespace-nowrap ${dark ? "text-white/25" : "text-black/20"}`}>
               {it}
-              <span className="w-2 h-2 bg-[#ff4d0a] inline-block" />
+              <span className="w-2 h-2 bg-[#5BEA99] inline-block" />
             </span>
           ))}
         </div>
@@ -99,7 +99,7 @@ export const Marquee = ({ items, dark }) => (
 
 export const DemoBadge = ({ className = "" }) => (
   <span className={`inline-flex items-center gap-2 text-[12px] font-medium text-current opacity-60 ${className}`}>
-    <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d0a] inline-block" aria-hidden="true" />
+    <span className="w-1.5 h-1.5 rounded-full bg-[#5BEA99] inline-block" aria-hidden="true" />
     Illustrative demo
   </span>
 );
