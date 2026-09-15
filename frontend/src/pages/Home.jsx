@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { usePageMeta, Reveal } from "@/lib/anim";
+import { usePageMeta, Reveal, MaskLines } from "@/lib/anim";
 import { ChapterHead, EditorialRow, Eyebrow, FillLink } from "@/components/kit";
 import { ThreadPath } from "@/components/thread";
 import HeroX from "@/components/home/HeroX";
@@ -14,6 +14,66 @@ import { SECURITY_PRINCIPLES, WORK_ENTRIES, RESOURCES, COMPOSER_CHIPS } from "@/
 import NetSegment from "@/components/home/NetworkThread";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import LetterGlitch from "@/components/ui/LetterGlitch";
+
+/* "What ALTERX is" — immediately after the hero, before any product
+   detail. The six-stage progression is one connected visual sequence,
+   not six cards. */
+const UNDERSTAND_STAGES = ["Understand", "Plan", "Assemble", "Execute", "Verify", "Recover"];
+
+const WhatAlterXIsSection = () => (
+  <section className="text-[#e8f7ee] py-24 md:py-32 relative" style={{ background: "#020806" }} data-testid="what-alterx-is-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="max-w-2xl">
+        <Reveal><Eyebrow dark className="mb-6">What ALTERX is</Eyebrow></Reveal>
+        <MaskLines as="h2" lines={["Not another AI assistant."]} className="ax-display text-3xl md:text-[44px] mb-8" />
+        <Reveal delay={0.1}>
+          <p className="text-white/70 text-lg leading-relaxed mb-4">ALTERX is being built as an execution system. You give it an objective. It works out what needs to happen, assembles the workflow, runs it, checks the result and responds when something goes wrong.</p>
+          <p className="text-white/70 text-lg leading-relaxed">The important part is not simply getting an AI model to perform a task. The important part is everything around that task. State. Verification. Recovery. Human approval. External systems. Cost. Continuity.</p>
+        </Reveal>
+      </div>
+
+      <Reveal delay={0.2}>
+        <div className="mt-16 flex flex-wrap items-center gap-x-2 gap-y-4" data-testid="what-alterx-is-sequence">
+          {UNDERSTAND_STAGES.map((s, i) => (
+            <React.Fragment key={s}>
+              <span className="text-sm md:text-base font-semibold tracking-tight text-[#9fffc0]">{s}</span>
+              {i < UNDERSTAND_STAGES.length - 1 && <span className="w-6 md:w-10 h-px bg-white/20" aria-hidden="true" />}
+            </React.Fragment>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* "The hard part" — the problem section. Plain narrative, emotionally
+   legible without prior AI-systems knowledge. */
+const ProblemSection = () => (
+  <section className="text-[#090909] py-24 md:py-32 relative" style={{ background: "#e8f7ee" }} data-testid="problem-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="max-w-2xl">
+        <Reveal><Eyebrow className="mb-6">The problem</Eyebrow></Reveal>
+        <MaskLines as="h2" lines={["The hard part isn't getting AI", "to do something once."]} className="ax-display text-3xl md:text-[44px] mb-5" />
+        <Reveal delay={0.1}>
+          <p className="text-black/60 text-lg mb-10">The hard part is trusting it with something that matters.</p>
+        </Reveal>
+      </div>
+      <div className="grid md:grid-cols-2 gap-x-16 gap-y-10 max-w-4xl">
+        <Reveal delay={0.15}>
+          <p className="text-black/70 leading-relaxed">A customer message comes in. Someone needs to understand it, check company data, check availability, prepare the quote, update the system, send the response, trigger whatever happens next.</p>
+          <p className="text-black/70 leading-relaxed mt-4">AI can participate in every part of that process.</p>
+        </Reveal>
+        <Reveal delay={0.22}>
+          <p className="text-black/70 leading-relaxed">The difficult part begins when one step goes wrong. A model misunderstands something. An API times out. A system returns bad data. The next step continues using incorrect information.</p>
+          <p className="text-black/70 leading-relaxed mt-4">The result still looks convincing. Nobody notices.</p>
+        </Reveal>
+      </div>
+      <Reveal delay={0.3}>
+        <p className="mt-10 text-[19px] font-semibold text-[#123d27] max-w-2xl">That is the problem ALTERX is being built to solve.</p>
+      </Reveal>
+    </div>
+  </section>
+);
 
 const SecuritySection = () => (
   <section className="text-[#fbfaf7] relative overflow-clip isolate" style={{ background: "#000", minHeight: "88vh" }} data-testid="security-section">
@@ -89,6 +149,39 @@ const ResourcesSection = () => (
   </section>
 );
 
+/* "Why ALTERX" — the company's belief, quiet and direct, not a manifesto. */
+const WhyAlterXSection = () => (
+  <section className="text-[#e8f7ee] py-24 md:py-32 relative" style={{ background: "#06120c" }} data-testid="why-alterx-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="max-w-2xl">
+        <Reveal><Eyebrow dark className="mb-6">Why ALTERX</Eyebrow></Reveal>
+        <MaskLines as="h2" lines={["We care about what happens", "after the demo."]} className="ax-display text-3xl md:text-[44px] mb-8" />
+        <Reveal delay={0.1}>
+          <p className="text-white/70 text-lg leading-relaxed mb-4">It is easy to show an AI system doing something clever once. It is much harder to hand it a business process and leave it alone.</p>
+          <p className="text-white/70 text-lg leading-relaxed mb-4">The gap is not simply model intelligence. It is everything around the model. State. Verification. Recovery. Isolation. Cost. Human judgement. Continuity.</p>
+          <p className="text-[19px] font-semibold text-[#9fffc0] mt-8">We think software should be honest about what it did.</p>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
+/* Vision — future tense, no invented milestones or years. */
+const VisionSection = () => (
+  <section className="text-[#090909] py-24 md:py-32 relative" style={{ background: "#d8ffe7" }} data-testid="vision-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="max-w-2xl">
+        <Reveal><Eyebrow className="mb-6">Vision</Eyebrow></Reveal>
+        <MaskLines as="h2" lines={["Where this goes next."]} className="ax-display text-3xl md:text-[44px] mb-6" />
+        <Reveal delay={0.1}>
+          <p className="text-black/70 text-lg leading-relaxed mb-4">A business should be able to describe an outcome and trust that the system can work toward it reliably.</p>
+          <p className="text-black/70 text-lg leading-relaxed">ALTERX is currently building deterministic execution. The direction is toward systems that can improve their judgement using verified outcomes, while keeping those changes controlled and reversible.</p>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
 const Composer = () => {
   const [text, setText] = useState("");
   const navigate = useNavigate();
@@ -144,6 +237,8 @@ export default function Home() {
   return (
     <>
       <HeroX />
+      <WhatAlterXIsSection />
+      <ProblemSection />
       <ProductPanels />
       <EngineStory />
       <Runway />
@@ -152,6 +247,8 @@ export default function Home() {
       <SecuritySection />
       <WorkSection />
       <ResourcesSection />
+      <WhyAlterXSection />
+      <VisionSection />
       <Composer />
     </>
   );

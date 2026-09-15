@@ -240,8 +240,8 @@ export default function Header() {
             ))}
           </nav>
           <div className="flex items-center gap-3 justify-self-end">
-            <Link to="/try-alter-engine" className="btn-primary !hidden sm:!inline-flex !py-2.5 !px-5 text-[14px] whitespace-nowrap" data-testid="header-try-cta">
-              Try Alter Engine <ArrowRight size={15} className="ax-arrow" aria-hidden="true" />
+            <Link to="/contact" className="btn-primary !hidden sm:!inline-flex !py-2.5 !px-5 text-[14px] whitespace-nowrap" data-testid="header-try-cta">
+              Talk to us <ArrowRight size={15} className="ax-arrow" aria-hidden="true" />
             </Link>
             <button
               className={`lg:hidden p-2 ${light ? "text-[#fbfaf7]" : "text-[#090909]"}`}
@@ -390,8 +390,8 @@ export default function Header() {
                   </div>
                 </details>
               ))}
-              <Link to="/try-alter-engine" className="btn-primary w-full justify-center mt-6" data-testid="mobile-try-cta">
-                Try Alter Engine <ArrowRight size={15} aria-hidden="true" />
+              <Link to="/contact" className="btn-primary w-full justify-center mt-6" data-testid="mobile-try-cta">
+                Talk to us <ArrowRight size={15} aria-hidden="true" />
               </Link>
             </nav>
           </motion.div>

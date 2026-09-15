@@ -6,7 +6,7 @@
 // it competed with Alter Engine for the same mental slot.
 export const NAV = [
   {
-    label: "Alter Engine",
+    label: "Products",
     key: "engine",
     featured: {
       title: "Start with the outcome.\nKeep the work visible.",
@@ -59,24 +59,6 @@ export const NAV = [
     ],
   },
   {
-    label: "Security",
-    key: "security",
-    featured: {
-      title: "Control is built into the work.",
-      body: "Permissions, approvals, visible execution and reviewable outcomes are part of the operating model.",
-      to: "/security",
-      visual: "security",
-    },
-    links: [
-      { label: "Security overview", to: "/security", desc: "Control is not an add-on" },
-      { label: "Identity & access", to: "/security#identity-and-access", desc: "Roles define who can do what" },
-      { label: "Workspace separation", to: "/security#workspace-separation", desc: "Structural, not cosmetic" },
-      { label: "Human approvals", to: "/security#human-approval-boundaries", desc: "Sensitive actions pause for authority" },
-      { label: "Activity & evidence", to: "/security#audit-and-evidence", desc: "Decisions keep their trail" },
-      { label: "Security enquiries", to: "/security#vulnerability-reporting", desc: "Report a concern today", accent: true },
-    ],
-  },
-  {
     label: "Resources",
     key: "resources",
     featured: {
@@ -93,7 +75,7 @@ export const NAV = [
     ],
   },
   {
-    label: "Company",
+    label: "About",
     key: "company",
     featured: {
       title: "Make complex work easier to carry out\nwithout making it harder to understand or control.",
@@ -104,8 +86,9 @@ export const NAV = [
     links: [
       { label: "About AlterX", to: "/company", desc: "Why AlterX exists" },
       { label: "Principles", to: "/company#principles", desc: "How we decide what to build" },
+      { label: "Security", to: "/security", desc: "Control is not an add-on" },
       { label: "Careers", to: "/careers", desc: "Build systems that move real work" },
-      { label: "Contact", to: "/contact", desc: "Bring us the outcome", accent: true },
+      { label: "Talk to us", to: "/contact", desc: "Bring us the outcome", accent: true },
     ],
   },
 ];
@@ -130,7 +113,7 @@ export const FOOTER_COLS = [
     ],
   },
   {
-    title: "Build",
+    title: "Developers",
     links: [
       { label: "Developers", to: "/developers" },
       { label: "Request developer access", to: "/contact" },
@@ -148,9 +131,9 @@ export const FOOTER_COLS = [
     ],
   },
   {
-    title: "Company",
+    title: "About",
     links: [
-      { label: "About", to: "/company" },
+      { label: "About AlterX", to: "/company" },
       { label: "Work", to: "/work" },
       { label: "Resources", to: "/resources" },
       { label: "Careers", to: "/careers" },

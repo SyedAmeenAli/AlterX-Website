@@ -71,8 +71,8 @@ export default function Contact() {
     <>
       <PageHero
         eyebrow="Contact"
-        title="Bring us the outcome."
-        body="Tell AlterX what needs to change, which systems are involved and where human judgment belongs."
+        title="Bring us something you wish you could automate."
+        body="Tell us about the process. What happens today? Where does it become difficult? What would change if you could trust the software to handle it?"
       />
       <section className="pb-28" style={{ background: "rgba(249,249,249,0.65)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1fr_380px] gap-14">
