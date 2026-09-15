@@ -17,7 +17,7 @@ export default function Company() {
       <PageHero
         dark
         eyebrow="About AlterX"
-        title={["We build AI systems with", "control, clarity and proof."]}
+        title={["We're building the part of AI", "people usually ignore."]}
         body={COMPANY_DESCRIPTION}
       />
       <section className="text-[#fbfaf7] pb-24" style={{ background: "rgba(0,0,0,0.62)" }}>
