@@ -200,6 +200,38 @@ export default function AlterEngine() {
         </div>
       </section>
 
+      {/* TECHNICAL DEPTH — quiet, labeled, not a giant table. Developers
+          carries the extreme depth; this is the "there's real engineering
+          under this" signal for a visitor who wants one more layer. */}
+      <section className="py-24 md:py-32 relative" style={{ background: "rgba(0,0,0,0.7)" }} data-testid="engine-technical-depth">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <Reveal><Eyebrow dark className="mb-6">Why the architecture matters</Eyebrow></Reveal>
+          <MaskLines as="h2" lines={["Built to keep running,", "not just to start."]} className="ax-display text-3xl sm:text-4xl lg:text-[48px] text-[#fbfaf7] mb-14 max-w-2xl" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+            {[
+              { t: "Durable execution", d: "A mission survives a restart. State is checkpointed, not held only in memory." },
+              { t: "Verification", d: "Output is checked against the original requirement before it is returned." },
+              { t: "Recovery", d: "Failures are classified and routed — retry, alternate route or a question back to a person." },
+              { t: "Provider boundaries", d: "Each connection runs within an explicit, permissioned scope. Never blanket access." },
+              { t: "Sandboxed execution", d: "Work runs isolated from other missions and from the host environment." },
+              { t: "Typed workflow structure", d: "Steps, inputs and outputs are structured data, not free-form text passed along a chain." },
+            ].map((c, i) => (
+              <Reveal key={c.t} delay={i * 0.04}>
+                <div className="border-t border-white/10 pt-5">
+                  <h3 className="text-lg font-semibold tracking-tight text-[#fbfaf7] mb-2">{c.t}</h3>
+                  <p className="text-white/55 text-[14px] leading-relaxed">{c.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.2}>
+            <div className="mt-12">
+              <FillLink to="/developers" dark>See the developer architecture</FillLink>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* PLATFORM SUPERVISION */}
       <section id="authority" className="py-24 md:py-32 relative" style={{ background: "var(--marketing-light-medium)" }} data-testid="engine-platform">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-14 items-center">

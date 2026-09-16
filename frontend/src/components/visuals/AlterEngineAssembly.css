@@ -1,13 +1,13 @@
-/* AlterEngineAssembly — 8 transparent-orange CSS-3D cubes (the 8 corners
+/* AlterEngineAssembly — 8 transparent-emerald CSS-3D cubes (the 8 corners
    of a cube), converge once on entry, then sit calm; hover makes the
    already-assembled object reactive. Zero blue, zero light mask panels,
    no infinite loader loop. */
 
 .aea-stage {
-  --engine-orange: #5BEA99;
-  --engine-orange-hot: #9FFFC0;
-  --engine-orange-light: #D8FFE7;
-  --engine-orange-dark: #123D27;
+  --engine-emerald: #5BEA99;
+  --engine-mint: #9FFFC0;
+  --engine-mint-soft: #D8FFE7;
+  --engine-forest: #123D27;
   --engine-glow: rgba(91, 234, 153, .30);
 
   --aea-tiltX: 0deg;
@@ -38,7 +38,7 @@
   opacity: 0;
   font-size: 11px;
   font-weight: 600;
-  color: var(--engine-orange-light);
+  color: var(--engine-mint-soft);
   white-space: nowrap;
   transition: opacity 260ms ease, transform 260ms ease;
 }
@@ -93,7 +93,7 @@
   backface-visibility: hidden;
   transition: background 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
 }
-/* orange architectural glass, not solid plastic — each face a different
+/* emerald architectural glass, not solid plastic — each face a different
    transparency/brightness so the 3D form still reads clearly */
 .aea-face--top    { background: linear-gradient(145deg, rgba(216,255,231,.20), rgba(91,234,153,.12)); transform: rotateX(90deg) translateZ(calc(var(--aea-w) / 2)); }
 .aea-face--bottom { background: rgba(18,61,39,.09); transform: rotateX(-90deg) translateZ(calc(var(--aea-w) / 2)); }
@@ -135,7 +135,7 @@
   top: 8%; bottom: 8%;
   left: 50%;
   width: 2px;
-  background: linear-gradient(rgba(91,234,153,0), var(--engine-orange) 20%, var(--engine-orange) 80%, rgba(91,234,153,0));
+  background: linear-gradient(rgba(91,234,153,0), var(--engine-emerald) 20%, var(--engine-emerald) 80%, rgba(91,234,153,0));
   opacity: 0;
   transition: opacity 400ms ease;
   transition-delay: 900ms;

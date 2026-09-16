@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./AlterEngineAssembly.css";
 
 /*
-  AlterEngineAssembly — 8 transparent-orange CSS-3D cubes that enter from
+  AlterEngineAssembly — 8 transparent-emerald CSS-3D cubes that enter from
   scattered positions and converge into one 2×2×2 structure once, then sit
   calm. Not a loader: assembly plays a single time on mount, hover only
   makes the already-assembled object reactive (separate/glow/tilt), it
