@@ -21,6 +21,6 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 2px;
-  background: var(--ax-orange, #5BEA99);
+  background: var(--alterx-emerald);
   opacity: 0.7;
 }

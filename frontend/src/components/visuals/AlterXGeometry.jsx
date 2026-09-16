@@ -13,7 +13,7 @@ import "./AlterXGeometry.css";
     "wireframe" — thin-edge single cube, optional slow spin, pulse point
                   (Developers)
     "stack"     — vertically offset units, one can carry attention
-                  (Cognitive AI)
+                  (unused — was the Cognitive AI variant)
     "split"     — one unit separates from the formed structure, moves back,
                   reconnects (Checking & recovery)
     "planes"    — thin flat 3D surfaces in perspective, calmer than a cube

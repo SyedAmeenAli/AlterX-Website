@@ -223,7 +223,7 @@
   100% { opacity: 1; transform: translateZ(calc(var(--unit) / 2 + 2px)) translateX(calc(var(--unit) * .9)) translateY(calc(var(--unit) * -.42)) scale(.6); box-shadow: 0 0 0 2px rgba(91,234,153,.5); }
 }
 
-/* ============ STACK (Cognitive AI) ============ */
+/* ============ STACK (unused) ============ */
 .axg-stack { position: absolute; inset: 0; transform-style: preserve-3d; }
 .axg-stack .axg-s--1 { transform: translate3d(0, 34%, 0) scale(.62); opacity: .5; }
 .axg-stack .axg-s--2 { transform: translate3d(0, 0%, 8px) scale(.62); opacity: .5; }

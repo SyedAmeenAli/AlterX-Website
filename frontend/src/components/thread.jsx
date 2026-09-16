@@ -8,7 +8,7 @@ import { EASE } from "@/lib/anim";
   Stroke animation only — no per-frame JS.
 */
 
-export const ThreadPath = ({ d, stroke = "var(--ax-orange)", strokeWidth = 2, delay = 0, duration = 1.1, dash, className = "", once = true }) => {
+export const ThreadPath = ({ d, stroke = "var(--alterx-emerald)", strokeWidth = 2, delay = 0, duration = 1.1, dash, className = "", once = true }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once, margin: "-80px" });
   const reduce = useReducedMotion();
@@ -58,6 +58,6 @@ export const GradientRibbon = ({ className = "", flip = false, opacity = 1, id =
 export const EvidenceMark = ({ size = 18, className = "" }) => (
   <svg width={size} height={size} viewBox="0 0 20 20" className={className} aria-hidden="true">
     <circle cx="10" cy="10" r="8" fill="none" stroke="rgba(251,250,247,.8)" strokeWidth="1.6" />
-    <path d="M6.4 10.2 L9 12.8 L13.8 7.6" fill="none" stroke="var(--ax-orange)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M6.4 10.2 L9 12.8 L13.8 7.6" fill="none" stroke="var(--alterx-emerald)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );

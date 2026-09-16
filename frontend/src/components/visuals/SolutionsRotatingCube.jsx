@@ -6,7 +6,7 @@ import "./SolutionsRotatingCube.css";
   continuously rotating on Y, transparent orange architectural-glass
   material. The parent visual identity for "Solutions" as a whole — the
   mega-nav featured panel default state and the /solutions hero. Individual
-  solutions (Cognitive AI, Voice, AI websites, Custom workflows) keep their
+  solutions (Voice, AI websites, Custom workflows) keep their
   own distinct visuals; this cube never replaces those.
 
   Continuous rotation is intentional here (unlike most other product
