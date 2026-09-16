@@ -2,68 +2,71 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { usePageMeta, Reveal, MaskLines } from "@/lib/anim";
-import { Eyebrow } from "@/components/kit";
 import HeroX from "@/components/home/HeroX";
 import EngineStory from "@/components/home/EngineStory";
-import AlterEngineAssembly from "@/components/visuals/AlterEngineAssembly";
-import NetSegment from "@/components/home/NetworkThread";
+import AlterXBlob from "@/components/home/AlterXBlob";
 
-/* Content reset — homepage cut to 7 sections. Every deeper explanation
-   (security detail, work samples, resources, voice demo, capability
-   grids, company vision) now lives on its own page instead of on the
-   homepage. See /axinventory, /security, /work, /resources, /company. */
+/* One continuous dark canvas from the hero to the final CTA — no chapter
+   swaps to a bright fill colour, no eyebrow "section label" pill above
+   every statement (Idea and Belief have no product name, so they get no
+   label at all; Engine and AxInventory keep a plain small caps line
+   because those ARE names, not pitch categories). A single soft green
+   atmosphere spans Idea → Engine → AxInventory instead of each chapter
+   getting its own background block, so the page reads as one experience
+   scrolling past rather than a stack of slides. */
 
-const ProblemSection = () => (
-  <section className="text-[#090909] py-24 md:py-32 relative" style={{ background: "#e8f7ee" }} data-testid="problem-section">
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-      <div className="max-w-2xl">
-        <Reveal><Eyebrow className="mb-6">The problem</Eyebrow></Reveal>
-        <MaskLines as="h2" lines={["AI can do a task.", "Real work is harder."]} className="ax-display text-3xl md:text-[44px] mb-8" />
-        <Reveal delay={0.1}>
-          <p className="text-black/70 text-lg leading-relaxed">AI can write the message. Look something up. Create a quote. Update a system. The problem starts when all of those things have to happen together. One step goes wrong. The next step carries on. The result can still look completely fine.</p>
-          <p className="mt-6 text-[19px] font-semibold text-[#123d27]">ALTERX is being built around that problem.</p>
-        </Reveal>
-      </div>
+const IdeaSection = () => (
+  <section className="text-[#fbfaf7] py-28 md:py-40 relative" style={{ background: "var(--alterx-bg)" }} data-testid="idea-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 max-w-2xl">
+      <MaskLines as="h2" lines={["Doing one thing is easy."]} className="ax-display text-3xl md:text-[46px] mb-3 text-white/40" />
+      <MaskLines as="p" lines={["Doing the whole job is different."]} className="ax-display text-3xl md:text-[46px] mb-14" />
+      <Reveal delay={0.15}>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-4 mb-10" data-testid="idea-sequence">
+          {["Understand", "Decide", "Do", "Check", "Recover"].map((s, i, arr) => (
+            <React.Fragment key={s}>
+              <span className="text-sm md:text-base font-semibold tracking-tight text-[#9fffc0]">{s}</span>
+              {i < arr.length - 1 && <span className="w-6 md:w-10 h-px bg-white/20" aria-hidden="true" />}
+            </React.Fragment>
+          ))}
+        </div>
+      </Reveal>
+      <Reveal delay={0.22}>
+        <p className="text-white/55 text-lg">The hard part is keeping the whole process together.</p>
+      </Reveal>
     </div>
   </section>
 );
 
-const AlterEngineSection = () => (
-  <section className="text-[#fbfaf7] py-24 md:py-32 relative overflow-clip" style={{ background: "rgba(0,0,0,0.7)" }} data-testid="alter-engine-section">
-    <NetSegment name="engine-intro" />
-    <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-14 items-center">
-      <div>
-        <Reveal><Eyebrow dark className="mb-6">Alter Engine</Eyebrow></Reveal>
-        <MaskLines as="h2" lines={["The engine underneath", "the work."]} className="ax-display text-3xl md:text-[44px] mb-6" />
-        <Reveal delay={0.1}>
-          <p className="text-white/70 text-lg leading-relaxed">Alter Engine turns an objective into executable work. It plans the process, runs it, checks the result and knows what to do when something fails.</p>
-        </Reveal>
-        <Reveal delay={0.18}>
-          <Link to="/alter-engine" className="inline-flex items-center gap-2 mt-8 text-sm font-semibold text-[#9fffc0]">
-            Explore Alter Engine <ArrowRight size={14} className="ax-arrow" aria-hidden="true" />
-          </Link>
-        </Reveal>
-      </div>
-      <Reveal delay={0.1}>
-        <div className="w-full aspect-square max-w-[420px] mx-auto">
-          <AlterEngineAssembly active interactive={false} size="tile" />
-        </div>
-      </Reveal>
+/* EngineStory carries its own heading and one-line context immediately
+   below — this stays to a single small name label so the two don't read
+   as two stacked slide headers. */
+const EngineIntro = () => (
+  <div className="pt-24 md:pt-32 relative" style={{ background: "var(--alterx-bg)" }} data-testid="engine-intro">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#9fffc0]">Alter Engine</p>
     </div>
-  </section>
+  </div>
+);
+
+const EngineCTA = () => (
+  <div className="text-center pb-28 md:pb-40 relative" style={{ background: "var(--alterx-bg)" }} data-testid="engine-cta">
+    <Link to="/alter-engine" className="inline-flex items-center gap-2 text-sm font-semibold text-[#9fffc0]">
+      Explore Alter Engine <ArrowRight size={14} className="ax-arrow" aria-hidden="true" />
+    </Link>
+  </div>
 );
 
 const AxInventorySection = () => (
-  <section className="py-24 md:py-32 relative" style={{ background: "#0d2117" }} data-testid="axinventory-home-section">
+  <section className="text-[#fbfaf7] pt-8 pb-28 md:pb-40 relative" style={{ background: "var(--alterx-bg)" }} data-testid="axinventory-home-section">
     <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-      <Reveal><Eyebrow dark className="mb-6">AxInventory</Eyebrow></Reveal>
-      <MaskLines as="h2" lines={["Built for real business."]} className="ax-display text-3xl md:text-[44px] text-[#e8f7ee] mb-6" />
+      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#9fffc0] mb-5">AxInventory</p>
+      <MaskLines as="h2" lines={["The software your shop runs on."]} className="ax-display text-3xl md:text-[46px] mb-6 max-w-2xl" />
       <Reveal delay={0.1}>
-        <p className="text-white/70 text-lg leading-relaxed max-w-2xl mb-12">AxInventory brings inventory, point of sale, purchasing, GST and accounting into one system for Indian retail. Everything stays connected.</p>
+        <p className="text-white/60 text-lg max-w-2xl mb-12">Inventory, point of sale, purchasing, GST and accounting in one system built for Indian retail.</p>
       </Reveal>
       <Reveal delay={0.18}>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-4 mb-12" data-testid="axinventory-home-sequence">
-          {["Sell", "Track", "Buy", "Account", "Understand"].map((s, i, arr) => (
+          {["Sell", "Stock", "Payment", "GST", "Books"].map((s, i, arr) => (
             <React.Fragment key={s}>
               <span className="text-sm md:text-base font-semibold tracking-tight text-[#9fffc0]">{s}</span>
               {i < arr.length - 1 && <span className="w-6 md:w-10 h-px bg-white/20" aria-hidden="true" />}
@@ -80,26 +83,20 @@ const AxInventorySection = () => (
   </section>
 );
 
-const WhyAlterXSection = () => (
-  <section className="text-[#e8f7ee] py-24 md:py-32 relative" style={{ background: "#06120c" }} data-testid="why-alterx-section">
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-      <div className="max-w-2xl">
-        <Reveal><Eyebrow dark className="mb-6">Why ALTERX</Eyebrow></Reveal>
-        <MaskLines as="h2" lines={["We care about what happens", "after the demo."]} className="ax-display text-3xl md:text-[44px] mb-8" />
-        <Reveal delay={0.1}>
-          <p className="text-white/70 text-lg leading-relaxed mb-4">It is easy to show AI doing something clever once. It is harder to trust it with work that matters. So we are building around the difficult part: what happens when something goes wrong. Can the system notice? Can the work continue? Can someone understand what happened?</p>
-          <p className="text-[19px] font-semibold text-[#9fffc0] mt-6">That is where ALTERX is focused.</p>
-        </Reveal>
-      </div>
+const BeliefSection = () => (
+  <section className="text-[#fbfaf7] py-28 md:py-40 relative" style={{ background: "var(--alterx-bg-soft)" }} data-testid="belief-section">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 max-w-2xl">
+      <MaskLines as="h2" lines={["We care about what happens", "after the demo."]} className="ax-display text-3xl md:text-[46px] mb-8" />
+      <Reveal delay={0.1}>
+        <p className="text-white/55 text-lg leading-relaxed">It is easy to show AI doing something clever once. It is harder to trust it with work that matters. That is the part ALTERX is building around.</p>
+      </Reveal>
     </div>
   </section>
 );
 
 const FinalCTASection = () => (
-  <section className="text-[#fbfaf7] py-28 md:py-40 text-center relative overflow-clip" style={{ background: "rgba(0,0,0,0.46)" }} data-testid="final-cta-section">
-    <div className="absolute inset-0 pointer-events-none" style={{ background: "var(--ax-atmo-dark)" }} aria-hidden="true" />
-    <NetSegment name="final-cta" />
-    <div className="relative z-10 max-w-[760px] mx-auto px-6">
+  <section className="text-[#fbfaf7] py-28 md:py-40 text-center relative overflow-clip" style={{ background: "var(--alterx-bg)" }} data-testid="final-cta-section">
+    <div className="relative z-[1] max-w-[760px] mx-auto px-6">
       <MaskLines as="h2" lines={["Bring us something you", "wish you could automate."]} className="ax-display text-3xl md:text-[48px]" />
       <p className="mt-5 text-white/60 max-w-xl mx-auto">Tell us about the process. We'll show you where ALTERX fits.</p>
       <div className="mt-9 flex justify-center">
@@ -114,11 +111,24 @@ export default function Home() {
   return (
     <>
       <HeroX />
-      <ProblemSection />
-      <AlterEngineSection />
-      <EngineStory />
-      <AxInventorySection />
-      <WhyAlterXSection />
+
+      {/* Idea → Engine → AxInventory ride one continuous dark canvas and one
+          shared atmosphere instead of each getting its own background
+          block — the thing that made the previous pass read as slides. */}
+      <div className="relative overflow-clip" style={{ background: "var(--alterx-bg)" }}>
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[900px] h-[1400px] pointer-events-none opacity-[0.5]" aria-hidden="true">
+          <AlterXBlob className="w-full h-full blur-[60px] opacity-30" />
+        </div>
+        <div className="relative z-[1]">
+          <IdeaSection />
+          <EngineIntro />
+          <EngineStory />
+          <EngineCTA />
+          <AxInventorySection />
+        </div>
+      </div>
+
+      <BeliefSection />
       <FinalCTASection />
     </>
   );

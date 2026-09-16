@@ -767,7 +767,7 @@ export default function AlterEngineLiveStory() {
   );
 
   return (
-    <section id="how-it-works" className="text-[#fbfaf7] relative" style={{ background: "rgba(0,0,0,0.64)" }} data-testid="engine-story-section">
+    <section id="how-it-works" className="text-[#fbfaf7] relative" style={{ background: "var(--alterx-bg)" }} data-testid="engine-story-section">
       <NetSegment name="engine" />
       <div className="absolute inset-y-0 right-0 w-[40%] pointer-events-none" style={{ background: "var(--ax-edge-burn)", transform: "scaleX(-1)" }} aria-hidden="true" />
 
